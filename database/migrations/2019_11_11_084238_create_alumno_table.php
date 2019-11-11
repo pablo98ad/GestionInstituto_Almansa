@@ -27,7 +27,7 @@ class CreateAlumnosTable extends Migration
             $table->date('fechaNacimiento');
             $table->longText('observaciones');	
 
-            $table->timestamps();//
+            $table->timestamps();//para ver cuando se ha cambiado
             $table->primary('id');	
         });
     }
