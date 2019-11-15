@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProfesorTable extends Migration
+class CreateGrupoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,14 @@ class CreateProfesorTable extends Migration
      */
     public function up()
     {
-        Schema::create('profesor', function (Blueprint $table) {
+        Schema::create('grupo', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('nombre');
+            $table->longText('descripcion')->nullable();
+            $table->string('nombreTutor')->nullable();
+            $table->string('curso')->nullable();
+
+
             $table->timestamps();
         });
     }
@@ -26,6 +32,6 @@ class CreateProfesorTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('profesor');
+        Schema::dropIfExists('grupo');
     }
 }
