@@ -12,8 +12,8 @@ class ProfesorController extends Controller
         //asi tenemos todos los datos de la tabla profesor
         $listado_profesores = Profesor::all();
         var_dump($listado_profesores);
-
-        return view('profesores.index');
+        exit();
+        //return view('profesores.index');
 
     }
 }
