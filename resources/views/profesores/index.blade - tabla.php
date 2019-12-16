@@ -29,52 +29,26 @@
 </div>
 @endif
 <div class="container text-center">
-Estoy en la vista que se ha llamado a traves del controlador de ProfesorController 
+Estoy en la vista que se ha llamado a traves del controlador de ProfesorController
 <h1>VISUALIZAMOS LISTADO DE PROFESORES</h1>
-<div class="row">
-<?php foreach($profesores as $profesor){ ?>
-
-<div class="card col-md-4 col-sm-6 col-12 mt-1 ">
-        <div class="card-body ">
-            <h2 class="card-title">{{$profesor->nombre}}</h2>
-            <h5 class="card-subtitle mb-2 text-muted">{{$profesor->apellidos}}</h5>
-            <div class="table-responsive">
-                <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Departamento</th>
-                        <th scope="col">Especialidad</th>
-                        <th scope="col">Cargo</th>
-                        <th scope="col">Codigo</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                    <td>{{$profesor->id}}</td>
-                    <td>{{$profesor->departamento}}</td>
-                    <td>{{$profesor->especialidad}}</td>
-                    <td>{{$profesor->cargo}}</td>
-                    <td>{{$profesor->codigo}}</td>
-                    </tr>
-                </tbody>
-                </table>
-            </div>
-            <h5 class="card-title ">Observaciones</h5>
-            <p class="card-text">{{$profesor->observaciones}}</p>
-            <a class='btn btn-primary' href='profesores/{{$profesor->id}}' role='button'>Visualizar</a>
-            <a class='btn btn-primary' href='profesores/{{$profesor->id}}/edit' role='button'>Editar</a>
-            <a class='btn btn-danger' href='#' role='button'>Borrar</a>
-    </div>
-</div>
-
-<?php } ?>
-</div>
-
-
-
+<div class="table-responsive-sm">
+  <table class="table">
+  <caption>Listado de profesores</caption>
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">NOMBRE</th>
+      <th scope="col">APELLIDOS</th>
+      <th scope="col">DEPARTAMENTO</th>
+      <th scope="col">ESPECIALIDAD</th>
+      <th scope="col">CARGO</th>
+      <th scope="col">OBSERVACIONES</th>
+      <th scope="col">CODIGO</th>
+      <th scope="col">Opciones</th>
+    </tr>
+  </thead>
+  <tbody>
   <?php
-  /*
     foreach($profesores as $profesor){
         echo "<tr>";
         echo "<th scope='row'>".$profesor->id."</th>";
@@ -92,9 +66,12 @@ Estoy en la vista que se ha llamado a traves del controlador de ProfesorControll
         echo $profesor->apellidos;
         echo '-------<a href="profesores/'.$profesor->id.'">Visualizar</a>';
         echo '-------<a href="profesores/'.$profesor->id.'/edit">Actualizar</a>';
-        echo "<br><br>";
-    }*/
+        echo "<br><br>";*/
+    }
 ?>
+
+    </tbody>
+  </table>
 </div>
 </div>
 
