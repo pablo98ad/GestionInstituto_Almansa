@@ -6,7 +6,12 @@ use Illuminate\Http\Request;
 use App\Profesor;
 
 class ProfesorController extends Controller
-{
+{   
+
+    public function __construct()
+    {
+        $this->middleware('auth')->except('index');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,8 +20,8 @@ class ProfesorController extends Controller
     public function index()
     {
         //
-        $profesores=Profesor::all();
-        return view('profesores.index',['profesores' => $profesores]);
+        $profesores = Profesor::all();
+        return view('profesores.index', ['profesores' => $profesores]);
     }
 
     /**
@@ -40,17 +45,20 @@ class ProfesorController extends Controller
     {
         // echo "estoy aqui";
         //guardar los datos que se envian en la base de datos 
-        $profesor= new Profesor();
-        $profesor ->nombre=$request ->input('nombre');  
-        $profesor ->apellidos=$request ->input('apellidos');
-        $profesor ->departamento=$request ->input('departamento');
-        $profesor ->especialidad=$request ->input('especialidad');
-        $profesor ->cargo=$request ->input('cargo');
-        $profesor ->observaciones=$request ->input('observaciones');
-        $profesor ->codigo=$request ->input('codigo');
+        $profesor = new Profesor();
+        $profesor->nombre = $request->input('nombre');
+        $profesor->apellidos = $request->input('apellidos');
+        $profesor->departamento = $request->input('departamento');
+        $profesor->especialidad = $request->input('especialidad');
+        $profesor->cargo = $request->input('cargo');
+        $profesor->observaciones = $request->input('observaciones');
+        $profesor->codigo = $request->input('codigo');
+        try{
         $profesor->save();
-        return redirect()->action('ProfesorController@index')->with('notice','Profesor guardado correctamente.');
-        
+        }catch(\Exception  $e){
+            return redirect()->action('ProfesorController@index')->with('error', 'Error, no se ha podido guardar');
+        }
+        return redirect()->action('ProfesorController@index')->with('notice', 'Profesor '.$profesor->nombre.', guardado correctamente.');
     }
 
     /**
@@ -62,8 +70,8 @@ class ProfesorController extends Controller
     public function show($id)
     {
         //Aqui tengo que mostrar el registro seleccionado 
-        $profesor= Profesor::find($id);
-        return view('profesores.show',['profesor'=>$profesor]);
+        $profesor = Profesor::find($id);
+        return view('profesores.show', ['profesor' => $profesor]);
     }
 
     /**
@@ -75,8 +83,8 @@ class ProfesorController extends Controller
     public function edit($id)
     {
         //recupera el id ylo manda a la vista
-        $profesor= Profesor::find($id);
-        return view('profesores.update',['profesor'=>$profesor]);
+        $profesor = Profesor::find($id);
+        return view('profesores.update', ['profesor' => $profesor]);
     }
 
     /**
@@ -89,19 +97,19 @@ class ProfesorController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $profesor= Profesor::find($id);
-    
-        $profesor ->nombre=$request ->input('nombre');  
-        $profesor ->apellidos=$request ->input('apellidos');
-        $profesor ->departamento=$request ->input('departamento');
-        $profesor ->especialidad=$request ->input('especialidad');
-        $profesor ->cargo=$request ->input('cargo');
-        $profesor ->observaciones=$request ->input('observaciones');
-        $profesor ->codigo=$request ->input('codigo');
+        $profesor = Profesor::find($id);
+
+        $profesor->nombre = $request->input('nombre');
+        $profesor->apellidos = $request->input('apellidos');
+        $profesor->departamento = $request->input('departamento');
+        $profesor->especialidad = $request->input('especialidad');
+        $profesor->cargo = $request->input('cargo');
+        $profesor->observaciones = $request->input('observaciones');
+        $profesor->codigo = $request->input('codigo');
 
         $profesor->save();
 
-        return redirect()->action('ProfesorController@index')->with('notice','El Profesor '.$profesor->nombre.' modificado correctamente.');
+        return redirect()->action('ProfesorController@index')->with('notice', 'El Profesor ' . $profesor->nombre . ' modificado correctamente.');
     }
 
     /**
@@ -113,5 +121,12 @@ class ProfesorController extends Controller
     public function destroy($id)
     {
         //
+        $profesor = Profesor::find($id);
+        try{
+             $profesor->delete();
+        }catch(\Exception $e){
+            return redirect()->action('ProfesorController@index')->with('error', 'Error: El Profesor ' .$profesor->nombre.', no se ha podido eliminar');
+        }
+        return redirect()->action('ProfesorController@index')->with('notice', 'El Profesor ' . $profesor->nombre . ' eliminado correctamente.');
     }
 }

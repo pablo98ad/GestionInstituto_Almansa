@@ -21,7 +21,7 @@
     <div class="container text-center ">
     <h1>Formulario actualizar {{$profesor->nombre}}</h1><br><br>
 
-    <form class="" action="{{url('profesores/').'/'.$profesor->id}}" method="POST"  >
+    <form class="" action="{{url('profesores/').'/'.$profesor->id}}" id="actualizar" method="POST"  >
     {{ csrf_field() }}
     {{ method_field('PUT') }}
     <input type="hidden" class="form-control" name="_method" value="PUT" >
@@ -63,9 +63,17 @@
     </div>
     
   </div>
-  <button type="submit" class="btn btn-primary">Guardar</button>
-  <a class='btn btn-danger' href='#' role='button'>Borrar</a>
+  
 </form>
+<button type="submit" name="enviar" form="actualizar" class="btn btn-primary">Guardar</button>
+<div class="d-inline">
+              <form class="d-inline" method="POST" action="{{url('profesores/').'/'.$profesor->id}}">
+                {{ csrf_field() }}
+                {{ method_field('DELETE') }} 
+                <input type="submit" name="eliminar"class="btn btn-danger" value="Eliminar">
+              </form>
+            </div>
+      
 </div>
 
 

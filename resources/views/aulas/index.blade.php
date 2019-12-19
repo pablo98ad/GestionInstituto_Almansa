@@ -14,7 +14,7 @@
   <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="#">Instituto</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Profesores</li>
+    <li class="breadcrumb-item active" aria-current="page">Aulas</li>
   </ol>
 </nav>
 @if(Session::has('notice'))
@@ -31,48 +31,34 @@
 
 
 <div class="container-md text-center">
-Estoy en la vista que se ha llamado a traves del controlador de ProfesorController 
-<h1>VISUALIZAMOS LISTADO DE PROFESORES</h1><br>
+<h1>LISTADO DE AULAS</h1><br>
 <div class="row ">
-            <a class='col-1 offset-11 btn btn-success mb-1 mr-2' href="{{url('profesores/').'/create'}}" role='button'>Añadir</a>
+            <a class='col-1 offset-11 btn btn-success mb-1 mr-2' href="{{url('aulas/').'/create'}}" role='button'>Añadir</a>
         </div>
 <div class="row">
-<?php foreach($profesores as $profesor){ ?>
+<?php foreach($aulas as $aula){ ?>
 
 <div class="card col-md-4 col-sm-6 col-12 mt-1 ">
         <div class="card-body ">
-            <h2 class="card-title">{{$profesor->nombre}}</h2>
-            <h5 class="card-subtitle mb-2 text-muted">{{$profesor->apellidos}}</h5>
-            <div class="table-responsive">
-                <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Departamento</th>
-                        <th scope="col">Especialidad</th>
-                        <th scope="col">Cargo</th>
-                        <th scope="col">Codigo</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                    <td>{{$profesor->id}}</td>
-                    <td>{{$profesor->departamento}}</td>
-                    <td>{{$profesor->especialidad}}</td>
-                    <td>{{$profesor->cargo}}</td>
-                    <td>{{$profesor->codigo}}</td>
-                    </tr>
-                </tbody>
-                </table>
-            </div>
-            <h5 class="card-title ">Observaciones</h5>
+            <h2 class="card-title">{{$aula->nombre}}</h2>
+            <h4 class="card-subtitle mb-2 text-muted">{{$aula->numero}}</h4>
+            <?php
+              if($aula->reservable==true){
+                echo "<span class='p-2 w-50 badge badge-info'>Reservable</span>";
+              }else{
+                echo "<span class='p-2 w-50 badge badge-secondary'>No Reservable</span>";
+              }
+            ?>
+            
+            <h5 class="card-title mt-3 ">Descripcion</h5>
             <div style="height: 90px;" class="border overflow-auto">
-              <p class="card-text">{{$profesor->observaciones}}</p>
+              <p class="card-text">{{$aula->descripcion}}</p>
             </div><br>
-            <a class='btn btn-primary' href='profesores/{{$profesor->id}}' role='button'>Visualizar</a>
-            <a class='btn btn-primary' href='profesores/{{$profesor->id}}/edit' role='button'>Editar</a>
+           
+            <!--<a class='btn btn-primary' href='aulas/{{$aula->id}}' role='button'>Visualizar</a>-->
+            <a class='btn btn-primary' href='aulas/{{$aula->id}}/edit' role='button'>Editar</a>
             <div class="d-inline">
-              <form class="d-inline" method="POST" action="{{url('profesores/').'/'.$profesor->id}}">
+              <form class="d-inline" method="POST" action="{{url('aulas/').'/'.$aula->id}}">
                 {{ csrf_field() }}
                 {{ method_field('DELETE') }} 
                 <input type="submit" name="eliminar"class="btn btn-danger" value="Eliminar">
