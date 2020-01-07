@@ -29,8 +29,8 @@
 </div>
 @endif
 <div class="container text-center">
-Estoy en la vista que se ha llamado a traves del controlador de ProfesorController
-<h1>VISUALIZAMOS LISTADO DE PROFESORES</h1>
+<!--Estoy en la vista que se ha llamado a traves del controlador de ProfesorController-->
+<h1>LISTADO DE PROFESORES</h1>
 <div class="table-responsive-sm">
   <table class="table">
   <caption>Listado de profesores</caption>

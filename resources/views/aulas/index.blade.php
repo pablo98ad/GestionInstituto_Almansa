@@ -32,19 +32,19 @@
 
 <div class="container-md text-center">
 <h1>LISTADO DE AULAS</h1><br>
-<div class="row ">
-            <a class='col-1 offset-11 btn btn-success mb-1 mr-2' href="{{url('aulas/').'/create'}}" role='button'>Añadir</a>
+<div class="row justify-content-end">
+            <a class='col-3 col-sm-2 col-md-2  btn btn-success mb-1 mr-2' href="{{url('aulas/').'/create'}}" role='button'>Añadir</a>
         </div>
 <div class="row">
 <?php foreach($aulas as $aula){ ?>
 
 <div class="card col-md-4 col-sm-6 col-12 mt-1 ">
-        <div class="card-body ">
+        <div class="card-body  ">
             <h2 class="card-title">{{$aula->nombre}}</h2>
             <h4 class="card-subtitle mb-2 text-muted">{{$aula->numero}}</h4>
             <?php
               if($aula->reservable==true){
-                echo "<span class='p-2 w-50 badge badge-info'>Reservable</span>";
+                echo "<span class='p-2 w-50 badge badge-warning'>Reservable</span>";
               }else{
                 echo "<span class='p-2 w-50 badge badge-secondary'>No Reservable</span>";
               }

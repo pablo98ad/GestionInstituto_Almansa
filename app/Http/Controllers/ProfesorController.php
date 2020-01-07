@@ -21,6 +21,7 @@ class ProfesorController extends Controller
     {
         //
         $profesores = Profesor::all();
+        
         return view('profesores.index', ['profesores' => $profesores]);
     }
 
@@ -71,6 +72,7 @@ class ProfesorController extends Controller
     {
         //Aqui tengo que mostrar el registro seleccionado 
         $profesor = Profesor::find($id);
+        //$profesor->nombre=ucfirst($profesor->nombre); //Para que salga la primera letra del nombre siempre en mayusculas
         return view('profesores.show', ['profesor' => $profesor]);
     }
 
@@ -125,7 +127,8 @@ class ProfesorController extends Controller
         try{
              $profesor->delete();
         }catch(\Exception $e){
-            return redirect()->action('ProfesorController@index')->with('error', 'Error: El Profesor ' .$profesor->nombre.', no se ha podido eliminar');
+            
+            return redirect()->action('ProfesorController@index')->with('error', 'Error: '.$e->getMessage().' - El Profesor ' .$profesor->nombre.', no se ha podido eliminar');
         }
         return redirect()->action('ProfesorController@index')->with('notice', 'El Profesor ' . $profesor->nombre . ' eliminado correctamente.');
     }

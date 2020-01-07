@@ -36,7 +36,7 @@ Route::resource('materia', 'MateriaController');//para crear las rutas de las fu
 
 //Route::resource('telefono', 'TelefonoController');
 Auth::routes();
-
+//Route::post('/aulas', 'AulaController@index')->name('aulas.');
 Route::get('/home', 'HomeController@index')->name('home');
 
 ?>

@@ -31,10 +31,10 @@
 
 
 <div class="container-md text-center">
-Estoy en la vista que se ha llamado a traves del controlador de ProfesorController 
-<h1>VISUALIZAMOS LISTADO DE PROFESORES</h1><br>
-<div class="row ">
-            <a class='col-1 offset-11 btn btn-success mb-1 mr-2' href="{{url('profesores/').'/create'}}" role='button'>Añadir</a>
+<!--Estoy en la vista que se ha llamado a traves del controlador de ProfesorController -->
+<h1>LISTADO DE PROFESORES</h1><br>
+<div class="row justify-content-end">
+             <a class='col-3 col-sm-2 col-md-2  btn btn-success mb-1 mr-2' href="{{url('profesores/').'/create'}}" role='button'>Añadir</a>
         </div>
 <div class="row">
 <?php foreach($profesores as $profesor){ ?>
