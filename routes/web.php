@@ -38,5 +38,6 @@ Route::resource('materia', 'MateriaController');//para crear las rutas de las fu
 Auth::routes();
 //Route::post('/aulas', 'AulaController@index')->name('aulas.');
 Route::get('/home', 'HomeController@index')->name('home');
+Route::post('/profesores/importar', 'ProfesorController@importar')->name('profesorImportar');
 
 ?>

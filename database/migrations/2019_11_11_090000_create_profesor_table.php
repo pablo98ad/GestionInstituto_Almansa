@@ -22,7 +22,7 @@ class CreateProfesorTable extends Migration
             $table->string('cargo')->nullable();
             $table->longText('observaciones')->nullable();
             $table->string('codigo')->unique();
-
+            $table->string('rutaImagen');
             $table->timestamps();
         });
     }

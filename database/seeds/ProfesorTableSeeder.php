@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class ProfesorTableSeeder extends Seeder
 {
@@ -21,7 +22,7 @@ class ProfesorTableSeeder extends Seeder
                 'cargo' => str_random(5),
                 'observaciones' => str_random(50),
                 'codigo' => 'PRO'.$i,
-                
+                'rutaImagen' => 'imagenes/profesores/default.png',
             ]);
         }
     }
