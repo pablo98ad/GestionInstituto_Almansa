@@ -65,16 +65,18 @@ class ProfesorController extends Controller
                 'imagenProfesor'  => 'nullable|image|mimes:jpg,png,gif,jpeg|max:10240'
             ]);
             $archivo = $request->file('imagenProfesor');
-            $nuevoNombre = now()->format('Y-m-d-H-i-s') . '.' . $archivo->getClientOriginalName();
-            
-
+            if($archivo!==null){
+                $nuevoNombre = now()->format('Y-m-d-H-i-s') . '.' . $archivo->getClientOriginalName();
+                $storagePath  = Storage::disk('public')->path('/');
+                $archivo->move($storagePath . 'imagenes/profesores/', $nuevoNombre);
+                $profesor->rutaImagen = 'imagenes/profesores/'.$nuevoNombre;   
+            }else{
+                $profesor->rutaImagen = 'imagenes/profesores/default.png';
+            }
            // $archivo->move($ruta, $nuevoNombre);
-            $profesor->rutaImagen = 'imagenes/profesores/'.$nuevoNombre;    
-            $storagePath  = Storage::disk('public')->path('/');
-    
             $profesor->save();
             //Storage::disk('public')->put($nuevoNombre, File::get($archivo));
-            $archivo->move($storagePath . 'imagenes/profesores/', $nuevoNombre);
+            
         } catch (\Exception  $e) {
             return redirect()->action('ProfesorController@index')->with('error', 'Error: ' . $e->getMessage() . ', no se ha podido guardar');
         }
@@ -179,15 +181,13 @@ class ProfesorController extends Controller
     {
         //
         $profesor = Profesor::find($id);
-        $imagenAntigua= $profesor->rutaImagen;
+        try {
+            $profesor->delete();
+            //Si se ha podido borrar el profesor borramos su imagen
+            $imagenAntigua= $profesor->rutaImagen;
             if($imagenAntigua!==null && substr($imagenAntigua,-11,12)!='default.png'){//si no es la imagen por defecto la borramos
                 unlink(storage_path('app/public/'.$imagenAntigua));
             }
-
-
-
-        try {
-            $profesor->delete();
         } catch (\Exception $e) {
 
             return redirect()->action('ProfesorController@index')->with('error', 'Error: ' . $e->getMessage() . ' - El Profesor ' . $profesor->nombre . ', no se ha podido eliminar');

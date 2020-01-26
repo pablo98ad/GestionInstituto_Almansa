@@ -18,15 +18,15 @@
     <div class="form-row">
       <div class="form-group col-md-4">
         <label for="inputEmail4">Nombre</label>
-        <input type="name" class="form-control" name="nombre" id="inputEmail4">
+        <input type="name" class="form-control" name="nombre" id="inputEmail4" required>
       </div>
       <div class="form-group col-md-4">
         <label for="inputPassword4">Apellidos</label>
-        <input type="apellidos" class="form-control" name="apellidos" id="inputPassword4">
+        <input type="apellidos" class="form-control" name="apellidos" id="inputPassword4" required>
       </div>
       <div class="form-group col-md-4">
         <label for="inputAddress">Departamento</label>
-        <input type="text" class="form-control" name="departamento" id="inputAddress">
+        <input type="text" class="form-control" name="departamento" id="inputAddress"required>
       </div>
     </div>
 
@@ -41,15 +41,15 @@
       </div>
       <div class="form-group col-md-4">
         <label for="inputZip">Codigo</label>
-        <input type="text" class="form-control" name="codigo" id="inputCod">
+        <input type="text" class="form-control" name="codigo" id="inputCod" required>
       </div>
       <div class="form-group col-md-12 ">
         <label for="inputZip">Observaciones</label>
         <textarea cols="70" class="form-control" name="observaciones" id="inputObservaciones"></textarea>
       </div>
       <div class="form-group col-md-12 text-center border ">
-        <label for="exampleFormControlFile1">Subir imagen (opcional)</label>
-        <input type="file" name="imagenProfesor" class="w-25 form-control-file" id="exampleFormControlFile1">
+        <label for="exampleFormControlFile1 d-block">Subir imagen (opcional)</label><br><br>
+        <input type="file" name="imagenProfesor" class="d-inline w-25 form-control-file" id="exampleFormControlFile1">
       </div>
 
     </div>

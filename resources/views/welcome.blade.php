@@ -13,8 +13,27 @@
 
     <!-- Styles -->
     <style>
-        .full-height {
-            height: 100vh;
+        body {
+            background: linear-gradient(-45deg, rgb(0, 255, 0), rgb(0, 50, 0));
+            background-size: 400% 400%;
+            animation: gradient 10s ease infinite;
+            }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }  
+        }
+
+        html,
+        body {
+            height: 100%;
         }
 
         .position-ref {
@@ -29,11 +48,16 @@
         .m-b-md {
             margin-bottom: 30px;
         }
+
+        .btn {
+            font-size: 30px;
+            color: black;
+        }
     </style>
 </head>
 
 <body>
-    <div class="container">
+    <div class="container   h-100">
         <div class="row d-flex justify-content-end">
             @if (Route::has('login'))
             <div class=" top-right links">
@@ -53,9 +77,10 @@
                 </a>
             </nav>
         </div><br><br><br>
-        <div class=" row d-flex justify-content-between">
-            <a href="profesores" class="pt-5 pb-5 col-5 btn btn-primary btn-lg active" role="button" aria-pressed="true">Modulo Profesores</a>
-            <a href="aulas" class="pt-5 pb-5 col-5 btn btn-primary btn-lg active" role="button" aria-pressed="true">Modulo Aulas</a>
+        <div class=" pl-2 pr-2 row d-flex justify-content-between">
+            <a href="profesores" class="pt-5 pb-5 col-5 btn btn-primary btn-lg " role="button" aria-pressed="true">Modulo Profesores</a>
+            <a href="aulas" class="pt-5 pb-5 col-5 btn btn-primary btn-lg " role="button" aria-pressed="true">Modulo Aulas</a>
+            <a href="anuncios" class="mt-5 pt-5 pb-5 col-5 btn btn-primary btn-lg " role="button" aria-pressed="true">Modulo Anuncios</a>
         </div>
     </div>
     </div>
@@ -73,4 +98,5 @@
         }, 2000);
     </script>
 </body>
+
 </html>

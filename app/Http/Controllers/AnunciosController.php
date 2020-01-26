@@ -7,6 +7,10 @@ use App\Anuncios;
 
 class AnunciosController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->except('index');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,6 +19,8 @@ class AnunciosController extends Controller
     public function index()
     {
         //
+        $anuncios = Anuncios::all()->sortBy("inicio");
+        return view('anuncios.index', ['anuncios' => $anuncios]);
     }
 
     /**
@@ -25,6 +31,7 @@ class AnunciosController extends Controller
     public function create()
     {
         //
+        return view('anuncios.create');
     }
 
     /**
@@ -36,7 +43,23 @@ class AnunciosController extends Controller
     public function store(Request $request)
     {
         //
-    }
+        $anuncio = new Anuncios();
+        $anuncio->nombre = $request->input('nombre');
+        $anuncio->descripcion = $request->input('descripcion');
+        if($request->input('activo')!=null){
+            $anuncio->activo = true;
+         }else{
+            $anuncio->activo = false;
+         }
+        $anuncio->inicio = $request->input('inicio');
+        $anuncio->fin = $request->input('fin');
+        try{
+            $anuncio->save();
+        }catch(\Exception  $e){
+            return redirect()->action('AnunciosController@index')->with('error', 'Error: ' . $e->getMessage() . ', no se ha podido guardar');
+        }
+        return redirect()->action('AnunciosController@index')->with('notice', 'Anuncio: ' . $anuncio->nombre . ', guardado correctamente.');
+    }   
 
     /**
      * Display the specified resource.
@@ -58,6 +81,8 @@ class AnunciosController extends Controller
     public function edit($id)
     {
         //
+        $anuncios = Anuncios::find($id);
+        return view('anuncios.update', ['anuncios' => $anuncios]);
     }
 
     /**
@@ -67,9 +92,33 @@ class AnunciosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    
     public function update(Request $request, $id)
     {
         //
+        $anuncio = Anuncios::find($id);
+
+        $anuncio->nombre = $request->input('nombre');
+        $anuncio->descripcion = $request->input('descripcion');
+        //$anuncio->activado = $request->input('activo');
+        if($request->input('activo')!=null){
+            $anuncio->activo = true;
+         }else{
+            $anuncio->activo = false;
+         }
+        //$inicio= date_create_from_format('YYYY-MM-DD HH:MM' , $request->input('inicio'),null);
+        $anuncio->inicio = $request->input('inicio');
+        //$fin= date_create_from_format ( 'YYYY-MM-DD HH:MM' , $request->input('fin'),null);
+        $anuncio->fin = $request->input('fin');
+       // $anuncio->fin = $request->input('fin');
+
+        try{
+            $anuncio->save();
+        }catch(\Exception $e){
+            return redirect()->action('AnunciosController@index')->with('error', 'Error: '. $e->getMessage() . ' - El Anuncio ' . $anuncio->nombre . ', no se ha podido editar.');
+        }
+        return redirect()->action('AnunciosController@index')->with('notice', 'El Anuncio ' . $anuncio->nombre . ' modificado correctamente.');
+        
     }
 
     /**
@@ -81,5 +130,15 @@ class AnunciosController extends Controller
     public function destroy($id)
     {
         //
+        $anuncio = Anuncios::find($id);
+        try {
+            $anuncio->delete();
+            //Si se ha podido borrar el profesor borramos su imagen
+            
+        } catch (\Exception $e) {
+
+            return redirect()->action('AnunciosController@index')->with('error', 'Error: ' . $e->getMessage() . ' - El Anuncio ' . $anuncio->nombre . ', no se ha podido eliminar');
+        }
+        return redirect()->action('AnunciosController@index')->with('notice', 'El Anuncio ' . $anuncio->nombre . ' eliminado correctamente.');
     }
 }
