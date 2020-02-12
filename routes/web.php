@@ -40,4 +40,13 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/profesores/importar', 'ProfesorController@importar')->name('profesorImportar');
 
+//horarios!!
+Route::get('/horario/profesor/{id}','HorarioController@horarioProfesor')->name('verHorarioProfesor');
+Route::get('/horarios', 'HorarioController@index');
+Route::get('/horario/tabla/{por}/{quien}', 'HorarioController@getSoloTabla');
+
+//API para ajax en cliente!!
+Route::get('/api/getprofesores', 'ProfesorController@getTodosProfesoresJSON');
+Route::get('/api/getalumnos', 'AlumnoController@getTodosAlumnosJSON');
+Route::get('/api/getaulas', 'AulaController@getTodasAulasJSON');
 ?>

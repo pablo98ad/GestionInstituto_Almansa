@@ -80,7 +80,8 @@
           <div style="height: 90px;" class="border overflow-auto">
             <p class="card-text">{{$profesor->observaciones}}</p>
           </div><br>
-          <a class='btn btn-primary' href='profesores/{{$profesor->id}}' role='button'>Visualizar</a>
+          <!--<a class='btn btn-primary' href='profesores/{{$profesor->id}}' role='button'>Visualizar</a>-->
+          <a class='btn btn-warning' href='horario/profesor/{{$profesor->id}}' role='button'>Horario</a>
           <a class='btn btn-primary' href='profesores/{{$profesor->id}}/edit' role='button'>Editar</a>
           <div class="d-inline">
             <form class="d-inline" method="POST" action="{{url('profesores/').'/'.$profesor->id}}">

@@ -194,4 +194,12 @@ class ProfesorController extends Controller
         }
         return redirect()->action('ProfesorController@index')->with('notice', 'El Profesor ' . $profesor->nombre . ' eliminado correctamente.');
     }
+
+    public function getTodosProfesoresJSON()
+    {
+        //
+        $profesor = Profesor::all();
+        echo $profesor;
+        
+    }
 }

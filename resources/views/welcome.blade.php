@@ -81,6 +81,7 @@
             <a href="profesores" class="pt-5 pb-5 col-5 btn btn-primary btn-lg " role="button" aria-pressed="true">Modulo Profesores</a>
             <a href="aulas" class="pt-5 pb-5 col-5 btn btn-primary btn-lg " role="button" aria-pressed="true">Modulo Aulas</a>
             <a href="anuncios" class="mt-5 pt-5 pb-5 col-5 btn btn-primary btn-lg " role="button" aria-pressed="true">Modulo Anuncios</a>
+            <a href="horarios" class="mt-5 pt-5 pb-5 col-5 btn btn-primary btn-lg " role="button" aria-pressed="true">Modulo Horarios</a>
         </div>
     </div>
     </div>
