@@ -7,6 +7,13 @@ use App\Alumno;
 
 class AlumnoController extends Controller
 {
+
+    
+    public function __construct()
+    {
+        $this->middleware('auth')->except('index','getTodosAlumnosJSON');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,6 +22,7 @@ class AlumnoController extends Controller
     public function index()
     {
         //
+        
     }
 
     /**

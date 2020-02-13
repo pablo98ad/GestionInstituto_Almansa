@@ -1,6 +1,14 @@
 
 @extends('layouts/all')
 
+@section('scriptsHead')
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+@endsection
+
 @section('breadcrumb')
 <li class="breadcrumb-item d-inline"><a href="{{url('/')}}">Instituto</a></li>
 <li class="breadcrumb-item active d-inline" aria-current="page">Anuncios</li>
@@ -30,8 +38,30 @@
           <div style="height: 50px;" class="border overflow-auto">
             <p class="card-text">{{$anuncio->descripcion}}</p>
           </div><br>
-          <p class="border">Inicio: {{$anuncio->inicio}}</p>
-          <p class="border">Fin: {{$anuncio->fin}}</p>
+          <!--<p class="border">Inicio: {{$anuncio->inicio}}</p>
+          <p class="border">Fin: {{$anuncio->fin}}</p>-->
+
+          <input readonly type="text" class="form-control" name="rangos" id="rango{{$anuncio->id}}" />
+                <script>
+                $(function() {
+                    $('#rango{{$anuncio->id}}').daterangepicker({
+                        timePicker: true,
+                        startDate: moment('{{substr($anuncio->inicio,0,16)}}') /*moment().startOf('hour')*/,
+                        endDate: moment('{{substr($anuncio->fin,0,16)}}')/*moment().startOf('hour').add(32, 'hour')*/,
+                        locale: {  separator: ' a ', format: 'YYYY-MM-DD hh:mm'},
+                        
+                        "alwaysShowCalendars": true,
+                        "autoApply": false,
+                        "timePickerIncrement": 5,
+                        "timePicker24Hour": true,
+                        "opens": "right",
+                         "drops": "up"
+                        
+                    });
+                });
+                </script>
+  <br>
+         
           
           <!--<a class='btn btn-primary' href='aulas/{{$anuncio->id}}' role='button'>Visualizar</a>-->
           <a class='btn btn-primary' href='anuncios/{{$anuncio->id}}/edit' role='button'>Editar</a>

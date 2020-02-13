@@ -1,5 +1,10 @@
 @extends('layouts/all')
 
+@section('scriptsHead')
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+@endsection
 
 @section('breadcrumb')
 <li class="breadcrumb-item d-inline"><a href="{{url('/')}}">Instituto</a></li>
@@ -40,7 +45,36 @@
             </div>
         </div>
         <div class="form-row text-center">
-            <div class="form-group col-md-6 ">
+        <div class="form-group col-md-12 ">
+                <label for="inputZip">Rango de fechas</label>
+                <!--<input type="text" class="form-control" name="inicio" id="rango" value="{{substr($anuncios->inicio,0,16)}}"/>-->
+                <input type="text" class="form-control" name="rangos" id="rango" />
+                <script>
+                $(function() {
+                    $('#rango').daterangepicker({
+                        timePicker: true,
+                        startDate: moment('{{substr($anuncios->inicio,0,16)}}') /*moment().startOf('hour')*/,
+                        endDate: moment('{{substr($anuncios->fin,0,16)}}')/*moment().startOf('hour').add(32, 'hour')*/,
+                        locale: {  separator: ' a ', format: 'YYYY-MM-DD hh:mm'},
+                        ranges: {
+                            'Hoy y mañana': [moment(), moment().add(1, 'day').endOf('day')],
+                            'Proximos 7 dias': [moment(), moment().add(7, 'day').endOf('day')],
+                            'Proximos 30 dias': [moment(), moment().add(30, 'day').endOf('day')],
+                            'Este Mes': [moment().startOf('month'), moment().endOf('month')]
+                        },
+                        "alwaysShowCalendars": true,
+                        "autoApply": false,
+                        "timePickerIncrement": 5,
+                        "timePicker24Hour": true,
+                        "opens": "right",
+                         "drops": "up"
+                        
+                    });
+                });
+                </script>
+        </div>
+
+           <!-- <div class="form-group col-md-6 ">
                 <label for="inputZip">Fecha Incio</label>
                 <input type="text" class="form-control" name="inicio" id="inicio" value="{{substr($anuncios->inicio,0,16)}}"/>
                 <script>$(function () { $('#inicio').datetimepicker({
@@ -62,7 +96,7 @@
                         disabledHours:false,
                         viewDate:false});
                         }); </script>
-            </div>
+            </div>-->
             
 
         </div>

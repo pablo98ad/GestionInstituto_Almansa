@@ -9,7 +9,7 @@ class AnunciosController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->except('index');
+        //$this->middleware('auth')->except('index');
     }
     /**
      * Display a listing of the resource.
@@ -51,8 +51,11 @@ class AnunciosController extends Controller
          }else{
             $anuncio->activo = false;
          }
-        $anuncio->inicio = $request->input('inicio');
-        $anuncio->fin = $request->input('fin');
+        //$anuncio->inicio = $request->input('inicio');
+        //$anuncio->fin = $request->input('fin');
+        $fechas=explode('a',$request->input('rangos'));
+        $anuncio->inicio=substr($fechas[0],0,-1).':00';
+        $anuncio->fin=substr($fechas[1],0,-1).':00';
         try{
             $anuncio->save();
         }catch(\Exception  $e){
@@ -107,10 +110,13 @@ class AnunciosController extends Controller
             $anuncio->activo = false;
          }
         //$inicio= date_create_from_format('YYYY-MM-DD HH:MM' , $request->input('inicio'),null);
-        $anuncio->inicio = $request->input('inicio');
+        //$anuncio->inicio = $request->input('inicio');
         //$fin= date_create_from_format ( 'YYYY-MM-DD HH:MM' , $request->input('fin'),null);
-        $anuncio->fin = $request->input('fin');
+        //$anuncio->fin = $request->input('fin');
        // $anuncio->fin = $request->input('fin');
+       $fechas=explode('a',$request->input('rangos'));
+       $anuncio->inicio=substr($fechas[0],0,-1).':00';
+       $anuncio->fin=substr($fechas[1],0,-1).':00';
 
         try{
             $anuncio->save();

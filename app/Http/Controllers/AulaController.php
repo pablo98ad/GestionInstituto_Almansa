@@ -9,8 +9,9 @@ class AulaController extends Controller
 {
 
     public function __construct()
-    {
-        $this->middleware('auth')->except('index')->except('getTodasAulasJSON');
+    {   
+    
+        //$this->middleware('auth')->except('index','getTodasAulasJSON');
     }
     /**
      * Display a listing of the resource.

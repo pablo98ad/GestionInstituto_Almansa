@@ -1,5 +1,10 @@
 @extends('layouts/all')
 
+@section('scriptsHead')
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+@endsection
 
 @section('breadcrumb')
 <li class="breadcrumb-item d-inline"><a href="{{url('/')}}">Instituto</a></li>
@@ -34,31 +39,32 @@
             </div>
         </div>
         <div class="form-row text-center">
-            <div class="form-group col-md-6 ">
-                <label for="inputZip">Fecha Incio</label>
-                <input type="text" class="form-control" name="inicio" id="inicio" value="" required/>
-                <script>$(function () { $('#inicio').datetimepicker({
-                        format:'YYYY-MM-DD HH:MM',
-                        locale: '',
-                        inline:true
-                        /*disabledHours:false,*/
-                        /**viewDate:false*/});
-                        }); </script>
+            <div class="form-group col-md-12 ">
+            <label for="inputZip">Rango de fechas</label>
+                <input type="text" class="form-control" name="rangos" id="rango" required/>
+                <script>
+                $(function() {
+                    $('#rango').daterangepicker({
+                        timePicker: true,
+                        startDate: moment() /*moment().startOf('hour')*/,
+                        endDate: moment().add(7, 'day').endOf('day')/*moment().startOf('hour').add(32, 'hour')*/,
+                        locale: {  separator: ' a ', format: 'YYYY-MM-DD hh:mm'},
+                        ranges: {
+                            'Hoy y mañana': [moment(), moment().add(1, 'day').endOf('day')],
+                            'Proximos 7 dias': [moment(), moment().add(7, 'day').endOf('day')],
+                            'Proximos 30 dias': [moment(), moment().add(30, 'day').endOf('day')],
+                            'Este Mes': [moment().startOf('month'), moment().endOf('month')]
+                        },
+                        "alwaysShowCalendars": true,
+                        "autoApply": false,
+                        "timePickerIncrement": 5,
+                        "timePicker24Hour": true,
+                        "opens": "right",
+                         "drops": "up"
+                    });
+                });
+                </script>
             </div>
-            <div class="form-group col-md-6 ">
-                <label for="inputZip">Fecha fin</label>
-                <input type="text" class="form-control"name="fin" id="fin" value=""required/>
-                <script>$(function () { $('#fin').datetimepicker({
-                        format:'YYYY-MM-DD HH:MM',
-                        dayViewHeaderFormat: 'DD/MM/YYYY',
-                        locale: '',
-                        inline:true,
-                        disabledHours:false,
-                        viewDate:false});
-                        }); </script>
-            </div>
-            
-
         </div>
 
 
