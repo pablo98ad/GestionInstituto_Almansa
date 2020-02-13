@@ -42,6 +42,7 @@ Route::post('/profesores/importar', 'ProfesorController@importar')->name('profes
 
 //horarios!!
 Route::get('/horario/profesor/{id}','HorarioController@horarioProfesor')->name('verHorarioProfesor');
+Route::get('/horario/aula/{id}','HorarioController@horarioAula')->name('verHorarioAula');
 Route::get('/horarios', 'HorarioController@index');
 Route::get('/horario/tabla/{por}/{quien}', 'HorarioController@getSoloTabla');
 

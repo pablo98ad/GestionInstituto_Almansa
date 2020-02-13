@@ -82,4 +82,12 @@ class AlumnoController extends Controller
     {
         //
     }
+    /**
+     * Controlador del api, devuelve todos los alumnos en formato json
+     */
+    public function getTodosAlumnosJSON()
+    {
+        $alumnos = Alumno::all();
+        echo $alumnos; 
+    }
 }

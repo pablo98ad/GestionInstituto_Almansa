@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Horario;
 use App\Profesor;
+use App\Aula;
 
 class HorarioController extends Controller
 {
@@ -81,6 +82,62 @@ class HorarioController extends Controller
         }
         return $aux;
     }
+
+
+    ///HORARIO POR AULA
+
+    public function horarioAula($id)
+    {   
+        $horariosAula = Horario::where('aula_id', $id)->get();;
+        if(sizeof($horariosAula)>0){
+            $tablaHorario= $this->generarHorarioAula($horariosAula);
+            $tablaHorario['nombreAula']= $horariosAula[0]->aula->nombre;
+            return view('horario.horarioAula', ['horariosAula' => $tablaHorario]);
+        }else{  
+            $tablaHorario=Aula::find($id);
+            $tablaHorario['nombreAula']= $tablaHorario->nombre;
+            return view('horario.horarioAula', ['horariosAula' => $tablaHorario]);
+        }
+        
+
+        
+    }
+
+    public function generarHorarioAula($horariosA){
+        $horario=[];
+        $dias=array('L','M','X','J','V');
+        $horas=array('1','2','3','R','4','5','6','7');
+        foreach ($dias as $dia){
+            foreach ($horas as $hora){
+                $horario[$dia][$hora]= $this->encontrarEnHorarioAula($horariosA,$dia,$hora);
+
+            }
+        }     
+        return $horario;
+    }
+
+    public static function encontrarEnHorarioAula($horario,$dia,$hora){
+        $encontrado=false;
+        $aux='';
+
+        for($i=0; $i<sizeof($horario) && !$encontrado;$i++){
+          
+            if($horario[$i]->dia==$dia &&$horario[$i]->hora==$hora){
+                $encontrado=true;
+                $aux.= /*'Grupo: '.*/$horario[$i]->grupo->nombre.' </br> ';
+                $aux.= '<a href="'.url('/').'/profesores/'.$horario[$i]->profesor->id.'">'.$horario[$i]->profesor->nombre.' - '.$horario[$i]->profesor->codigo.'</a> </br> ';
+                $aux.= /*'Materia: '.*/$horario[$i]->materia->nombre.' </br> ';
+            }
+        }
+          
+        if(!$encontrado){
+            $aux.= "LIBRE";
+        }
+        return $aux;
+    }
+
+
+
 
 
 

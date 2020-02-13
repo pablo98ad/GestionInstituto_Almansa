@@ -10,7 +10,7 @@ class AulaController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth')->except('index');
+        $this->middleware('auth')->except('index')->except('getTodasAulasJSON');
     }
     /**
      * Display a listing of the resource.
@@ -140,5 +140,16 @@ class AulaController extends Controller
         }
         return redirect()->action('AulaController@index')->with('notice', 'La aula ' . $aula->nombre . ' eliminado correctamente.');
     }
+
+    /**
+     * Controlador del api, devuelve todos los alumnos en formato json
+     */
+    public function getTodasAulasJSON()
+    {
+        $aulas = Aula::all();
+        echo $aulas; 
+    }
+
+
     }
 
