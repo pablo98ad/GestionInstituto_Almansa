@@ -35,8 +35,8 @@
           }
           ?>
           <h5 class="card-title mt-3 ">Descripción</h5>
-          <div style="height: 50px;" class="border overflow-auto">
-            <p class="card-text">{{$anuncio->descripcion}}</p>
+          <div style="height: 200px;" class="border overflow-auto">
+            <!--<p class="card-text">-->{!!$anuncio->descripcion!!}<!--</p>-->
           </div><br>
           <!--<p class="border">Inicio: {{$anuncio->inicio}}</p>
           <p class="border">Fin: {{$anuncio->fin}}</p>-->

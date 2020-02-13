@@ -4,6 +4,9 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<!-- add summernote -->
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote.min.js"></script>
 @endsection
 
 @section('breadcrumb')
@@ -29,7 +32,15 @@
         <div class="form-row text-center">
             <div class="form-group col-md-12 ">
                 <label for="inputZip">Descripcion</label>
-                <textarea cols="70" class="form-control" name="descripcion" id="inputObservaciones">{{$anuncios->descripcion}}</textarea>
+                <textarea id="summernote" name="descripcion">{{$anuncios->descripcion}}</textarea>
+                <script>
+                $(document).ready(function() {
+                     $('#summernote').summernote({
+                        height: 200,
+                        focus: true  
+                     });
+                });
+                </script>
             </div>
 
         </div>
