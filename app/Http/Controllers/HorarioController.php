@@ -54,6 +54,19 @@ class HorarioController extends Controller
                 $tablaHorario= $this->generarHorarioProfe($horariosProfe);
             }
             return view('horario.tablaHorario', ['horario' => $tablaHorario]);
+
+
+        }else if($por=='aulas'){
+            $horariosAula = Horario::where('aula_id', $quien)->get();;
+            if(sizeof($horariosAula)>0){
+                $tablaHorario= $this->generarHorarioAula($horariosAula);
+               // $tablaHorario['nombreAula']= $horariosAula[0]->aula->nombre;
+                return view('horario.tablaHorario', ['horario' => $tablaHorario]);
+            }else{  
+                $tablaHorario=Aula::find($quien);
+               // $tablaHorario['nombreAula']= $tablaHorario->nombre;
+                return view('horario.tablaHorario', ['horario' => $tablaHorario]);
+            }
         }
 
 

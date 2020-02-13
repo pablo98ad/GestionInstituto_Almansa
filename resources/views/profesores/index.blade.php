@@ -94,7 +94,11 @@
       </div>
 
     <?php } ?>
-  </div>
+    
+  </div><br><br>
+  <div class="row text-center d-flex justify-content-center">
+    {{ $profesores->links() }}
+    </div>
 </div>
 </div>
 

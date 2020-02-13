@@ -25,8 +25,8 @@ class ProfesorController extends Controller
     public function index()
     {
         //
-        $profesores = Profesor::all();
-
+        //$profesores = Profesor::all()::paginate(3);
+        $profesores = Profesor::paginate(6);
         return view('profesores.index', ['profesores' => $profesores]);
     }
 

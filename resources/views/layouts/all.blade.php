@@ -51,7 +51,7 @@
   <footer class="page-footer font-small blue">
 
     <!-- Copyright -->
-    <div class="footer-copyright text-center py-3 mt-3 bg-info">© 2020 Copyright:
+    <div class="footer footer-copyright text-center py-3 mt-3 bg-info">© 2020 Copyright:
       <a class="text-dark" href="https://github.com/pablo98ad"> Pablo Ávila Doñate</a>
     </div>
 
