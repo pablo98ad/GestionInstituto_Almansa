@@ -48,7 +48,7 @@
                         timePicker: true,
                         startDate: moment('{{substr($anuncio->inicio,0,16)}}') /*moment().startOf('hour')*/,
                         endDate: moment('{{substr($anuncio->fin,0,16)}}')/*moment().startOf('hour').add(32, 'hour')*/,
-                        locale: {  separator: ' a ', format: 'YYYY-MM-DD hh:mm'},
+                        locale: {  separator: ' a ', format: 'YYYY-MM-DD HH:mm'},
                         
                         "alwaysShowCalendars": true,
                         "autoApply": false,

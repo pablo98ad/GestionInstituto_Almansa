@@ -23,7 +23,7 @@ class AnunciosController extends Controller
     public function index()
     {
         //
-        $anuncios = Anuncios::all()->sortBy("inicio");
+        $anuncios = Anuncios::orderBy("activo",'desc')->get();
         return view('anuncios.index', ['anuncios' => $anuncios]);
     }
 
@@ -58,8 +58,8 @@ class AnunciosController extends Controller
         //$anuncio->inicio = $request->input('inicio');
         //$anuncio->fin = $request->input('fin');
         $fechas=explode('a',$request->input('rangos'));
-        $anuncio->inicio=substr($fechas[0],0,-1).':00';
-        $anuncio->fin=substr($fechas[1],0,-1).':00';
+        $anuncio->inicio=substr($fechas[0],0,0).':00';
+        $anuncio->fin=$fechas[1].':00';
         try{
             $anuncio->save();
         }catch(\Exception  $e){
@@ -120,14 +120,14 @@ class AnunciosController extends Controller
        // $anuncio->fin = $request->input('fin');
        $fechas=explode('a',$request->input('rangos'));
        $anuncio->inicio=substr($fechas[0],0,-1).':00';
-       $anuncio->fin=substr($fechas[1],0,-1).':00';
+       $anuncio->fin=$fechas[1].':00';
 
         try{
             $anuncio->save();
         }catch(\Exception $e){
-            return redirect()->action('AnunciosController@index')->with('error', 'Error: '. $e->getMessage() . ' - El Anuncio ' . $anuncio->nombre . ', no se ha podido editar.');
-        }
-        return redirect()->action('AnunciosController@index')->with('notice', 'El Anuncio ' . $anuncio->nombre . ' modificado correctamente.');
+            return redirect()->action('AnunciosController@index')->with('error', $fechas[1].':00'.'Error: '. $e->getMessage() . ' - El Anuncio ' . $anuncio->nombre . ', no se ha podido editar.');
+        } 
+        return redirect()->action('AnunciosController@index')->with('notice', $fechas[1].'El Anuncio ' . $anuncio->nombre . ' modificado correctamente.');
         
     }
 
@@ -154,9 +154,10 @@ class AnunciosController extends Controller
 
     public function verAnuncios()
     {
-        $hoy=  (new DateTime())->format('Y-m-d');
-
-        $anunciosATiempo = DB::table('Anuncios') ->whereDate('fin','>', $hoy)->where('activo', '=', '1')->orderBy('fin') ->get();
+        date_default_timezone_set('CET');//para que estamos en la hora de madrid
+        $hoy=  (new DateTime())->format('Y-m-d H:i:s');
+        //echo $hoy;
+        $anunciosATiempo = DB::table('Anuncios') ->where('fin','>=', $hoy)->where('activo', '=', '1')->orderBy('fin') ->get();
         //echo $anunciosATiempo;
         return view('anuncios.verAnuncios', ['anuncios' => $anunciosATiempo]);
 

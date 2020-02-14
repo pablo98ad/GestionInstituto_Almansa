@@ -59,14 +59,14 @@
         <div class="form-group col-md-12 ">
                 <label for="inputZip">Rango de fechas</label>
                 <!--<input type="text" class="form-control" name="inicio" id="rango" value="{{substr($anuncios->inicio,0,16)}}"/>-->
-                <input type="text" class="form-control" name="rangos" id="rango" />
+                <input readonly type="text" class="form-control" name="rangos" id="rango" />
                 <script>
                 $(function() {
                     $('#rango').daterangepicker({
                         timePicker: true,
                         startDate: moment('{{substr($anuncios->inicio,0,16)}}') /*moment().startOf('hour')*/,
                         endDate: moment('{{substr($anuncios->fin,0,16)}}')/*moment().startOf('hour').add(32, 'hour')*/,
-                        locale: {  separator: ' a ', format: 'YYYY-MM-DD hh:mm'},
+                        locale: {  separator: ' a ', format: 'YYYY-MM-DD HH:mm'},
                         ranges: {
                             'Hoy y mañana': [moment(), moment().add(1, 'day').endOf('day')],
                             'Proximos 7 dias': [moment(), moment().add(7, 'day').endOf('day')],

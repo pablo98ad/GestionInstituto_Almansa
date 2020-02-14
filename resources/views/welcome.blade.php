@@ -107,7 +107,7 @@
     function activarTimeout(){
         return setTimeout(function(){
             window.location.href='{{url('/')}}'+'/verAnuncios';
-        },3000)//3 minutos
+        },1000)//3 minutos
     }
 
     function resetearTimeout(){

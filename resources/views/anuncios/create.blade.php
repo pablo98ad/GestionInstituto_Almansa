@@ -53,7 +53,7 @@
         <div class="form-row text-center">
             <div class="form-group col-md-12 ">
             <label for="inputZip">Rango de fechas</label>
-                <input type="text" class="form-control" name="rangos" id="rango" required/>
+                <input readonly type="text" class="form-control" name="rangos" id="rango" required/>
                 <script>
                 $(function() {
                     $('#rango').daterangepicker({

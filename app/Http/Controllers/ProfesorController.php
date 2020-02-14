@@ -62,7 +62,7 @@ class ProfesorController extends Controller
             $profesor->codigo = $request->input('codigo');
             //$ruta=Storage::disk('public') . '/imagenes/profesores/';
             $this->validate($request, [
-                'imagenProfesor'  => 'nullable|image|mimes:jpg,png,gif,jpeg|max:10240'
+                'imagenProfesor'  => 'nullable|image|mimes:jpg,png,gif,jpeg,bmp|max:10240'
             ]);
             $archivo = $request->file('imagenProfesor');
             if($archivo!==null){
