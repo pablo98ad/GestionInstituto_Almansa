@@ -98,6 +98,25 @@
             });
         }, 2000);
     </script>
+    <script>
+    document.body.addEventListener('mousemove',resetearTimeout);
+    document.body.addEventListener('click',resetearTimeout);
+    
+    let timeout=activarTimeout();
+
+    function activarTimeout(){
+        return setTimeout(function(){
+            window.location.href='{{url('/')}}'+'/verAnuncios';
+        },3000)//3 minutos
+    }
+
+    function resetearTimeout(){
+        clearTimeout(timeout);
+        timeout=activarTimeout();
+    }
+    </script>
+
+
 </body>
 
 </html>

@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Anuncios;
+use Illuminate\Support\Facades\DB;
+use DateTime;
+
+
 
 class AnunciosController extends Controller
 {
@@ -147,4 +151,19 @@ class AnunciosController extends Controller
         }
         return redirect()->action('AnunciosController@index')->with('notice', 'El Anuncio ' . $anuncio->nombre . ' eliminado correctamente.');
     }
+
+    public function verAnuncios()
+    {
+        $hoy=  (new DateTime())->format('Y-m-d');
+
+        $anunciosATiempo = DB::table('Anuncios') ->whereDate('fin','>', $hoy)->where('activo', '=', '1')->orderBy('fin') ->get();
+        //echo $anunciosATiempo;
+        return view('anuncios.verAnuncios', ['anuncios' => $anunciosATiempo]);
+
+
+    }
+
+
+
+
 }

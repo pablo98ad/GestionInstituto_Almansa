@@ -2,10 +2,7 @@
 
 @section('scriptsHead')
 <style>
-  #campos {
-    /*width: 300px;
-    height: 100px;*/
-  }
+ 
   .imagen{
     display: inline;
   }
