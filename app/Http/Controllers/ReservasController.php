@@ -32,6 +32,7 @@ class ReservasController extends Controller
     }
 
     public function getTodasAulasDisponiblesJSON(){//devolvemos todas las aulas disponibles para reservar en formato JSON
+       $aulasDisponiblesNum=[];
        // OBTENEMOS EL RANGO DE FECHAS DE LA SEMANA QUE VIENE DEL LUNES AL DOMINGO
        $lunes = strtotime("next monday");
        $lunes = date('W', $lunes)==date('W') ? $lunes-7*86400 : $lunes; 
@@ -47,17 +48,42 @@ class ReservasController extends Controller
             $reservasAula= Reservas::where('aula_id', $aula->id)->where('fecha','>=',$lunesSiguienteSemana)->where('fecha','<=',$domingoSiguienteSemana)->get();
             //a partir del horario del aula, generamos una tabla que nosotros entendemos y asignamos a cada dia->hora si esta libre o no
             $tablaHorariosAulaLibre= $this->generarTablaHorariosLibresAula($horarioAula);
+            //if($aula->id==2){return view('horario.tablaHorario', ['horario' => $tablaHorariosAulaLibre]);}
             //ahora que ya tenemos todas las horas libres de cada aula, comprobamos tambien 
             //que esa hora y ese dia de la semana no este ya reservada en la tabla reservas
             $tablaHorariosAulaLibre=$this->quitarHorasReservadas($tablaHorariosAulaLibre,$reservasAula);
-
+            
+           // $horarioAulas[$aula->id]=$tablaHorariosAulaLibre;//la guardamos
+            if($this->hayReservasDisponibles($tablaHorariosAulaLibre)){//si hay algun oueco libre para la proxima semana  
+                echo   $aula->id.'<br><br>';
+                $aulasDisponiblesNum[]=$aula->id;//la añadimos al array
+            }
        }
+       //una vez tengo los id con las aulas que tienen alguna hora para reservar, las recupero y envido
+       $aulasConHorasLibres= Aula::whereIn('id', $aulasDisponiblesNum)->get();
 
+       //return view('horario.tablaHorario', ['horario' => $tablaHorariosAulaLibre]);
+       echo $aulasConHorasLibres;
        //ahora solo me queda comprobar cada aula si tiene alguna hora libre, para poder mandarla como que se puede reservar en el listado para seleccionarla
-
-       return view('horario.tablaHorario', ['horario' => $tablaHorariosAulaLibre]);
+       //print_r($aulasDisponiblesNum);
+       //return view('horario.tablaHorario', ['horario' => $tablaHorariosAulaLibre]);
 
     }
+
+    private function hayReservasDisponibles($tablaHorariosAulaLibre){
+        $hayLibres=false;
+        $dias=array('L','M','X','J','V');
+        $horas=array('1','2','3','R','4','5','6','7'); 
+        for($i=0; $i<sizeOf($dias)  ;$i++){
+            for($j=0; $j<sizeOf($horas) ;$j++){
+                if($tablaHorariosAulaLibre[$dias[$i]][$horas[$j]]=='libre'){
+                    $hayLibres=true;
+                }
+            }
+        }
+        return $hayLibres;
+    }
+
 
 
     private function quitarHorasReservadas($horarioAula,$reservasAula){
@@ -78,26 +104,30 @@ class ReservasController extends Controller
         $dias=array('L','M','X','J','V');
         $horas=array('1','2','3','R','4','5','6','7');
         $horario=[];
-        foreach ($horarioAula as $unHorario){
 
-            for($i=0; $i<sizeOf($dias);$i++){
-                for($j=0; $j<sizeOf($horas);$j++){
-    
-                    if(isset($unHorario->dia) && isset($unHorario->hora)){
-                       // echo 'existe';
-                        if($unHorario->dia==$dias[$i] &&  $unHorario->hora==$horas[$j] ){
-                            $horario[$dias[$i]][$horas[$j]]='ocupado';
-                        }else{
-                            $horario[$dias[$i]][$horas[$j]]='libre';
-                        }
-                    }else{
-                        $horario[$dias[$i]][$horas[$j]]='libre';
-                    }
-                }
+        //de primeras lo ponemos todo como libre y luego si existe, ponemos ocupado
+        for($i=0; $i<sizeOf($dias);$i++){
+            for($j=0; $j<sizeOf($horas);$j++){
+                $horario[$dias[$i]][$horas[$j]]='libre';
             }
+        }
+        foreach ($horarioAula as $unHorario){
+            /* for($i=0; $i<sizeOf($dias);$i++){
+                for($j=0; $j<sizeOf($horas);$j++){*/
+        
+                    if(isset($unHorario->dia) && isset($unHorario->hora)){
+                     //echo $unHorario->dia.'---------'.$unHorario->hora.'         ';
+                       //if($unHorario->dia==$dias[$i] &&  $unHorario->hora==$horas[$j] ){
+                            $horario[$unHorario->dia][$unHorario->hora]='ocupado';
+                            //echo $horario[$unHorario->dia][$unHorario->horas].'--'.$unHorario->dia.' - - '.$unHorario->horas;
+                        //}
+                    }
+                    /*}
+                }*/
 
         }
         
+        //print_r($horario);
         return $horario;
 
     }
