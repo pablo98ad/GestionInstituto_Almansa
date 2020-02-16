@@ -50,6 +50,7 @@ Route::get('/horario/tabla/{por}/{quien}', 'HorarioController@getSoloTabla');
 Route::get('/api/getprofesores', 'ProfesorController@getTodosProfesoresJSON');
 Route::get('/api/getalumnos', 'AlumnoController@getTodosAlumnosJSON');
 Route::get('/api/getaulas', 'AulaController@getTodasAulasJSON');
+Route::get('/api/getreservasDisponibles', 'ReservasController@getTodasAulasDisponiblesJSON');
 
 Route::get('verAnuncios', 'AnunciosController@verAnuncios');
 ?>

@@ -55,7 +55,7 @@
                         "timePickerIncrement": 5,
                         "timePicker24Hour": true,
                         "opens": "right",
-                         "drops": "up"
+                        "drops": "up"
                         
                     });
                 });

@@ -112,10 +112,9 @@
               .then(datos=>{
                 //IMPORTANTISIMO, para poder buscar, introduce un nuevo campo en los objetos llamado text que se usara para la busqueda
                 var datos = $.map(datos, function (obj) {
-                  obj.text = obj.text || obj.nombre; // replace name with the property used for the text
+                  obj.text = obj.text || (obj.nombre+' '+obj.apellidos); // replace name with the property used for the text
                   return obj;
                 });
-
                 console.log(datos);
                 $('#campos').select2({
                   //le inidicamos el array de objeto que queremos que carge en el select
