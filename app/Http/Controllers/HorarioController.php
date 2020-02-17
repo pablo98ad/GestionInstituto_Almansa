@@ -149,7 +149,7 @@ class HorarioController extends Controller
                 return view('horario.tablaHorario', ['horario' => $tablaHorario]);
             }
         }
-
+        //FALTA POR ALUMNO
 
 
     }

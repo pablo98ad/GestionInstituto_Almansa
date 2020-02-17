@@ -25,7 +25,7 @@
             <div class="form-group col-md-12">
                 <label for="inputEmail4">Nombre</label>
                 <input type="name" class="form-control" value="{{$anuncios->nombre}}" name="nombre" id="inputEmail4">
-                
+
 
             </div>
         </div>
@@ -34,12 +34,12 @@
                 <label for="inputZip">Descripcion</label>
                 <textarea id="summernote" name="descripcion">{{$anuncios->descripcion}}</textarea>
                 <script>
-                $(document).ready(function() {
-                     $('#summernote').summernote({
-                        height: 200,
-                        focus: true  
-                     });
-                });
+                    $(document).ready(function() {
+                        $('#summernote').summernote({
+                            height: 200,
+                            focus: true
+                        });
+                    });
                 </script>
             </div>
 
@@ -56,71 +56,100 @@
             </div>
         </div>
         <div class="form-row text-center">
-        <div class="form-group col-md-12 ">
+            <div class="form-group col-md-12 ">
                 <label for="inputZip">Rango de fechas</label>
                 <!--<input type="text" class="form-control" name="inicio" id="rango" value="{{substr($anuncios->inicio,0,16)}}"/>-->
                 <input readonly type="text" class="form-control" name="rangos" id="rango" />
                 <script>
-                $(function() {
-                    $('#rango').daterangepicker({
-                        timePicker: true,
-                        startDate: moment('{{substr($anuncios->inicio,0,16)}}') /*moment().startOf('hour')*/,
-                        endDate: moment('{{substr($anuncios->fin,0,16)}}')/*moment().startOf('hour').add(32, 'hour')*/,
-                        locale: {  separator: ' a ', format: 'YYYY-MM-DD HH:mm'},
-                        ranges: {
-                            'Hoy y mañana': [moment(), moment().add(1, 'day').endOf('day')],
-                            'Proximos 7 dias': [moment(), moment().add(7, 'day').endOf('day')],
-                            'Proximos 30 dias': [moment(), moment().add(30, 'day').endOf('day')],
-                            'Este Mes': [moment().startOf('month'), moment().endOf('month')]
-                        },
-                        "alwaysShowCalendars": true,
-                        "autoApply": false,
-                        "timePickerIncrement": 5,
-                        "timePicker24Hour": true,
-                        "opens": "right",
-                         "drops": "up"
-                        
+                    $(function() {
+                        $('#rango').daterangepicker({
+                            timePicker: true,
+                            startDate: moment('{{substr($anuncios->inicio,0,16)}}') /*moment().startOf('hour')*/ ,
+                            endDate: moment('{{substr($anuncios->fin,0,16)}}') /*moment().startOf('hour').add(32, 'hour')*/ ,
+                            locale: {
+                                separator: ' a ',
+                                format: 'YYYY-MM-DD HH:mm',
+                                "applyLabel": "Aceptar",
+                                "cancelLabel": "Cancelar",
+                                "fromLabel": "De",
+                                "toLabel": "a",
+                                "customRangeLabel": "Custom",
+                                "weekLabel": "W",
+                                "daysOfWeek": [
+                                    "DOM",
+                                    "LUN",
+                                    "MAR",
+                                    "MIE",
+                                    "JUE",
+                                    "VIE",
+                                    "SAB"
+                                ],
+                                "monthNames": [
+                                    "Enero",
+                                    "Febrero",
+                                    "Marzo",
+                                    "Abril",
+                                    "Mayo",
+                                    "Junio",
+                                    "Julio",
+                                    "Agosto",
+                                    "Septiembre",
+                                    "Octubre",
+                                    "Noviembre",
+                                    "Diciembre"
+                                ],
+                                "firstDay": 1
+                            },
+                            ranges: {
+                                'Hoy y mañana': [moment(), moment().add(1, 'day').endOf('day')],
+                                'Proximos 7 dias': [moment(), moment().add(7, 'day').endOf('day')],
+                                'Proximos 30 dias': [moment(), moment().add(30, 'day').endOf('day')],
+                                'Este Mes': [moment().startOf('month'), moment().endOf('month')]
+                            },
+                            "alwaysShowCalendars": true,
+                            "autoApply": false,
+                            "timePickerIncrement": 5,
+                            "timePicker24Hour": true,
+                            "opens": "right",
+                            "drops": "up"
+
+                        });
                     });
-                });
                 </script>
-        </div>
-
-           <!-- <div class="form-group col-md-6 ">
-                <label for="inputZip">Fecha Incio</label>
-                <input type="text" class="form-control" name="inicio" id="inicio" value="{{substr($anuncios->inicio,0,16)}}"/>
-                <script>$(function () { $('#inicio').datetimepicker({
-                        format:'YYYY-MM-DD HH:MM',
-                        locale: '{{substr($anuncios->inicio,0,16)}}',
-                        inline:true
-                        /*disabledHours:false,*/
-                        /**viewDate:false*/});
-                        }); </script>
             </div>
-            <div class="form-group col-md-6 ">
-                <label for="inputZip">Fecha fin</label>
-                <input type="text" class="form-control"name="fin" id="fin" value="{{substr($anuncios->fin,0,16)}}"/>
-                <script>$(function () { $('#fin').datetimepicker({
-                        format:'YYYY-MM-DD HH:MM',
-                        dayViewHeaderFormat: 'DD/MM/YYYY',
-                        locale: '{{substr($anuncios->fin,0,16)}}',
-                        inline:true,
-                        disabledHours:false,
-                        viewDate:false});
-                        }); </script>
-            </div>-->
-            
-
         </div>
 
 
     </form>
     <button type="submit" name="enviar" form="actualizar" class="btn btn-primary">Guardar</button>
-    <div class="d-inline">
-        <form class="d-inline" method="POST" action="{{url('anuncios/').'/'.$anuncios->id}}">
-            {{ csrf_field() }}
-            {{ method_field('DELETE') }}
-            <input type="submit" name="eliminar" class="btn btn-danger" value="Eliminar">
-        </form>
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal-{{$anuncios->id}}">
+        Eliminar
+    </button>
+    <!-- Modal -->
+    <div class="modal fade " id="exampleModal-{{$anuncios->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog " role="document">
+            <div class="modal-content ">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">AVISO</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h5 class="modal-title" id="exampleModalLabel">¿Esta seguro que quiere eliminar el anuncio seleccionado?</h5>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <form class="d-inline" method="POST" action="{{url('anuncios/').'/'.$anuncios->id}}">
+                        {{ csrf_field() }}
+                        {{ method_field('DELETE') }}
+                        <input type="submit" name="eliminar" class="btn btn-danger" value="Eliminar">
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>

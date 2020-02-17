@@ -58,14 +58,14 @@ class AnunciosController extends Controller
         //$anuncio->inicio = $request->input('inicio');
         //$anuncio->fin = $request->input('fin');
         $fechas=explode('a',$request->input('rangos'));
-        $anuncio->inicio=substr($fechas[0],0,0).':00';
+        $anuncio->inicio=substr($fechas[0],0,-1).':00';
         $anuncio->fin=$fechas[1].':00';
         try{
             $anuncio->save();
         }catch(\Exception  $e){
-            return redirect()->action('AnunciosController@index')->with('error', 'Error: ' . $e->getMessage() . ', no se ha podido guardar');
+            return redirect()->action('AnunciosController@index')->with('error', 'Error: "' . $e->getMessage() . '", el anuncio no se ha podido guardar');
         }
-        return redirect()->action('AnunciosController@index')->with('notice', 'Anuncio: ' . $anuncio->nombre . ', guardado correctamente.');
+        return redirect()->action('AnunciosController@index')->with('notice', 'Anuncio con titulo "' . $anuncio->nombre . '", guardado correctamente.');
     }   
 
     /**
@@ -125,9 +125,9 @@ class AnunciosController extends Controller
         try{
             $anuncio->save();
         }catch(\Exception $e){
-            return redirect()->action('AnunciosController@index')->with('error', $fechas[1].':00'.'Error: '. $e->getMessage() . ' - El Anuncio ' . $anuncio->nombre . ', no se ha podido editar.');
+            return redirect()->action('AnunciosController@index')->with('Error: '. $e->getMessage() . ' - El Anuncio ' . $anuncio->nombre . ', no se ha podido editar.');
         } 
-        return redirect()->action('AnunciosController@index')->with('notice', $fechas[1].'El Anuncio ' . $anuncio->nombre . ' modificado correctamente.');
+        return redirect()->action('AnunciosController@index')->with('notice', 'El Anuncio con nombre "' . $anuncio->nombre . '" modificado correctamente.');
         
     }
 
@@ -149,7 +149,7 @@ class AnunciosController extends Controller
 
             return redirect()->action('AnunciosController@index')->with('error', 'Error: ' . $e->getMessage() . ' - El Anuncio ' . $anuncio->nombre . ', no se ha podido eliminar');
         }
-        return redirect()->action('AnunciosController@index')->with('notice', 'El Anuncio ' . $anuncio->nombre . ' eliminado correctamente.');
+        return redirect()->action('AnunciosController@index')->with('notice', 'El Anuncio con titulo "' . $anuncio->nombre .'" eliminado correctamente.');
     }
 
     public function verAnuncios()

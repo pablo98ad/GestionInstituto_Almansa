@@ -98,7 +98,7 @@
         </div>
         <div class="mt-4">
         <label for="inputObservaciones">Observaciones</label>
-        <textarea rows="2" cols="80" class="form-control" name="observaciones" id="inputObservaciones"></textarea>
+        <textarea maxlength="50" rows="2" cols="80" class="form-control" name="observaciones" id="inputObservaciones"></textarea>
         </div>
         <br><br>
         <div class="mt-3">

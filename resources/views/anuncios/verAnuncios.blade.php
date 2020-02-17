@@ -33,7 +33,7 @@
         <div class=" card-body  ">
           <h2 class="card-title">{{$anuncio->nombre}}</h2>
 
-         <!-- <h5 class=" card-title mt-3 ">Descripción</h5>--><br><hr>
+         <hr>
           <div class="border overflow-auto">
             <!--<p class="card-text">-->{!!$anuncio->descripcion!!}
             <!--</p>-->

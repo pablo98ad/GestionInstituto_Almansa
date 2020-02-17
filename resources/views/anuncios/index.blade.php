@@ -1,4 +1,3 @@
-
 @extends('layouts/all')
 
 @section('scriptsHead')
@@ -36,41 +35,103 @@
           ?>
           <h5 class="card-title mt-3 ">Descripción</h5>
           <div style="height: 200px;" class="border overflow-auto">
-            <!--<p class="card-text">-->{!!$anuncio->descripcion!!}<!--</p>-->
+            <!--<p class="card-text">-->{!!$anuncio->descripcion!!}
+            <!--</p>-->
           </div><br>
-          <!--<p class="border">Inicio: {{$anuncio->inicio}}</p>
-          <p class="border">Fin: {{$anuncio->fin}}</p>-->
 
           <input readonly type="text" class="form-control" name="rangos" id="rango{{$anuncio->id}}" />
-                <script>
-                $(function() {
-                    $('#rango{{$anuncio->id}}').daterangepicker({
-                        timePicker: true,
-                        startDate: moment('{{substr($anuncio->inicio,0,16)}}') /*moment().startOf('hour')*/,
-                        endDate: moment('{{substr($anuncio->fin,0,16)}}')/*moment().startOf('hour').add(32, 'hour')*/,
-                        locale: {  separator: ' a ', format: 'YYYY-MM-DD HH:mm'},
-                        
-                        "alwaysShowCalendars": true,
-                        "autoApply": false,
-                        "timePickerIncrement": 5,
-                        "timePicker24Hour": true,
-                        "opens": "right",
-                        "drops": "up"
-                        
-                    });
-                });
-                </script>
-  <br>
-         
-          
+          <script>
+            $(function() {
+              $('#rango{{$anuncio->id}}').daterangepicker({
+                timePicker: true,
+                startDate: moment('{{substr($anuncio->inicio,0,16)}}') /*moment().startOf('hour')*/ ,
+                endDate: moment('{{substr($anuncio->fin,0,16)}}') /*moment().startOf('hour').add(32, 'hour')*/ ,
+                locale: {
+                  separator: ' a ',
+                  format: 'YYYY-MM-DD HH:mm',
+                  "applyLabel": "Aceptar",
+                  "cancelLabel": "Cancelar",
+                  "fromLabel": "De",
+                  "toLabel": "a",
+                  "customRangeLabel": "Custom",
+                  "weekLabel": "W",
+                  "daysOfWeek": [
+                    "DOM",
+                    "LUN",
+                    "MAR",
+                    "MIE",
+                    "JUE",
+                    "VIE",
+                    "SAB"
+                  ],
+                  "monthNames": [
+                    "Enero",
+                    "Febrero",
+                    "Marzo",
+                    "Abril",
+                    "Mayo",
+                    "Junio",
+                    "Julio",
+                    "Agosto",
+                    "Septiembre",
+                    "Octubre",
+                    "Noviembre",
+                    "Diciembre"
+                  ],
+                  "firstDay": 1
+                },
+
+                "alwaysShowCalendars": true,
+                "autoApply": false,
+                "timePickerIncrement": 5,
+                "timePicker24Hour": true,
+                "opens": "right",
+                "drops": "up"
+
+              });
+            });
+          </script>
+          <br>
+
+
           <!--<a class='btn btn-primary' href='aulas/{{$anuncio->id}}' role='button'>Visualizar</a>-->
           <a class='btn btn-primary' href='anuncios/{{$anuncio->id}}/edit' role='button'>Editar</a>
           <div class="d-inline">
-            <form class="d-inline" method="POST" action="{{url('anuncios/').'/'.$anuncio->id}}">
-              {{ csrf_field() }}
-              {{ method_field('DELETE') }}
-              <input type="submit" name="eliminar" class="btn btn-danger" value="Eliminar">
-            </form>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal-{{$anuncio->id}}">
+              Eliminar
+            </button>
+            <!-- Modal -->
+            <div class="modal fade " id="exampleModal-{{$anuncio->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog " role="document">
+                <div class="modal-content ">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">AVISO</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <h5 class="modal-title" id="exampleModalLabel">¿Esta seguro que quiere eliminar el anuncio seleccionado?</h5>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <form class="d-inline" method="POST" action="{{url('anuncios/').'/'.$anuncio->id}}">
+                      {{ csrf_field() }}
+                      {{ method_field('DELETE') }}
+                      <input type="submit" name="eliminar" class="btn btn-danger" value="Eliminar">
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+
+
+
+
           </div>
         </div>
       </div>

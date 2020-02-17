@@ -60,7 +60,40 @@
                         timePicker: true,
                         startDate: moment() /*moment().startOf('hour')*/,
                         endDate: moment().add(7, 'day').endOf('day')/*moment().startOf('hour').add(32, 'hour')*/,
-                        locale: {  separator: ' a ', format: 'YYYY-MM-DD hh:mm'},
+                        locale: {  
+                            separator: ' a ',
+                             format: 'YYYY-MM-DD hh:mm',
+                            "applyLabel": "Aceptar",
+                            "cancelLabel": "Cancelar",
+                            "fromLabel": "De",
+                            "toLabel": "a",
+                            "customRangeLabel": "Custom",
+                            "weekLabel": "W",
+                            "daysOfWeek": [
+                                "DOM",
+                                "LUN",
+                                "MAR",
+                                "MIE",
+                                "JUE",
+                                "VIE",
+                                "SAB"
+                            ],
+                            "monthNames": [
+                                "Enero",
+                                "Febrero",
+                                "Marzo",
+                                "Abril",
+                                "Mayo",
+                                "Junio",
+                                "Julio",
+                                "Agosto",
+                                "Septiembre",
+                                "Octubre",
+                                "Noviembre",
+                                "Diciembre"
+                            ],
+                            "firstDay": 1
+                            },
                         ranges: {
                             'Hoy y mañana': [moment(), moment().add(1, 'day').endOf('day')],
                             'Proximos 7 dias': [moment(), moment().add(7, 'day').endOf('day')],

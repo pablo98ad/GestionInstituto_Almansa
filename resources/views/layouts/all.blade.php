@@ -91,7 +91,6 @@ body {
   <!--Para el calendario -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js" type="text/javascript"></script>
-<script src="{{asset('js/bootstrap-datetimepicker.js')}}"></script>
 <!------------------------------------------------------------->
   <script type="text/javascript">
     window.setTimeout(function() {
@@ -99,7 +98,7 @@ body {
         $(this).hide();
         //$(this).remove();
       });
-    }, 2000);
+    }, 4000);
   </script>
 </body>
 

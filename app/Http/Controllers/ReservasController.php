@@ -27,47 +27,61 @@ class ReservasController extends Controller
         return view('reservas.index');
     }
 
+    //DESDE RUTA GET: /reservarManualmente
+    public function reservarManualmente(){
+        //$parametros;
+        $lunes = strtotime("next monday");
+        $lunes = date('W', $lunes) == date('W') ? $lunes - 7 * 86400 : $lunes;
+        $domingoProx = strtotime(date("Y-m-d", $lunes) . " +0 days");
+        $sabado = strtotime(date("Y-m-d", $domingoProx) . " +4 days");
+        $lunesSiguienteSemana = date("Y-m-d", $domingoProx);
+        $SabadoSiguienteSemana = date("Y-m-d", $sabado);
+        $parametros=['inicio'=>$lunesSiguienteSemana,'fin'=>$SabadoSiguienteSemana];
+
+        return view('reservas.reservarManualmente',['parametros' => $parametros]);
+    }
+
+
      //DESDE RUTA POST: /reservarAula
     public function reservarAula(Request $request){
-        $aula_id=$request->input('aula_id');
-        $dia=$request->input('diaReserva');
-        $hora=$request->input('horaReserva');
-        $id_profesor=$request->input('profe');
-        $observaciones=$request->input('observaciones');
+        try{
+            $aula_id=$request->input('aula_id');
+            $dia=$request->input('diaReserva');
+            $hora=$request->input('horaReserva');
+            $id_profesor=$request->input('profe');
+            $observaciones=$request->input('observaciones');
 
-        if(!$this->sePuedeReservarConEstaFecha($aula_id,$dia,$hora)){
-            return redirect()->action('ReservasController@index')->with('error', 'Reserva no se ha podido realizar.');
-        }else{
-            $reserva = new Reservas();
-            $reserva->profesor_id=$id_profesor;
-            $reserva->aula_id=$aula_id;
-            $reserva->fecha=$dia;
-            $reserva->hora=$hora;
-            $reserva->observaciones=$observaciones;
-            $reserva->save();
-
-
-            return redirect()->action('ReservasController@index')->with('notice', 'Reserva ' . $aula_id.'  '.$dia.'    '.$hora.'    '.$id_profesor . ', guardado correctamente.');
-  
+            if(!$this->sePuedeReservarConEstaFecha($aula_id,$dia,$hora)){
+                return redirect()->action('ReservasController@index')->with('error', 'La reserva no se ha podido realizar porque el aula ya esta ocupada.');
+            }else{
+                $reserva = new Reservas();
+                $reserva->profesor_id=$id_profesor;
+                $reserva->aula_id=$aula_id;
+                $reserva->fecha=$dia;
+                $reserva->hora=$hora;
+                $reserva->observaciones=$observaciones;
+                $reserva->save();
+                return redirect()->action('ReservasController@index')->with('notice', 'Reserva ' . $aula_id.'  '.$dia.'    '.$hora.'    '.$id_profesor . ', guardado correctamente.');
+            }
+        }catch(\Exception  $e){ 
+            return redirect()->action('ReservasController@index')->with('error', 'La reserva no se ha podido realizar. Error: '.$e->getMessage());
         }
-
-
-
-       
-          }
+    }
 
 
 
     //DESDE RUTA GET: /reservar/aula/{aula_id}/{dia}}/{hora}
     public function ultimoPasoReservar($aula_id,$dia,$hora){   
         //comprobamos que esa aula, ese dia y esa aula se pueda reservar
-        if(!$this->sePuedeReservarConEstaFecha($aula_id,$dia,$hora)){
-            echo "Esta aula no se puede reservar con los datos introducidos";
-        }else{
-            return view('reservas.rerservarAulaDiaHora', ['parametros' => [$aula_id,$dia,$hora]]);
+        try{
+            if(!$this->sePuedeReservarConEstaFecha($aula_id,$dia,$hora)){
+                return redirect()->action('ReservasController@index')->with('error', 'La reserva no se ha podido realizar porque el aula ya esta ocupada.');
+            }else{
+                return view('reservas.reservarAulaDiaHora', ['parametros' => [$aula_id,$dia,$hora]]);
+            }
+        }catch(\Exception  $e){ 
+            return redirect()->action('ReservasController@index')->with('error', 'La reserva no se ha podido realizar. Error: '.$e->getMessage());
         }
-
-        //echo 'Vamos a reservar el aula: '.$aula_id.' para el dia: '.$dia.' hora:'.$hora.' de la semana que viene';
     }
 
 
@@ -138,6 +152,7 @@ class ReservasController extends Controller
     //DESDE RUTA GET /reservar/aula/{id}
     //devolvemos todas las aulas disponibles para reservar en formato JSON
     public function getTodasAulasDisponiblesJSON(){
+        
        $aulasDisponiblesNum=[];
        // OBTENEMOS EL RANGO DE FECHAS DE LA SEMANA QUE VIENE DEL LUNES AL DOMINGO
        $lunes = strtotime("next monday");
@@ -216,7 +231,8 @@ class ReservasController extends Controller
         foreach ($reservasAula as $reserva){
             $dia = date('w',strtotime($reserva->fecha));
             $letraDia= $dias[$dia];//obtenemos el dia (una sola letra) de la reserva a partir de un date
-            $horarioAula[$letraDia][$reserva->hora]='Aula ocupada </br> por <a href="'.url('/').'/profesores/'.$reserva->profesor->id.'">'.$reserva->profesor->nombre.'</a>';
+            $horarioAula[$letraDia][$reserva->hora]='Aula ocupada </br> por <a href="'.url('/').'/profesores/'.$reserva->profesor->id.'">'.$reserva->profesor->nombre.'</a>
+                                                    <br> <p style="font-size:12px;font-style:oblique">'.$reserva->observaciones.'</p>';
         }
         return $horarioAula;
     }
@@ -251,7 +267,7 @@ class ReservasController extends Controller
         //de primeras lo ponemos todo como libre y luego si existe, ponemos ocupado
         for($i=0; $i<sizeOf($dias);$i++){
             for($j=0; $j<sizeOf($horas);$j++){
-                $horario[$dias[$i]][$horas[$j]]='<a href="'.url('/').'/reservar/aula/'.$aula_id.'/'.$this->generarFechaDiaSemanaSiguiente($dias[$i])
+                $horario[$dias[$i]][$horas[$j]]='<a class="botonReservar" href="'.url('/').'/reservar/aula/'.$aula_id.'/'.$this->generarFechaDiaSemanaSiguiente($dias[$i])
                 .'/'.$horas[$j].'">RESERVAR</a>';
             }
         }

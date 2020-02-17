@@ -31,6 +31,24 @@
   #filtro{
     font-size: 18px;
   }
+  .botonReservar{
+    text-decoration: none;
+    padding: 2px;
+    padding-left: 3px;
+    padding-right: 3px;
+    font-family: helvetica;
+    font-weight: 300;
+    font-size: 1.3em;
+    font-style: italic;
+    color: #002215;
+    background-color: #82b085;
+    border-radius: 2px;
+    border: 3px double #006505;
+  }
+  .botonReservar:hover{
+    opacity: 0.6;
+    text-decoration: none;
+  }
 
 </style>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
@@ -46,6 +64,9 @@
 
 <div class="container-md text-center">
   <h1>Reservar Aula</h1><br>
+  <div class="row justify-content-end">
+    <a  class='col-2 col-sm-2 col-md-2  btn btn-danger mb-1 mr-2' href="{{url('/').'/reservarManualmente'}}" role='button'>Añadir Manualmente (no recomendado)</a>
+  </div>
   <div class="row d-flex justify-content-center">
 
     <div class="col-12 col-md-4">
