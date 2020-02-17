@@ -3,13 +3,14 @@
 @section('breadcrumb')
 <li class="breadcrumb-item d-inline"><a href="{{url('/')}}">Instituto</a></li>
 <li class="breadcrumb-item d-inline"><a href="{{url('/aulas')}}">Aulas</a></li>
-<li class="breadcrumb-item active d-inline" aria-current="page">Horario Aula {{$horariosAula['nombreAula']}}</li>
+<li class="breadcrumb-item active d-inline" aria-current="page">Horario Aula {{ $horariosAula['nombreAula'] }}</li>
 @endsection
 
 @section('content')
 
 <div class="container-md text-center">
-<h1>Horario del Aula: {{$horariosAula['nombreAula']}}</h1><br>
+
+<h2>Horario del Aula: {{$horariosAula['nombreAula']}}  + reservas de esta semana</h2><br>
  <!-- <div class="row justify-content-end">
     <a class='col-3 col-sm-2 col-md-2  btn btn-success mb-1 mr-2' href="{{url('aulas/').'/create'}}" role='button'>Añadir</a>
   </div>-->
@@ -18,7 +19,7 @@
   }
   ?>
    <div class="row">
-     
+  
     <table class="greenTable">
       <thead>
         <tr>
@@ -50,7 +51,6 @@
       </tbody>
       </tr>
     </table>
-
    </div>
  
 </div>

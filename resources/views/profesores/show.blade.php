@@ -38,7 +38,7 @@
       <h5 class="card-title ">Observaciones</h5>
       <p class="card-text">{{$profesor->observaciones}}</p>
       <h5 class="card-title ">Imagen</h5>
-      <img class="border w-auto   d-inline border " src="{{url('../').'/storage/app/public/'.$profesor->rutaImagen}}" alt=""><br>
+      <img class="border d-inline border " width="250px"  src="{{url('../').'/storage/app/public/'.$profesor->rutaImagen}}" alt=""><br>
       <hr>
       <a class='btn btn-primary' href='{{$profesor->id}}/edit' role='button'>Editar</a>
       <!--<a class='btn btn-danger' href="{{route('profesores.destroy', [$profesor->id])}}" role='button'>Borrar</a>-->

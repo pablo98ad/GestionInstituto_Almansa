@@ -1,6 +1,7 @@
 <?php
     if(sizeof($horario)>0){
     ?>
+    <h4>{{$horario['info']}}</h4>
     <table class="greenTable">
       <thead>
         <tr>

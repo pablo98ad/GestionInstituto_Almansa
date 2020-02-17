@@ -3,18 +3,23 @@
 @section('breadcrumb')
 <li class="breadcrumb-item d-inline"><a href="{{url('/')}}">Instituto</a></li>
 <li class="breadcrumb-item d-inline"><a href="{{url('/profesores')}}">Profesores</a></li>
-<li class="breadcrumb-item active d-inline" aria-current="page">Horario {{$horariosProfe['nombreProfesor']}}</li>
+<li class="breadcrumb-item active d-inline" aria-current="page">{{$horariosProfe['nombreProfesor']}}</li>
 @endsection
 
 @section('content')
 
 <div class="container-md text-center">
-<h1>Horario profesor: {{$horariosProfe['nombreProfesor']}}</h1><br>
+
+<h2>Horario profesor: {{$horariosProfe['nombreProfesor']}} + reservas de esta semana</h2><br>
+<?php if (!isset($horariosProfe['L']['1'])){
+    echo "<h1>No se han encontrado registros para esta tabla</h1><br>";
+  }
+  ?>
  <!-- <div class="row justify-content-end">
     <a class='col-3 col-sm-2 col-md-2  btn btn-success mb-1 mr-2' href="{{url('aulas/').'/create'}}" role='button'>Añadir</a>
   </div>-->
    <div class="row">
-     
+   
     <table class="greenTable">
       <thead>
         <tr>
@@ -46,7 +51,6 @@
       </tbody>
       </tr>
     </table>
-
    </div>
  
 </div>

@@ -9,7 +9,7 @@
 @section('content')
 
 <div class="container text-center ">
-  <h1 class="p-0 m-0">Formulario actualizar {{$profesor->nombre}}</h1>
+  <h2 class="p-0 m-0">Formulario actualizar profesor: {{$profesor->nombre}}</h2>
   <hr><br>
   <form class="" action="{{url('profesores/').'/'.$profesor->id}}" id="actualizar" enctype="multipart/form-data" method="POST">
     {{ csrf_field() }}
@@ -54,7 +54,7 @@
       <div class="form-group col-md-12 ">
         <?php if (substr($profesor->rutaImagen, -11, 12) != 'default.png') { //comprobamos si tiene la foto por defecto
         ?>
-          <img class=" card-img-top w-auto w-25 d-inline border " src="{{url('../').'/storage/app/public/'.$profesor->rutaImagen}}" alt="">
+          <img class="d-inline border" width="250px" src="{{url('../').'/storage/app/public/'.$profesor->rutaImagen}}" alt="">
         <?php } ?>
         <input type="file" name="imagenProfesor" class="d-inline w-25 form-control-file" id="exampleFormControlFile1">
       </div>

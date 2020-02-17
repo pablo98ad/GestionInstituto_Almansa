@@ -10,6 +10,33 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
   @yield('scriptsHead')
+  <style>
+  html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  margin-bottom: 80px; /* Margin bottom by footer height */
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 60px; /* Set the fixed height of the footer here */
+  line-height: 60px; /* Vertically center the text there */
+  background-color: #f5f5f5;
+}
+.footer >h5{
+  font-size: 20px;
+  font-weight: normal;
+
+}
+  
+  
+  
+  
+  </style>
+
   <title>Hello, world!</title>
 </head>
 
@@ -50,8 +77,9 @@
   <footer class="page-footer font-small blue">
 
     <!-- Copyright -->
-    <div class="footer footer-copyright text-center py-3 mt-3 bg-info">© 2020 Copyright:
-      <a class="text-dark" href="https://github.com/pablo98ad"> Pablo Ávila Doñate</a>
+    <div class="footer footer-copyright text-center py-3 mt-3 bg-info">
+      <h5 class="textoFooter">© 2020 Copyright:
+      <a class="text-dark" href="https://github.com/pablo98ad"> Pablo Ávila Doñate</a></h5>
     </div>
 
   </footer>

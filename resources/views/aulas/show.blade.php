@@ -1,50 +1,54 @@
 @extends('layouts/all')
 
+@section('scriptsHead')
+<style>
+input,textarea {
+  text-align: center;
+}
+
+</style>
+@endsection
+
 @section('breadcrumb')
 <li class="breadcrumb-item d-inline"><a href="{{url('/')}}">Instituto</a></li>
-<li class="breadcrumb-item d-inline"><a href="{{url('profesores/')}}">Profesores</a></li>
-<li class="breadcrumb-item active d-inline" aria-current="page">{{$profesor->nombre}}</li>
+<li class="breadcrumb-item d-inline"><a href="{{url('aulas/')}}">Aulas</a></li>
+<li class="breadcrumb-item active d-inline" aria-current="page">{{$aula->nombre}}</li>
 @endsection
 
 @section('content')
 <div class="container text-center ">
-  <h1>Mostrar Profesor {{$profesor->nombre}}</h1><br><br>
-  <div class="card ">
-    <div class="card-body ">
-      <h5 class="card-title">{{$profesor->nombre}}</h5>
-      <h6 class="card-subtitle mb-2 text-muted">{{$profesor->apellidos}}</h6>
-      <div class="table-responsive">
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Departamento</th>
-              <th scope="col">Especialidad</th>
-              <th scope="col">Cargo</th>
-              <th scope="col">Codigo</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>{{$profesor->id}}</td>
-              <td>{{$profesor->departamento}}</td>
-              <td>{{$profesor->especialidad}}</td>
-              <td>{{$profesor->cargo}}</td>
-              <td>{{$profesor->codigo}}</td>
-            </tr>
-          </tbody>
-        </table>
+  <h1>Mostrar Aula: {{$aula->nombre}}</h1><br><br>
+  <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="inputEmail4">Nombre</label>
+        <input disabled type="name" class="form-control" value="{{$aula->nombre}}" name="nombre" id="inputEmail4">
       </div>
-      <h5 class="card-title ">Observaciones</h5>
-      <p class="card-text">{{$profesor->observaciones}}</p>
-      <a class='btn btn-primary' href='{{$profesor->id}}/edit' role='button'>Editar</a>
-      <!--<a class='btn btn-danger' href="{{route('profesores.destroy', [$profesor->id])}}" role='button'>Borrar</a>-->
-      <div class="d-inline">
-        <form class="d-inline" method="POST" action="{{url('profesores/').'/'.$profesor->id}}">
-          {{ csrf_field() }}
-          {{ method_field('DELETE') }}
-          <input type="submit" class="btn btn-danger" value="Eliminar">
-        </form>
+      <div class="form-group col-md-6">
+        <label for="inputPassword4">Numero</label>
+        <input disabled type="number" class="form-control" value="{{$aula->numero}}" name="numero" id="inputPassword4">
       </div>
+    </div>
+
+    <div class="form-row text-center">
+      <div class="form-group col-md-12 ">
+        <?php
+        if ($aula->reservable == false) {
+          echo " <input disabled class='text-center' data-offstyle='danger' data-onstyle='success' data-toggle='toggle' id='chkToggle2' type='checkbox' data-on='Se puede Reservar' data-off='No se puede Reservar' data-width='95' name='reservable' >
+            ";
+        } else {
+          echo " <input disabled class='text-center' data-offstyle='danger' data-onstyle='success' data-toggle='toggle' id='chkToggle2' type='checkbox' data-on='Se puede Reservar' data-off='No se puede Reservar' data-width='95' name='reservable' checked>
+            ";
+        }
+        ?>
+      </div>
+    </div>
+
+    <div class="form-row text-center">
+      <div class="form-group col-md-12 ">
+        <label for="inputZip">Descripcion</label>
+        <textarea disabled cols="70" class="form-control" name="descripcion" id="inputObservaciones">{{$aula->descripcion}}</textarea>
+      </div>
+    </div>
+
     </div>
     @endsection

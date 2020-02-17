@@ -33,8 +33,8 @@
           </div><br>
 
           <!--<a class='btn btn-primary' href='aulas/{{$aula->id}}' role='button'>Visualizar</a>-->
-          <a class='btn btn-primary' href='aulas/{{$aula->id}}/edit' role='button'>Editar</a>
           <a class='btn btn-warning' href='horario/aula/{{$aula->id}}' role='button'>Horario</a>
+          <a class='btn btn-primary' href='aulas/{{$aula->id}}/edit' role='button'>Editar</a>
           <div class="d-inline">
             <form class="d-inline" method="POST" action="{{url('aulas/').'/'.$aula->id}}">
               {{ csrf_field() }}

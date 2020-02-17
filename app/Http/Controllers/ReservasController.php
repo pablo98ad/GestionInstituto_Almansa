@@ -18,23 +18,66 @@ class ReservasController extends Controller
  */
     public function __construct()
     {
-        $this->middleware('auth')->except('index','getTodasAulasDisponiblesJSON','horariosDisponiblesAula');
+        $this->middleware('auth')->except('index','getTodasAulasDisponiblesJSON','horariosDisponiblesAula','reservarAula');
     }
 
-    //DESDE RUTA
-    public function index()//ruta: /reservarAula
+    //DESDE RUTA /reservar
+    public function index()
     {
         return view('reservas.index');
     }
 
-    //DESDE RUTA
-    public function reservarAula($aula_id,$dia,$hora)
-    {
-        echo 'Vamos a reservar el aula: '.$aula_id.' para el dia: '.$dia.' hora:'.$hora.' de la semana que viene';
+
+    //DESDE RUTA: /reservar/aula/{aula_id}/{dia}}/{hora}
+    public function reservarAula($aula_id,$dia,$hora){   
+        //comprobamos que esa aula, ese dia y esa aula se pueda reservar
+        if(!$this->sePuedeReservarConEstaFecha($aula_id,$dia,$hora)){
+            echo "Esta aula no se puede reservar con los datos introducidos";
+        }else{
+            return view('reservas.rerservarAulaDiaHora', ['parametros' => [$aula_id,$dia,$hora]]);
+        }
+
+        //echo 'Vamos a reservar el aula: '.$aula_id.' para el dia: '.$dia.' hora:'.$hora.' de la semana que viene';
     }
 
 
-    //DESDE RUTA
+    private function sePuedeReservarConEstaFecha($id_aula,$dia,$hora){
+        // OBTENEMOS EL RANGO DE FECHAS DE LA SEMANA QUE VIENE DEL LUNES AL DOMINGO
+        $sePuedeReservar = false;
+        $lunes = strtotime("next monday");
+        $lunes = date('W', $lunes) == date('W') ? $lunes - 7 * 86400 : $lunes;
+        $domingoProx = strtotime(date("Y-m-d", $lunes) . " -1 days");
+        $sabado = strtotime(date("Y-m-d", $domingoProx) . " +6 days");
+        $lunesSiguienteSemana = date("Y-m-d", $domingoProx);
+        $domingoSiguienteSemana = date("Y-m-d", $sabado);
+
+        //comprobamos que se un dia de la semana que viene
+        if(($dia > $lunesSiguienteSemana && $dia < $domingoSiguienteSemana)) {
+            $aula =  Aula::find($id_aula);
+            $horarioAula = Horario::where('aula_id', $aula->id)->get();
+            //obtenemos las reservas que tiene esa aula de la semana que viene
+            $reservasAula = Reservas::where('aula_id', $aula->id)->where('fecha', '>=', $lunesSiguienteSemana)->where('fecha', '<=', $domingoSiguienteSemana)->get();
+            //a partir del horario del aula, generamos una tabla que nosotros entendemos y asignamos a cada dia->hora si esta libre o no
+            $tablaHorariosAulaLibre = $this->generarTablaHorariosLibresAula($horarioAula);
+            //ahora que ya tenemos todas las horas libres del aula, comprobamos tambien 
+            //que esa hora y ese dia de la semana no este ya reservada en la tabla reservas
+            $tablaHorariosAulaLibre = $this->quitarHorasReservadas($tablaHorariosAulaLibre, $reservasAula);
+
+            $dias=array('L','M','X','J','V');
+            $letraDia=$dias[((int)date('w ', strtotime($dia))-1)];
+            if($tablaHorariosAulaLibre[$letraDia][$hora]=='libre'){
+                $sePuedeReservar=true; 
+            }
+
+        }
+        return $sePuedeReservar;
+    }
+
+
+
+
+
+    //DESDE RUTA /horario/aula/{id}
     public function horariosDisponiblesAula($aula_id){
         // OBTENEMOS EL RANGO DE FECHAS DE LA SEMANA QUE VIENE DEL LUNES AL DOMINGO
        $lunes = strtotime("next monday");
@@ -42,12 +85,12 @@ class ReservasController extends Controller
        $domingo = strtotime(date("Y-m-d",$lunes)." +6 days");
        $lunesSiguienteSemana = date("Y-m-d",$lunes);
        $domingoSiguienteSemana = date("Y-m-d",$domingo);
-
-
-
+       
         //paso 1 comprobamos que no nos la cuelan y vemos si el aula se puede reservar en alguna hora de la semana que viene
         $sePuedeReservar= $this->esEstaAulaReservable($aula_id);
-        if(!$sePuedeReservar){return view('reservas.horariosDisponiblesAula', ['horario' => []]);}
+        if(!$sePuedeReservar){
+            return view('reservas.horariosDisponiblesAula', ['horario' => []]);
+        }
         //paso 2 generamos la tabla con las horas disponibles para reservar y su correspondiente enlace a cada reserva de hora
         $horarioAula= Horario::where('aula_id', $aula_id)->get();
         //obtenemos las reservas que tiene esa aula de la semana que viene
@@ -55,13 +98,16 @@ class ReservasController extends Controller
         //a partir del horario del aula, generamos una tabla que nosotros entendemos y asignamos a cada dia->hora si esta libre o no
         $tablaHorariosAulaLibre= $this->generarTablaReservasAulaEnlaces($horarioAula,$aula_id);
         $tablaHorariosAulaLibre=$this->quitarHorasReservadas($tablaHorariosAulaLibre,$reservasAula);
+
+        $tablaHorariosAulaLibre['info']='Semana del: '.$lunesSiguienteSemana.' al '.$domingoSiguienteSemana;
+
         return view('reservas.horariosDisponiblesAula', ['horario' => $tablaHorariosAulaLibre]);
-        //echo (int)$sePuedeReservar;
     }
 
 
-    //DESDE RUTA 
-    public function getTodasAulasDisponiblesJSON(){//devolvemos todas las aulas disponibles para reservar en formato JSON
+    //DESDE RUTA /reservar/aula/{id}
+    //devolvemos todas las aulas disponibles para reservar en formato JSON
+    public function getTodasAulasDisponiblesJSON(){
        $aulasDisponiblesNum=[];
        // OBTENEMOS EL RANGO DE FECHAS DE LA SEMANA QUE VIENE DEL LUNES AL DOMINGO
        $lunes = strtotime("next monday");
@@ -77,31 +123,23 @@ class ReservasController extends Controller
             $reservasAula= Reservas::where('aula_id', $aula->id)->where('fecha','>=',$lunesSiguienteSemana)->where('fecha','<=',$domingoSiguienteSemana)->get();
             //a partir del horario del aula, generamos una tabla que nosotros entendemos y asignamos a cada dia->hora si esta libre o no
             $tablaHorariosAulaLibre= $this->generarTablaHorariosLibresAula($horarioAula);
-            //if($aula->id==2){return view('horario.tablaHorario', ['horario' => $tablaHorariosAulaLibre]);}
             //ahora que ya tenemos todas las horas libres de cada aula, comprobamos tambien 
             //que esa hora y ese dia de la semana no este ya reservada en la tabla reservas
             $tablaHorariosAulaLibre=$this->quitarHorasReservadas($tablaHorariosAulaLibre,$reservasAula);
-            
-           // $horarioAulas[$aula->id]=$tablaHorariosAulaLibre;//la guardamos
+             //ahora solo me queda comprobar cada aula si tiene alguna hora libre, para poder mandarla como que se puede reservar en el listado para seleccionarla
             if($this->hayReservasDisponibles($tablaHorariosAulaLibre)){//si hay algun hueco libre para la proxima semana  
-                //echo   $aula->id.'<br><br>';
                 $aulasDisponiblesNum[]=$aula->id;//la añadimos al array
             }
        }
-       //una vez tengo los id con las aulas que tienen alguna hora para reservar, las recupero y envido
+       //una vez tengo los id con las aulas que tienen alguna hora para reservar, las recupero y envio
        $aulasConHorasLibres= Aula::whereIn('id', $aulasDisponiblesNum)->get();
 
-       //return view('horario.tablaHorario', ['horario' => $tablaHorariosAulaLibre]);
        echo $aulasConHorasLibres;
-       //ahora solo me queda comprobar cada aula si tiene alguna hora libre, para poder mandarla como que se puede reservar en el listado para seleccionarla
-       //print_r($aulasDisponiblesNum);
-       //return view('horario.tablaHorario', ['horario' => $tablaHorariosAulaLibre]);
 
     }
 
 
-    private function esEstaAulaReservable($id_aula)
-    { //devolvemos todas las aulas disponibles para reservar en formato JSON
+    private function esEstaAulaReservable($id_aula){
         // OBTENEMOS EL RANGO DE FECHAS DE LA SEMANA QUE VIENE DEL LUNES AL DOMINGO
         $sePuedeReservar = false;
         $lunes = strtotime("next monday");
@@ -116,28 +154,17 @@ class ReservasController extends Controller
         $reservasAula = Reservas::where('aula_id', $aula->id)->where('fecha', '>=', $lunesSiguienteSemana)->where('fecha', '<=', $domingoSiguienteSemana)->get();
         //a partir del horario del aula, generamos una tabla que nosotros entendemos y asignamos a cada dia->hora si esta libre o no
         $tablaHorariosAulaLibre = $this->generarTablaHorariosLibresAula($horarioAula);
-        //if($aula->id==2){return view('horario.tablaHorario', ['horario' => $tablaHorariosAulaLibre]);}
-        //ahora que ya tenemos todas las horas libres de cada aula, comprobamos tambien 
+        //ahora que ya tenemos todas las horas libres del aula, comprobamos tambien 
         //que esa hora y ese dia de la semana no este ya reservada en la tabla reservas
         $tablaHorariosAulaLibre = $this->quitarHorasReservadas($tablaHorariosAulaLibre, $reservasAula);
 
-        // $horarioAulas[$aula->id]=$tablaHorariosAulaLibre;//la guardamos
         if ($this->hayReservasDisponibles($tablaHorariosAulaLibre)) { //si hay algun hueco libre para la proxima semana  
             $sePuedeReservar = true;
         }
 
-        //una vez tengo los id con las aulas que tienen alguna hora para reservar, las recupero y envido
-        //$aulasConHorasLibres= Aula::whereIn('id', $aulasDisponiblesNum)->get();
 
         return $sePuedeReservar;
     }
-
-
-
-
-
-
-
 
 
     private function hayReservasDisponibles($tablaHorariosAulaLibre){
@@ -159,12 +186,11 @@ class ReservasController extends Controller
         foreach ($reservasAula as $reserva){
             $dia = date('w',strtotime($reserva->fecha));
             $letraDia= $dias[$dia];//obtenemos el dia (una sola letra) de la reserva a partir de un date
-            $horarioAula[$letraDia][$reserva->hora]='ocupado';
-
-        //echo date('w', strtotime($reserva->fecha));
+            $horarioAula[$letraDia][$reserva->hora]='Aula ocupada <br> por '.$reserva->profesor->nombre;
         }
         return $horarioAula;
     }
+
     private function generarTablaHorariosLibresAula($horarioAula){
         $dias=array('L','M','X','J','V');
         $horas=array('1','2','3','R','4','5','6','7');
@@ -176,17 +202,18 @@ class ReservasController extends Controller
                 $horario[$dias[$i]][$horas[$j]]='libre';
             }
         }
+        //ahora recorremos todos las filas de horario de esa aula
         foreach ($horarioAula as $unHorario){
             if(isset($unHorario->dia) && isset($unHorario->hora)){
-                $horario[$unHorario->dia][$unHorario->hora]='ocupado';
+                $horario[$unHorario->dia][$unHorario->hora]='Aula Ocupada </br> por <a href="'.url('/').'/profesores/'.$unHorario->profesor->id.'">'.$unHorario->profesor->nombre.'</a>';
                 }
         }
-        //print_r($horario);
         return $horario;
     }
 
     
     private function generarTablaReservasAulaEnlaces($horarioAula,$aula_id){
+        setlocale(LC_ALL,"es_ES");
         $dias=array('L','M','X','J','V');
         $horas=array('1','2','3','R','4','5','6','7');
         $horario=[];
@@ -194,16 +221,47 @@ class ReservasController extends Controller
         //de primeras lo ponemos todo como libre y luego si existe, ponemos ocupado
         for($i=0; $i<sizeOf($dias);$i++){
             for($j=0; $j<sizeOf($horas);$j++){
-                $horario[$dias[$i]][$horas[$j]]='<a href="'.url('/').'/reservar/aula/'.$aula_id.'/'.$dias[$i].'/'.$horas[$j].'">RESERVAR</a>';
+                $horario[$dias[$i]][$horas[$j]]='<a href="'.url('/').'/reservar/aula/'.$aula_id.'/'.$this->generarFechaDiaSemanaSiguiente($dias[$i])
+                .'/'.$horas[$j].'">RESERVAR</a>';
             }
         }
+        //ahora recorremos todos las filas de horario de esa aula
         foreach ($horarioAula as $unHorario){
             if(isset($unHorario->dia) && isset($unHorario->hora)){
-                $horario[$unHorario->dia][$unHorario->hora]='ocupado';
+                $horario[$unHorario->dia][$unHorario->hora]='Aula Ocupada </br> por <a href="'.url('/').'/profesores/'.$unHorario->profesor->id.'">'.$unHorario->profesor->nombre.'</a>';
                 }
         }
-        //print_r($horario);
         return $horario;
+    }
+
+
+    /**
+     * Funcion que dada una letra que representa un dia de la semana, devuelve el string de ese dia de la semana de la semana que viene
+     */
+    private function generarFechaDiaSemanaSiguiente($letraDia){
+        $valorDia='';
+        switch ($letraDia) {
+            case 'L':
+            $valorDia= 0;
+                break;
+            case 'M':
+            $valorDia= 1;
+                break;
+            case 'X':
+            $valorDia= 2;
+                break;
+            case 'J':
+            $valorDia= 3;
+                break;
+            case 'V':
+            $valorDia= 4;
+                break;
+        }
+        $lunes = strtotime("next monday");
+        $lunes = date('W', $lunes) == date('W') ? $lunes - 7 * 86400 : $lunes;
+        $diaSemanaSiguiente = strtotime(date("Y-m-d", $lunes) . " +".$valorDia." days");
+        $diaSemanaSiguiente = date("Y-m-d", $diaSemanaSiguiente);
+        return $diaSemanaSiguiente;
     }
     
 }

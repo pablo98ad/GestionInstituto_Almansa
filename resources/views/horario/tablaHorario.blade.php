@@ -1,3 +1,6 @@
+<?php
+    if(sizeof($horario)>0){
+    ?>
     <table class="greenTable">
       <thead>
         <tr>
@@ -30,7 +33,9 @@
       </tr>
     </table>
 
-   </div>
- 
-</div>
+    <?php
+    }else{
+      echo "<h1>Esta Aula no se puede reservar</h1>";
+    }
+    ?>
 
