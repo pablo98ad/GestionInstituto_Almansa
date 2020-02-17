@@ -78,11 +78,14 @@
             </nav>
         </div><br><br><br>
         <div class=" pl-2 pr-2 row d-flex justify-content-between">
-            <a href="profesores" class="pt-5 pb-5 col-5 btn btn-primary btn-lg " role="button" aria-pressed="true">Modulo Profesores</a>
-            <a href="aulas" class="pt-5 pb-5 col-5 btn btn-primary btn-lg " role="button" aria-pressed="true">Modulo Aulas</a>
-            <a href="anuncios" class="mt-5 pt-5 pb-5 col-5 btn btn-primary btn-lg " role="button" aria-pressed="true">Modulo Anuncios</a>
+            <a href="reservar" class="mt-5 pt-5 pb-5 col-5 btn btn-primary btn-lg " role="button" aria-pressed="true">Modulo Reservas</a>
             <a href="horarios" class="mt-5 pt-5 pb-5 col-5 btn btn-primary btn-lg " role="button" aria-pressed="true">Modulo Horarios</a>
-        </div>
+            <a href="anuncios" class="mt-5 pt-5 pb-5 col-5 btn btn-primary btn-lg " role="button" aria-pressed="true">Modulo Anuncios</a> 
+            <a href="profesores" class="mt-5 pt-5 pb-5 col-5 btn btn-primary btn-lg " role="button" aria-pressed="true">Modulo Profesores</a>
+            <a href="aulas" class="mt-5 pt-5 pb-5 col-5 btn btn-primary btn-lg " role="button" aria-pressed="true">Modulo Aulas</a>
+            
+            
+        </div><br><br><br><br><br><br><br><br>
     </div>
     </div>
 

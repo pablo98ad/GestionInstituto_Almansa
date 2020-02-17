@@ -18,10 +18,10 @@ class HorarioController extends Controller
     {   
         return view('horario.index');
     }
-    
+    //¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡INTEGRAR MODULO RESERVAS!!!!!!!!!!!!!!!!!!!!!!!!!!
     public function horarioProfesor($id)
     {   
-        $horariosProfe = Horario::where('profesor_id', $id)->get();;
+        $horariosProfe = Horario::where('profesor_id', $id)->get();
         if(sizeof($horariosProfe)>0){
             $tablaHorario= $this->generarHorarioProfe($horariosProfe);
         }
