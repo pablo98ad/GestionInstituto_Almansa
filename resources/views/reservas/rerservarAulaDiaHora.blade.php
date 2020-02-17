@@ -39,6 +39,11 @@
   #filtro {
     font-size: 18px;
   }
+  .error{
+    border: red 3px solid;
+  }
+
+
 </style>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
@@ -53,9 +58,9 @@
 @section('content')
 
 <div class="container-md text-center">
-  <h1>Reservar Aula {{$parametros[0] }} el dia {{$parametros[1]}}, hora {{$parametros[2]}}</h1><br>
+  <h2>Reservar Aula {{$parametros[0] }} el dia {{$parametros[1]}}, hora {{$parametros[2]}}</h2><br>
 
-  <form id="actualizar" class="text-center d-flex justify-content-center" action="" method="POST">
+<form id="actualizar" class="text-center d-flex justify-content-center" action="{{url('/')}}/reservar" method="POST">
     {{ csrf_field()}}
     {{ method_field('POST') }}
 
@@ -63,21 +68,21 @@
       <div class="row">
         <div class="form-group col-md-12">
           <label for="aula_id">Aula</label>
-          <input disabled type="text" class="form-control" value="{{$parametros[0]}}" name="aula_id" id="aula_id">
+          <input readonly="readonly" type="text" class="form-control" value="{{$parametros[0]}}" name="aula_id" id="aula_id">
         </div>
       </div>
       <div class="w-100"></div>
       <div class="row">
         <div class="form-group col-md-12">
           <label for="diaReserva">Dia</label>
-          <input disabled type="text" class="form-control" value="{{$parametros[1]}}" name="diaReserva" id="diaReserva">
+          <input readonly="readonly" type="text" class="form-control" value="{{$parametros[1]}}" name="diaReserva" id="diaReserva">
         </div>
       </div>
       <div class="w-100"></div>
       <div class="row">
         <div class="form-group col-md-12">
           <label for="horaReserva">Hora</label>
-          <input disabled type="text" class="form-control" value="{{$parametros[2]}}" name="horaReserva" id="horaReserva">
+          <input readonly="readonly" type="text" class="form-control" value="{{$parametros[2]}}" name="horaReserva" id="horaReserva">
         </div>
       </div>
     </div>
@@ -85,23 +90,28 @@
     <div class="w-100"></div>
     <div class="col-12 col-md-6">
       <div class="row d-flex justify-content-center ">
-        <div class="col-12">
+        <div id="select" class="col-12">
         <label for="campos">Seleccionar Profesor que va a hacer esta reserva</label><br>
-        <select class="w-100" id="profes" disabled name="profes">
+        <select class="w-100" id="profes" disabled name="profe">
           <option value="no" selected></option>
         </select>
         </div>
-        <br><br><br>
-        <button type="submit" class="mt-5 border btn btn-success">Hacer Reserva</button>
+        <div class="mt-4">
+        <label for="inputObservaciones">Observaciones</label>
+        <textarea rows="2" cols="80" class="form-control" name="observaciones" id="inputObservaciones"></textarea>
+        </div>
+        <br><br>
+        <div class="mt-3">
+        <button id="enviar" type="submit" class="mt-2 border btn btn-success">Hacer Reserva</button>
+        </div>
       </div>
     </div>
-
+</form>
     
 
     <br>
     <hr>
 
-    <div id="tabla"></div>
 
 </div>
 
@@ -172,26 +182,14 @@
     return item.nombre;
   };
 
+  document.getElementById('enviar').addEventListener('click',validarForm);
 
-  $('#aulasDis').on('select2:select', function(e) { //Para que cuando seleccionemos un option del select, se carge la horas disponibles del aula correspondientes
-    cargarTabla(e);
-  });
-
-
-
-
-
-  //Para que cuando seleccionemos un option del select, se carge la horas disponibles del aula correspondiente
-  function cargarTabla(e) {
-    //alert(this.value);
-    if (document.getElementById('aulasDis').value != 'no') {
-      let aula = document.getElementById('aulasDis').value;
-      let url = directorioBase + '/reservar/aula/' + aula;
-      //alert(url);
-      $("#tabla").load(url);
-    } else {
-      $("#tabla").html(' ');
+  function validarForm(e){
+    if(document.getElementById('profes').value=='no'){
+      e.preventDefault();
+      document.getElementById('select').className="error";
     }
   }
+
 </script>
 @endsection

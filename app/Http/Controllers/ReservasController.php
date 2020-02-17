@@ -27,9 +27,39 @@ class ReservasController extends Controller
         return view('reservas.index');
     }
 
+     //DESDE RUTA POST: /reservarAula
+    public function reservarAula(Request $request){
+        $aula_id=$request->input('aula_id');
+        $dia=$request->input('diaReserva');
+        $hora=$request->input('horaReserva');
+        $id_profesor=$request->input('profe');
+        $observaciones=$request->input('observaciones');
 
-    //DESDE RUTA: /reservar/aula/{aula_id}/{dia}}/{hora}
-    public function reservarAula($aula_id,$dia,$hora){   
+        if(!$this->sePuedeReservarConEstaFecha($aula_id,$dia,$hora)){
+            return redirect()->action('ReservasController@index')->with('error', 'Reserva no se ha podido realizar.');
+        }else{
+            $reserva = new Reservas();
+            $reserva->profesor_id=$id_profesor;
+            $reserva->aula_id=$aula_id;
+            $reserva->fecha=$dia;
+            $reserva->hora=$hora;
+            $reserva->observaciones=$observaciones;
+            $reserva->save();
+
+
+            return redirect()->action('ReservasController@index')->with('notice', 'Reserva ' . $aula_id.'  '.$dia.'    '.$hora.'    '.$id_profesor . ', guardado correctamente.');
+  
+        }
+
+
+
+       
+          }
+
+
+
+    //DESDE RUTA GET: /reservar/aula/{aula_id}/{dia}}/{hora}
+    public function ultimoPasoReservar($aula_id,$dia,$hora){   
         //comprobamos que esa aula, ese dia y esa aula se pueda reservar
         if(!$this->sePuedeReservarConEstaFecha($aula_id,$dia,$hora)){
             echo "Esta aula no se puede reservar con los datos introducidos";
@@ -77,7 +107,7 @@ class ReservasController extends Controller
 
 
 
-    //DESDE RUTA /horario/aula/{id}
+    //DESDE RUTA GET /horario/aula/{id}
     public function horariosDisponiblesAula($aula_id){
         // OBTENEMOS EL RANGO DE FECHAS DE LA SEMANA QUE VIENE DEL LUNES AL DOMINGO
        $lunes = strtotime("next monday");
@@ -105,7 +135,7 @@ class ReservasController extends Controller
     }
 
 
-    //DESDE RUTA /reservar/aula/{id}
+    //DESDE RUTA GET /reservar/aula/{id}
     //devolvemos todas las aulas disponibles para reservar en formato JSON
     public function getTodasAulasDisponiblesJSON(){
        $aulasDisponiblesNum=[];
@@ -186,7 +216,7 @@ class ReservasController extends Controller
         foreach ($reservasAula as $reserva){
             $dia = date('w',strtotime($reserva->fecha));
             $letraDia= $dias[$dia];//obtenemos el dia (una sola letra) de la reserva a partir de un date
-            $horarioAula[$letraDia][$reserva->hora]='Aula ocupada <br> por '.$reserva->profesor->nombre;
+            $horarioAula[$letraDia][$reserva->hora]='Aula ocupada </br> por <a href="'.url('/').'/profesores/'.$reserva->profesor->id.'">'.$reserva->profesor->nombre.'</a>';
         }
         return $horarioAula;
     }

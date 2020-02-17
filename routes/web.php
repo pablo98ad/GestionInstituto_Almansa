@@ -48,7 +48,8 @@ Route::get('/horario/tabla/{por}/{quien}', 'HorarioController@getSoloTabla');
 //reservas de aulas
 Route::get('/reservar', 'ReservasController@index');
 Route::get('/reservar/aula/{id}', 'ReservasController@horariosDisponiblesAula');
-Route::get('/reservar/aula/{id}/{dia}/{hora}', 'ReservasController@reservarAula');
+Route::get('/reservar/aula/{id}/{dia}/{hora}', 'ReservasController@ultimoPasoReservar');
+Route::post('/reservar', 'ReservasController@reservarAula')->name('hacerReserva');;
 
 //API para ajax en cliente!!
 Route::get('/api/getprofesores', 'ProfesorController@getTodosProfesoresJSON');

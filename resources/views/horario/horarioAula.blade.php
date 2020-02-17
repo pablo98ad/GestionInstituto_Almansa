@@ -10,7 +10,7 @@
 
 <div class="container-md text-center">
 
-<h2>Horario del Aula: {{$horariosAula['nombreAula']}}  + reservas de esta semana</h2><br>
+<h2>Horario del Aula: {{$horariosAula['nombreAula']}} y reservas de <b>esta semana</b></h2><br>
  <!-- <div class="row justify-content-end">
     <a class='col-3 col-sm-2 col-md-2  btn btn-success mb-1 mr-2' href="{{url('aulas/').'/create'}}" role='button'>Añadir</a>
   </div>-->
