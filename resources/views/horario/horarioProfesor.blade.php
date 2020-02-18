@@ -14,7 +14,9 @@ Horario del profesor {{$horariosProfe['nombreProfesor']}}
 
 <div class="container-md text-center">
 
-<h2>Horario profesor: {{$horariosProfe['nombreProfesor']}} + reservas de esta semana</h2><br>
+@section('tituloCabezera')  
+Horario profesor: {{$horariosProfe['nombreProfesor']}} + reservas de esta semana
+@endsection
 <?php if (!isset($horariosProfe['L']['1'])){
     echo "<h1>No se han encontrado registros para esta tabla</h1><br>";
   }

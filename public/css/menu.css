@@ -10,7 +10,7 @@ body {
 
 .components p {
     font-family: 'Poppins', sans-serif;
-    font-size: 1.1em;
+    font-size: 1.5em;
     font-weight: 300;
     line-height: 1.7em;
     color: #999;
@@ -43,7 +43,7 @@ body {
 .line {
     width: 100%;
     height: 1px;
-    border-bottom: 1px dashed #ddd;
+    border-bottom: 1px dashed rgb(255, 255, 255);
     margin: 40px 0;
 }
 
@@ -74,10 +74,9 @@ body {
     left: 0;
     height: 100vh;
     z-index: 999;
-    background: rgb(48, 68, 150);
+    background: #337740;
     color: #fff;
     transition: all 0.3s;
-
 }
 
 #sidebar.active {
@@ -87,7 +86,11 @@ body {
 
 #sidebar .sidebar-header {
     padding: 20px;
-    background: #3a4faf;
+    
+}
+.sidebar-header{
+    background: rgb(51,119,64);
+    background: linear-gradient(0deg, rgba(51,119,64,1) 0%, rgba(25,65,33,1) 100%);
 }
 
 #sidebar ul.components {
@@ -102,17 +105,21 @@ body {
 
 #sidebar ul li a {
     padding: 10px;
-    font-size: 1.1em;
+    font-size: 1.2em;
     display: block;
 }
 #sidebar ul li a:hover {
     color: #7386D5;
-    background: #fff;
+    background: #95c799;
 }
 
-#sidebar ul li.active > a, a[aria-expanded="true"] {
+#sidebar ul li.active > a{
     color: #fff;
-    background: #101b50;
+    background: #7cd69a;
+} 
+a[aria-expanded="true"] {
+    color: #fff;
+    background: #015319;
 }
 
 
@@ -129,9 +136,9 @@ a[data-toggle="collapse"] {
 }
 
 ul ul a {
-    font-size: 0.9em !important;
+    font-size: 1.0em !important;
     padding-left: 30px !important;
-    background: #3a4faf;
+    background: #04852a;
 }
 
 ul.CTAs {
@@ -147,13 +154,15 @@ ul.CTAs a {
 }
 
 a.download {
-    background: rgb(68, 102, 175);
+    background: #015319;
     color: rgb(255, 255, 255);
+    text-transform: none !important;
 }
 
 a.download:hover {
-    background: #344699 !important;
+    background: #95c799 !important;
     color: rgb(80, 82, 228) !important;
+    text-transform: none !important;
 }
 
 

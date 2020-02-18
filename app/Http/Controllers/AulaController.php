@@ -21,7 +21,8 @@ class AulaController extends Controller
     public function index()
     {
         //
-        $aulas = Aula::all();
+        //$aulas = Aula::all();
+        $aulas = Aula::paginate(6);
         return view('aulas.index', ['aulas' => $aulas]);
     }
 

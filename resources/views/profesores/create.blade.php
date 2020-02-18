@@ -13,7 +13,9 @@ Crear un nuevo profesor
 @section('content')
 
 <div class="container text-center ">
-  <h1>Formulario Añadir Profesor</h1><br>
+@section('tituloCabezera') 
+  Formulario Añadir Profesor
+@endsection
   <form class="" action="{{url('profesores')}}" method="POST" enctype="multipart/form-data">
     {{ csrf_field()}}
 

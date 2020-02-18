@@ -54,7 +54,9 @@ Horario Instituto
 @section('content')
 
 <div class="container-md text-center">
-  <h2>Horarios y reservas de <b>esta semana</b></h2><br>
+@section('tituloCabezera')  
+Horarios y reservas de <b>esta semana</b>
+@endsection
   <div class="row d-flex justify-content-center">
     <div class="col-12 col-md-3">
       <label for="filtro">Seleccione :</label><br>

@@ -75,7 +75,9 @@ Reservar Aula Manualmente
 @section('content')
 
 <div class="container-md text-center">
-  <h2>Reservar Manualmente</h2><br>
+@section('tituloCabezera') 
+  Reservar Manualmente
+@endsection
 
 <form id="actualizar" class="text-center d-flex justify-content-center" action="{{url('/')}}/reservar" method="POST">
     {{ csrf_field()}}

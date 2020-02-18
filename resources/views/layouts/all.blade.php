@@ -14,37 +14,12 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
-
+  <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+-->
 
   @yield('scriptsHead')
   <style>
-    /*html {
-      margin-top: position: relative;
-      min-height: 100%;*/
-    }
 
-    /*body {
-     margin-bottom: 60px;*/
-    /* Margin bottom by footer height */
-    }
-
-    /*
-    .footer {
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-      height: 60px;
-      line-height: 60px;
-
-      background-color: #f5f5f5;
-    }
-
-    .footer>h5 {
-      font-size: 20px;
-      font-weight: normal;
-
-    }*/
   </style>
 </head>
 
@@ -62,25 +37,26 @@
   </div>
   @endif
 
-
-
-
-
   <div class="wrapper">
     <!-- Sidebar Holder -->
     <nav id="sidebar">
       <div class="sidebar-header">
         <a class="navbar-brand " href="{{url('/')}}">
-          <img src="{{asset('img/logoGestionInstituto.png')}}" width="200" height="94" class="d-inline-block align-center" alt="">
+          <img src="{{asset('img/logoGestionInstituto.png')}}" width="220" height="105" class="d-inline-block align-center" alt="">
         </a>
       </div>
 
       <ul class="list-unstyled components">
         <p>Seleccion de Modulos</p>
-        <li class="">
-          <!--active-->
-          <a href="{{url('/horarios')}}">Horarios</a>
+        <li>
+          <a href="#horarios" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Horarios</a>
+          <ul class="collapse list-unstyled" id="horarios">
+            <li>
+              <a href="{{url('/horarios')}}">Ver Horarios</a>
+            </li>
+          </ul>
         </li>
+        <li>
         <li>
           <a href="#reservas" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Reservas</a>
           <ul class="collapse list-unstyled" id="reservas">
@@ -102,7 +78,7 @@
               <a href="{{url('/anuncios/create')}}">Crear nuevo Anuncio</a>
             </li>
             <li>
-              <a href="{{url('/verAnuncios')}}">Invocar Pagina Anucios</a>
+              <a href="{{url('/verAnuncios')}}">Invocar Pagina Anuncios</a>
             </li>
           </ul>
         </li>
@@ -142,19 +118,22 @@
     <div id="content">
 
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid ">
-
+        <div class="container-fluid d-flex justify-content-between w-100">
+          <div>
           <button type="button" id="sidebarCollapse" class="navbar-btn">
             <span></span>
             <span></span>
             <span></span>
           </button>
-          <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <button class="btn btn-dark d-inline-block d-lg-none " type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <i class="fas fa-align-justify"></i>
           </button>
-
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="nav navbar-nav ml-auto">
+          </div>
+          <div >
+            <h4>@yield('tituloCabezera') </h4>
+          </div><!--ml-auto collapse navbar-collapse-->
+          <div class="" id="navbarSupportedContent">
+            <ul class="nav navbar-nav ">
               @yield('breadcrumb')
             </ul>
           </div>
@@ -183,9 +162,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js" type="text/javascript"></script>
   <!------------------------------------------------------------->
-  <!-- jQuery Custom Scroller CDN -->
+  <!-- jQuery Custom Scroller CDN 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
-
+-->
 
 
   <!--para las alertas de success o error-->
@@ -200,12 +179,38 @@
   <!--colapso del menu-->
   <script type="text/javascript">
     $(document).ready(function() {
+      ////PARA RECORDAR SI EL USUARIO TIENE CERRADO EL MENU
+      var state = localStorage.getItem('menu-closed');
+      if (state === null) {
+        $('#sidebarCollapse').removeClass('active');
+      } else {
+        var closed = state === "true" ? true : false;
+        if (closed) {
+          $('#sidebar').toggleClass('active');
+          $('#content').toggleClass('active');
+          $('#sidebarCollapse').toggleClass('active');
+        }
+      }
+
       $('#sidebarCollapse').on('click', function() {
+        localStorage.setItem('menu-closed', !$('#sidebarCollapse').hasClass('active')); ////PARA RECORDAR SI EL USUARIO TIENE CERRADO EL MENU
         $('#sidebar').toggleClass('active');
         $('#content').toggleClass('active');
         $(this).toggleClass('active');
-        
+
+
       });
+      let enlace = window.location.href.split('?')[0];
+      $("a").each(function() {
+        //console.log(enlace+'   -----   '+$(this).parent().attr('href'));
+        if (enlace == $(this).attr('href')) {
+          $(this).parent().addClass(' active ');
+          $(this).parent().parent().addClass(' show ');
+          $(this).parent().parent().prev().addClass(' dropdown-toggle ');
+          $(this).parent().parent().prev().attr("aria-expanded", "true");
+        }
+      });
+
     });
     /*$(document).ready(function() {
 

@@ -62,7 +62,9 @@ Reservar Aula
 @section('content')
 
 <div class="container-md text-center">
-  <h2>Reservar Aula {{$parametros[0] }} el dia {{$parametros[1]}}, hora {{$parametros[2]}}</h2><br>
+@section('tituloCabezera')   
+Reservar Aula {{$parametros[0] }} el dia {{$parametros[1]}}, hora {{$parametros[2]}}
+@endsection
 
 <form id="actualizar" class="text-center d-flex justify-content-center" action="{{url('/')}}/reservar" method="POST">
     {{ csrf_field()}}

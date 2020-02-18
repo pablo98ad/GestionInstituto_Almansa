@@ -13,7 +13,9 @@ Listado Reservas
 @section('content')
 <div class="container-md text-center">
   <!--Estoy en la vista que se ha llamado a traves del metodo listado de reservas controller -->
-  <h1>LISTADO DE RESERVAS ACTIVAS</h1><br>
+  @section('tituloCabezera') 
+  LISTADO DE RESERVAS ACTIVAS
+  @endsection
     
   <div class="row">
     <?php foreach ($reservas as $reserva) { ?>

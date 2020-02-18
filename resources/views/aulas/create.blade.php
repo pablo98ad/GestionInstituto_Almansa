@@ -14,7 +14,9 @@ Crear una nueva aula
 
 @section('content')
 <div class="container text-center justify-content-center ">
-  <h1>Formulario Añadir Aula</h1><br><br>
+@section('tituloCabezera')   
+Formulario Añadir Aula
+@endsection
   <form class="text-center justify-content-center" action="{{url('aulas')}}" method="POST">
     {{ csrf_field()}}
 

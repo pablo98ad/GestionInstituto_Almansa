@@ -12,7 +12,9 @@ Ver Profesor {{$profesor->nombre}}
 
 @section('content')
 <div class="container text-center ">
-  <h1>Mostrar Profesor {{$profesor->nombre}}</h1><br><br>
+@section('tituloCabezera') 
+  Mostrar Profesor {{$profesor->nombre}}
+@endsection
   <div class="card ">
     <div class="card-body ">
       <h5 class="card-title">{{$profesor->nombre}}</h5>

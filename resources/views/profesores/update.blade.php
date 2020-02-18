@@ -13,7 +13,9 @@ Editar Profesor {{$profesor->nombre}}
 @section('content')
 
 <div class="container text-center ">
-  <h2 class="p-0 m-0">Formulario actualizar profesor: {{$profesor->nombre}}</h2>
+@section('tituloCabezera') 
+  Formulario actualizar profesor: {{$profesor->nombre}}
+@endsection
   <hr><br>
   <form class="" action="{{url('profesores/').'/'.$profesor->id}}" id="actualizar" enctype="multipart/form-data" method="POST">
     {{ csrf_field() }}

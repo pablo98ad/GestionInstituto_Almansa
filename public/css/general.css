@@ -1,6 +1,15 @@
 html,body, #content, .container-md,.wrapper{
-    background-color: rgb(119, 187, 116);
+    background-color: rgb(170, 221, 168);
 
  }
+
+ .pagination > li{
+     background-color: white;
+ }
+ .pagination li  a , .pagination li  a:hover{
+    
+    text-transform: none !important;
+  
+}
 
  

@@ -12,7 +12,9 @@ Editar aula {{$aula->nombre}}
 
 @section('content')
 <div class="container text-center justify-content-center ">
-  <h1>Formulario editar Aula</h1><br><br>
+@section('tituloCabezera') 
+Formulario editar Aula
+@endsection
   <form id="actualizar" class="text-center justify-content-center" action="{{url('aulas/').'/'.$aula->id}}" method="POST">
     {{ csrf_field()}}
     {{ method_field('PUT') }}

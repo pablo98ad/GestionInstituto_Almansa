@@ -12,7 +12,9 @@ Listado de aulas
 @section('content')
 
 <div class="container-md text-center">
-  <h1>LISTADO DE AULAS</h1><br>
+@section('tituloCabezera') 
+LISTADO DE AULAS
+@endsection
   <div class="row justify-content-end">
     <a class='col-3 col-sm-2 col-md-2  btn btn-success mb-1 mr-2' href="{{url('aulas/').'/create'}}" role='button'>Añadir</a>
   </div>
@@ -51,6 +53,10 @@ Listado de aulas
 
     <?php } ?>
   </div>
+  <br><br>
+  <div class="row text-center d-flex justify-content-center">
+    {{ $aulas->links() }}
+    </div>
 </div>
 </div>
 @endsection

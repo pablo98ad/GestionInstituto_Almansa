@@ -12,7 +12,9 @@ Listado de profesores
 @section('content')
 <div class="container-md text-center">
   <!--Estoy en la vista que se ha llamado a traves del controlador de ProfesorController -->
-  <h1>LISTADO DE PROFESORES</h1><br>
+  @section('tituloCabezera') 
+    LISTADO DE PROFESORES
+  @endsection
   <div class="row justify-content-between">
 
     <!-- MODAL PARA LA IMPORTACION  DE PROFESORES POR FICHERO -->

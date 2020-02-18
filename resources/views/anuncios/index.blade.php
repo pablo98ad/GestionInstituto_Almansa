@@ -20,7 +20,9 @@ Listado de Anuncios
 @section('content')
 
 <div class="container-md text-center">
-  <h1>LISTADO DE ANUNCIOS</h1><br>
+  @section('tituloCabezera')  
+    LISTADO DE ANUNCIOS
+  @endsection
   <div class="row justify-content-end">
     <a class='col-3 col-sm-2 col-md-2  btn btn-success mb-1 mr-2' href="{{url('anuncios/').'/create'}}" role='button'>Añadir</a>
   </div>
@@ -142,6 +144,10 @@ Listado de Anuncios
 
     <?php } ?>
   </div>
+  <br><br>
+  <div class="row text-center d-flex justify-content-center">
+    {{ $anuncios->links() }}
+    </div>
 </div>
 </div>
 

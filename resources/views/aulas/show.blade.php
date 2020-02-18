@@ -1,5 +1,9 @@
 @extends('layouts/all')
 
+@section('titulo')
+Ver aula {{$aula->nombre}}
+@endsection
+
 @section('scriptsHead')
 <style>
 input,textarea {
@@ -17,7 +21,10 @@ input,textarea {
 
 @section('content')
 <div class="container text-center ">
-  <h1>Mostrar Aula: {{$aula->nombre}}</h1><br><br>
+@section('tituloCabezera') 
+Mostrar Aula: {{$aula->nombre}}
+@endsection
+
   <div class="form-row">
       <div class="form-group col-md-6">
         <label for="inputEmail4">Nombre</label>

@@ -23,7 +23,7 @@ class AnunciosController extends Controller
     public function index()
     {
         //
-        $anuncios = Anuncios::orderBy("activo",'desc')->get();
+        $anuncios = Anuncios::orderBy("activo",'desc')->paginate(9);;
         return view('anuncios.index', ['anuncios' => $anuncios]);
     }
 

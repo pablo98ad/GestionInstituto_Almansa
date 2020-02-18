@@ -21,7 +21,9 @@ Editar anuncio {{$anuncios->nombre}}
 
 @section('content')
 <div class="container text-center justify-content-center ">
-    <h1>Formulario editar anuncio {{$anuncios->nombre}}</h1><br><br>
+    @section('tituloCabezera')
+        Formulario editar anuncio {{$anuncios->nombre}}
+    @endsection
     <form id="actualizar" class="text-center justify-content-center" action="{{url('anuncios/').'/'.$anuncios->id}}" method="POST">
         {{ csrf_field()}}
         {{ method_field('PUT') }}
