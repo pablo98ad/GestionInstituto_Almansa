@@ -1,5 +1,9 @@
 @extends('layouts/all')
 
+@section('titulo')
+Crear un nuevo profesor
+@endsection
+
 @section('breadcrumb')
 <li class="d-inline breadcrumb-item"><a href="{{url('/')}}">Instituto</a></li>
 <li class="d-inline breadcrumb-item"><a href="{{url('profesores/')}}">Profesores</a></li>

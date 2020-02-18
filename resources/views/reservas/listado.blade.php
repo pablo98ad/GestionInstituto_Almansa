@@ -1,5 +1,9 @@
 @extends('layouts/all')
 
+@section('titulo')
+Listado Reservas
+@endsection
+
 @section('breadcrumb')
 <li class="d-inline breadcrumb-item"><a href="{{url('/')}}">Instituto</a></li>
 <li class="breadcrumb-item d-inline"><a href="{{url('reservar/')}}">Reservas</a></li>

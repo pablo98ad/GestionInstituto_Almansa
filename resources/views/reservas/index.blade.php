@@ -1,5 +1,9 @@
 @extends('layouts/all')
 
+@section('titulo')
+Reservar Aula
+@endsection
+
 @section('scriptsHead')
 <style>
   
@@ -65,7 +69,7 @@
 <div class="container-md text-center">
   <h1>Reservar Aula</h1><br>
   <div class="row justify-content-between">
-  <a  class='col-2 col-sm-2 col-md-2 h-50 w-25  btn btn-success mb-1 mr-2' href="{{url('/').'/reservas/listado'}}" role='button'>Listado</a>
+  <a  class='col-2 col-sm-2 col-md-1  h-50 w-25  btn btn-success mb-1 mr-2' href="{{url('/').'/reservas/listado'}}" role='button'>Listado</a>
   <a  class='col-2 col-sm-2 col-md-2  btn btn-danger mb-1 mr-2' href="{{url('/').'/reservarManualmente'}}" role='button'>Añadir Manualmente (no recomendado)</a>
   </div>
   <div class="row d-flex justify-content-center">

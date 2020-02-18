@@ -1,5 +1,9 @@
 @extends('layouts/all')
 
+@section('titulo')
+Listado de Anuncios
+@endsection
+
 @section('scriptsHead')
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
@@ -39,7 +43,7 @@
             <!--</p>-->
           </div><br>
 
-          <input readonly type="text" class="form-control" name="rangos" id="rango{{$anuncio->id}}" />
+          <input readonly="readonly" type="text" class="form-control" name="rangos" id="rango{{$anuncio->id}}" />
           <script>
             $(function() {
               $('#rango{{$anuncio->id}}').daterangepicker({

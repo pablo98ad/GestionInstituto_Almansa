@@ -1,5 +1,9 @@
 @extends('layouts/all')
 
+@section('titulo')
+Reservar Aula Manualmente
+@endsection
+
 @section('scriptsHead')
 <style>
   #horaReserva,

@@ -1,5 +1,9 @@
 @extends('layouts/all')
 
+@section('titulo')
+Ver Anuncios
+@endsection
+
 @section('scriptsHead')
 <style>
   .container,

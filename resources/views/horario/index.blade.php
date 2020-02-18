@@ -1,5 +1,9 @@
 @extends('layouts/all')
 
+@section('titulo')
+Horario Instituto
+@endsection
+
 @section('scriptsHead')
 <style>
  

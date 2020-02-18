@@ -1,5 +1,9 @@
 @extends('layouts/all')
 
+@section('titulo')
+Listado de aulas
+@endsection
+
 @section('breadcrumb')
 <li class="breadcrumb-item d-inline"><a href="{{url('/')}}">Instituto</a></li>
 <li class="breadcrumb-item active d-inline" aria-current="page">Aulas</li>

@@ -1,5 +1,9 @@
 @extends('layouts/all')
 
+@section('titulo')
+Horario del profesor {{$horariosProfe['nombreProfesor']}}
+@endsection
+
 @section('breadcrumb')
 <li class="breadcrumb-item d-inline"><a href="{{url('/')}}">Instituto</a></li>
 <li class="breadcrumb-item d-inline"><a href="{{url('/profesores')}}">Profesores</a></li>

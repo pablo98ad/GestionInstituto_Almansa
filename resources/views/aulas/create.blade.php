@@ -1,5 +1,9 @@
 @extends('layouts/all')
 
+@section('titulo')
+Crear una nueva aula
+@endsection
+
 @section('breadcrumb')
 
 <li class="breadcrumb-item d-inline"><a href="{{url('/')}}">Instituto</a></li>
