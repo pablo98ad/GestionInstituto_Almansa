@@ -92,6 +92,8 @@
     document.body.addEventListener('click', volverPaginaPrincipal);
     document.body.addEventListener('keypress', quitarEventos);
     document.body.addEventListener('scroll', volverPaginaPrincipal);
+    document.body.addEventListener('touchmove', volverPaginaPrincipal);
+    
     let actual = 0;
     let anchoHTML = document.documentElement.offsetHeight;
     let velocidad = 12;//menos es mas rapido
@@ -102,6 +104,7 @@
         document.body.removeEventListener('mousemove', volverPaginaPrincipal);
         document.body.removeEventListener('click', volverPaginaPrincipal);
         document.body.removeEventListener('scroll', volverPaginaPrincipal);
+        document.body.removeEventListener('touchmove', volverPaginaPrincipal);
         clearInterval(inter);
       } else {
         volverPaginaPrincipal();

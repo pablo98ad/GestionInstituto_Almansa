@@ -63,9 +63,10 @@ body {
     min-width: 280px;
     max-width: 280px;/*
     height: 100vh;
-
+    
     background: rgb(48, 68, 150);
     color: #fff;*/
+
     transition: all 0.6s cubic-bezier(0.945, 0.020, 0.270, 0.665);
     transform-origin: bottom left;
     width: 280px;
@@ -95,7 +96,7 @@ body {
 
 #sidebar ul.components {
     padding: 20px 0;
-    border-bottom: 1px solid #47748b;
+    border-bottom: 1px solid #ffffff;
 }
 
 #sidebar ul p {
@@ -245,6 +246,7 @@ a.download:hover {
     }
     #content {
         width: 100%;
+        padding:0px;
     }
     
     #sidebarCollapse span:first-of-type,

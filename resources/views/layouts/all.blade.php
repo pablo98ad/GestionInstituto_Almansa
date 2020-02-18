@@ -120,23 +120,27 @@
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid d-flex justify-content-between w-100">
           <div>
-          <button type="button" id="sidebarCollapse" class="navbar-btn">
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
-          <button class="btn btn-dark d-inline-block d-lg-none " type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <i class="fas fa-align-justify"></i>
-          </button>
+            <button type="button" id="sidebarCollapse" class="navbar-btn">
+              <span></span>
+              <span></span>
+              <span></span>
+            </button>
+            
           </div>
-          <div >
+          <div>
             <h4>@yield('tituloCabezera') </h4>
-          </div><!--ml-auto collapse navbar-collapse-->
+          </div>
+          <button class="btn btn-dark d-inline-block d-lg-none " type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <i class="fas fa-align-justify"></i>
+            </button>
+          <!--ml-auto collapse navbar-collapse-->
           <div class="" id="navbarSupportedContent">
             <ul class="nav navbar-nav ">
               @yield('breadcrumb')
             </ul>
+            
           </div>
+          
         </div>
       </nav>
       @yield('content')
@@ -166,10 +170,23 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 -->
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/1.0.1/slideout.min.js" type="text/javascript"></script>
 
   <!--para las alertas de success o error-->
   <script type="text/javascript">
+    /*var slideout = new Slideout({
+        'panel': document.getElementById('content'),
+        'menu': document.getElementById('sidebar'),
+        'padding': 256,
+        'tolerance': 70
+      });*/
+    //slideout.toggle();
+    //slideout.toggle();
+
+
+
     window.setTimeout(function() {
+      //slideout.toggle();
       $(".alert").fadeTo(500, 0).slideUp(500, function() {
         $(this).hide();
         //$(this).remove();
@@ -193,13 +210,46 @@
       }
 
       $('#sidebarCollapse').on('click', function() {
+        //slideout.toggle();
+
         localStorage.setItem('menu-closed', !$('#sidebarCollapse').hasClass('active')); ////PARA RECORDAR SI EL USUARIO TIENE CERRADO EL MENU
         $('#sidebar').toggleClass('active');
         $('#content').toggleClass('active');
-        $(this).toggleClass('active');
+        $('#sidebarCollapse').toggleClass('active');
 
 
       });
+      //al deslizar con el menu puesto en el movil, este se oculta
+      function initialHash() {
+        localStorage.setItem('menu-closed', !$('#sidebarCollapse').hasClass('active')); ////PARA RECORDAR SI EL USUARIO TIENE CERRADO EL MENU
+        $('#sidebar').toggleClass('active');
+        $('#content').toggleClass('active');
+        $('#sidebarCollapse').toggleClass('active');
+      }
+
+      function handleTouch(e) {
+        var x = e.changedTouches[0].clientX;
+        console.log(x);
+        var total = document.getElementById('sidebar').clientWidth;
+        var position = x - total;
+        if (position < 0) document.getElementById('sidebar').style.left = (x - total) + 'px'
+        else if (position >= 0) document.getElementById('sidebar').style.left = 0 + 'px'
+      }
+
+      function handleTouchEnd(e) {
+        var x = e.changedTouches[0].clientX;
+        var total = document.getElementById('sidebar').clientWidth;
+        var position = x - total;
+        document.getElementById('sidebar').style.left = "";
+        if (position <= -total * 0.6) initialHash();
+      }
+      document.querySelector('#sidebar, #content').addEventListener('touchstart', handleTouch, false);
+      document.querySelector('#sidebar, #content').addEventListener('touchmove', handleTouch, false);
+      document.querySelector('#sidebar, #content').addEventListener('touchend', handleTouchEnd, false);
+
+
+
+
       let enlace = window.location.href.split('?')[0];
       $("a").each(function() {
         //console.log(enlace+'   -----   '+$(this).parent().attr('href'));
