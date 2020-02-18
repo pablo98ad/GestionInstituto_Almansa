@@ -68,7 +68,8 @@ class HorarioController extends Controller
                 $diaSemana = date('w', strtotime($reserva->fecha));
                 $diaSemana= $dias[$diaSemana-1];
                 $tablaHorario[$diaSemana][$reserva->hora]='Reservada por <br>
-                                                            <a href="'.url('/').'/profesores/'.$reserva->profesor_id.'">'.$reserva->profesor->nombre.'</a>';
+                                                            <a href="'.url('/').'/profesores/'.$reserva->profesor_id.'">'.$reserva->profesor->nombre.' '.$reserva->profesor->apellidos.'</a>
+                                                            <br> <p style="font-size:12px;font-style:oblique">'.$reserva->observaciones.'</p>';
 
             }
         }

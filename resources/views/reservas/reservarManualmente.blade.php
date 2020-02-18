@@ -125,7 +125,7 @@
         </div>
         <div class="mt-3 mb-3">
         <label for="inputObservaciones">Observaciones</label>
-        <textarea maxlength="50" rows="2" cols="80" class="form-control" name="observaciones" id="inputObservaciones"></textarea>
+        <textarea required maxlength="50" rows="2" cols="80" class="form-control" name="observaciones" id="inputObservaciones"></textarea>
         </div>
         <br><br>
         <div class="mt-4">
@@ -316,13 +316,17 @@ fetch(urlAulas) //pedimos a nuestra api la lista completa de los profes disponib
   document.getElementById('enviar').addEventListener('click',validarForm);
 
   function validarForm(e){
-    if(document.getElementById('aulas').value=='no' ){
+    if(document.getElementById('aula_id').value=='no' ){
       document.getElementById('selectAulas').className="error";
       e.preventDefault();
+    }else{
+      document.getElementById('selectAulas').className="";
     }
     if(document.getElementById('profes').value=='no'){
       document.getElementById('selectProfes').className="error";
       e.preventDefault();
+    }else{
+      document.getElementById('selectProfes').className="";
     }
 
 

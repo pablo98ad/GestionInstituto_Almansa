@@ -21,6 +21,26 @@ class ReservasController extends Controller
         $this->middleware('auth')->except('index','getTodasAulasDisponiblesJSON','horariosDisponiblesAula','reservarAula');
     }
 
+    //DESDE RUTA /reservas/listado
+    public function listado()
+    {   //recojemos las reservas que sean su fecha mayor a la de ahora
+        $diaActual = date("Y-m-d", strtotime("today"));
+        $reservasAulas = Reservas::where('fecha', '>=', $diaActual)->orderBy('fecha', 'asc')->orderBy('hora', 'asc')->get();
+           
+        return view('reservas.listado', ['reservas' => $reservasAulas]);
+    }
+
+    public function destroy($id)
+    {
+        try {
+            $reserva = Reservas::find($id);
+            $reserva->delete();
+        } catch (\Exception $e) {
+            return redirect()->action('ReservasController@index')->with('error', 'La Reserva del aula ID: ' . $reserva->aula->id.' para el dia '.$reserva->fecha.' a la hora '.$reserva->hora.' con el profesor: '.$reserva->profesor->nombre . ', eliminada correctamente.');
+        }
+        return redirect()->action('ReservasController@index')->with('notice', 'La Reserva del aula ID: ' . $reserva->aula->id.' para el dia '.$reserva->fecha.' a la hora '.$reserva->hora.' con el profesor: '.$reserva->profesor->nombre . ', no se ha eliminado correctamente.');
+    }
+
     //DESDE RUTA /reservar
     public function index()
     {
@@ -61,7 +81,7 @@ class ReservasController extends Controller
                 $reserva->hora=$hora;
                 $reserva->observaciones=$observaciones;
                 $reserva->save();
-                return redirect()->action('ReservasController@index')->with('notice', 'Reserva ' . $aula_id.'  '.$dia.'    '.$hora.'    '.$id_profesor . ', guardado correctamente.');
+                return redirect()->action('ReservasController@index')->with('notice', 'La Reserva del aula ID: ' . $aula_id.' para el dia '.$dia.' a la hora '.$hora.' con el profesor: '.$id_profesor . ', guardada correctamente.');
             }
         }catch(\Exception  $e){ 
             return redirect()->action('ReservasController@index')->with('error', 'La reserva no se ha podido realizar. Error: '.$e->getMessage());
@@ -231,8 +251,8 @@ class ReservasController extends Controller
         foreach ($reservasAula as $reserva){
             $dia = date('w',strtotime($reserva->fecha));
             $letraDia= $dias[$dia];//obtenemos el dia (una sola letra) de la reserva a partir de un date
-            $horarioAula[$letraDia][$reserva->hora]='Aula ocupada </br> por <a href="'.url('/').'/profesores/'.$reserva->profesor->id.'">'.$reserva->profesor->nombre.'</a>
-                                                    <br> <p style="font-size:12px;font-style:oblique">'.$reserva->observaciones.'</p>';
+            $horarioAula[$letraDia][$reserva->hora]='Aula ocupada </br> por <a target="_blank" href="'.url('/').'/profesores/'.$reserva->profesor->id.'">'.$reserva->profesor->nombre.' '.$reserva->profesor->apellidos.'</a>
+                                                    <br> <p style="font-size:13px;font-style:oblique">'.$reserva->observaciones.'</p>';
         }
         return $horarioAula;
     }
@@ -251,7 +271,7 @@ class ReservasController extends Controller
         //ahora recorremos todos las filas de horario de esa aula
         foreach ($horarioAula as $unHorario){
             if(isset($unHorario->dia) && isset($unHorario->hora)){
-                $horario[$unHorario->dia][$unHorario->hora]='Aula Ocupada </br> por <a href="'.url('/').'/profesores/'.$unHorario->profesor->id.'">'.$unHorario->profesor->nombre.'</a>';
+                $horario[$unHorario->dia][$unHorario->hora]='Aula Ocupada (Horario)</br> por <a target="_blank" href="'.url('/').'/profesores/'.$unHorario->profesor->id.'">'.$unHorario->profesor->nombre.'</a>';
                 }
         }
         return $horario;
@@ -274,7 +294,7 @@ class ReservasController extends Controller
         //ahora recorremos todos las filas de horario de esa aula
         foreach ($horarioAula as $unHorario){
             if(isset($unHorario->dia) && isset($unHorario->hora)){
-                $horario[$unHorario->dia][$unHorario->hora]='Aula Ocupada </br> por <a href="'.url('/').'/profesores/'.$unHorario->profesor->id.'">'.$unHorario->profesor->nombre.'</a>';
+                $horario[$unHorario->dia][$unHorario->hora]='Aula Ocupada (Horario)</br> por <a target="_blank" href="'.url('/').'/profesores/'.$unHorario->profesor->id.'">'.$unHorario->profesor->nombre.' '.$unHorario->profesor->apellidos.'</a>';
                 }
         }
         return $horario;
