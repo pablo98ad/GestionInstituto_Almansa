@@ -6,36 +6,45 @@
   <title>@yield('titulo')</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="stylesheet" href="{{asset('css/custom.css')}}">
+  <link rel="stylesheet" href="{{asset('css/tablaHorarios.css')}}">
+  <link rel="stylesheet" href="{{asset('css/menu.css')}}">
+  <link rel="stylesheet" href="{{asset('css/general.css')}}">
   <!-- Bootstrap CSS -->
+  <!-- Scrollbar Custom CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+
+
   @yield('scriptsHead')
   <style>
-  html {
-  position: relative;
-  min-height: 100%;
-}
-body {
-  margin-bottom: 80px; /* Margin bottom by footer height */
-}
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 60px; /* Set the fixed height of the footer here */
-  line-height: 60px; /* Vertically center the text there */
-  background-color: #f5f5f5;
-}
-.footer >h5{
-  font-size: 20px;
-  font-weight: normal;
+    /*html {
+      margin-top: position: relative;
+      min-height: 100%;*/
+    }
 
-}
-  
-  
-  
-  
+    /*body {
+     margin-bottom: 60px;*/
+    /* Margin bottom by footer height */
+    }
+
+    /*
+    .footer {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 60px;
+      line-height: 60px;
+
+      background-color: #f5f5f5;
+    }
+
+    .footer>h5 {
+      font-size: 20px;
+      font-weight: normal;
+
+    }*/
   </style>
 </head>
 
@@ -53,44 +62,133 @@ body {
   </div>
   @endif
 
-  <nav class="d-flex justify-content-center p-0 m-0 mx-auto navbar navbar-light bg-light">
-    <a class="navbar-brand " href="{{url('/')}}">
-      <img src="{{asset('img/logoGestionInstituto.png')}}" width="200" height="94" class="d-inline-block align-center" alt="">
-    </a>
-  </nav>
 
-  <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <div class="container-md">
-        @yield('breadcrumb')
+
+
+
+  <div class="wrapper">
+    <!-- Sidebar Holder -->
+    <nav id="sidebar">
+      <div class="sidebar-header">
+        <a class="navbar-brand " href="{{url('/')}}">
+          <img src="{{asset('img/logoGestionInstituto.png')}}" width="200" height="94" class="d-inline-block align-center" alt="">
+        </a>
       </div>
-    </ol>
-  </nav>
-  <!--/////////////////-->
 
-  @yield('content')
+      <ul class="list-unstyled components">
+        <p>Seleccion de Modulos</p>
+        <li class="">
+          <!--active-->
+          <a href="{{url('/horarios')}}">Horarios</a>
+        </li>
+        <li>
+          <a href="#reservas" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Reservas</a>
+          <ul class="collapse list-unstyled" id="reservas">
+            <li>
+              <a href="{{url('/reservar')}}">Hacer reserva</a>
+            </li>
+            <li>
+              <a href="{{url('/reservas/listado')}}">Listado de Reservas</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="#anuncios" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Anuncios</a>
+          <ul class="collapse list-unstyled" id="anuncios">
+            <li>
+              <a href="{{url('/anuncios')}}">Listado Anuncios</a>
+            </li>
+            <li>
+              <a href="{{url('/anuncios/create')}}">Crear nuevo Anuncio</a>
+            </li>
+            <li>
+              <a href="{{url('/verAnuncios')}}">Invocar Pagina Anucios</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="#profesores" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Profesores</a>
+          <ul class="collapse list-unstyled" id="profesores">
+            <li>
+              <a href="{{url('/profesores')}}">Listado de Profesores</a>
+            </li>
+            <li>
+              <a href="{{url('/profesores/create')}}">Alta nuevo Profesor</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="#aulas" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Aulas</a>
+          <ul class="collapse list-unstyled" id="aulas">
+            <li>
+              <a href="{{url('/aulas')}}">Listado de Aulas</a>
+            </li>
+            <li>
+              <a href="{{url('/aulas/create')}}">Alta nueva Aula</a>
+            </li>
+          </ul>
+        </li>
 
-  <!--/////////////////-->
+      </ul>
 
-  <!-- Footer -->
+      <ul class="list-unstyled CTAs">
+        <li>
+          <a href="https://github.com/pablo98ad" class="download">Por Pablo Ávila</a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Page Content Holder -->
+    <div id="content">
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid ">
+
+          <button type="button" id="sidebarCollapse" class="navbar-btn">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+          <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-align-justify"></i>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="nav navbar-nav ml-auto">
+              @yield('breadcrumb')
+            </ul>
+          </div>
+        </div>
+      </nav>
+      @yield('content')
+    </div>
+  </div>
+
+
+  <!-- Footer 
   <footer class="page-footer font-small blue">
 
-    <!-- Copyright -->
     <div class="footer footer-copyright text-center py-3 mt-3 bg-info">
       <h5 class="textoFooter">© 2020 Copyright:
-      <a class="text-dark" href="https://github.com/pablo98ad"> Pablo Ávila Doñate</a></h5>
+        <a class="text-dark" href="https://github.com/pablo98ad"> Pablo Ávila Doñate</a></h5>
     </div>
 
-  </footer>
+  </footer>-->
   @yield('scripsFooter')
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
   <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
   <!--Para el calendario -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js" type="text/javascript"></script>
-<!------------------------------------------------------------->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js" type="text/javascript"></script>
+  <!------------------------------------------------------------->
+  <!-- jQuery Custom Scroller CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+
+
+  <!--para las alertas de success o error-->
   <script type="text/javascript">
     window.setTimeout(function() {
       $(".alert").fadeTo(500, 0).slideUp(500, function() {
@@ -98,6 +196,35 @@ body {
         //$(this).remove();
       });
     }, 4000);
+  </script>
+  <!--colapso del menu-->
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('#sidebarCollapse').on('click', function() {
+        $('#sidebar').toggleClass('active');
+        $('#content').toggleClass('active');
+        $(this).toggleClass('active');
+        
+      });
+    });
+    /*$(document).ready(function() {
+
+      $("#sidebar").mCustomScrollbar({
+        theme: "minimal"
+      });
+
+      $('#sidebarCollapse').on('click', function() {
+        // open or close navbar
+        $('#sidebar').toggleClass('active');
+        $('#content').toggleClass('active');
+        // close dropdowns
+        $('.collapse.in').toggleClass('in');
+        // and also adjust aria-expanded attributes we use for the open/closed arrows
+        // in our CSS
+        $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+      });
+
+    });*/
   </script>
 </body>
 

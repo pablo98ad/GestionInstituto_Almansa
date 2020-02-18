@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
-
+    <link rel="stylesheet" href="{{asset('css/menu.css')}}">
     <!-- Styles -->
     <style>
         body {
@@ -53,19 +53,37 @@
             font-size: 30px;
             color: black;
         }
+        
+.botones{
+    text-decoration: none;
+    padding: 5px;
+    padding-left: 6px;
+    padding-right: 6px;
+    font-family: helvetica;
+    font-weight: 300;
+    font-size: 1.6em;
+    font-style: italic;
+    color: #002215;
+    background-color: #82b085;
+    border-radius: 2px;
+    border: 3px double #006505;
+  }
+  .botones:hover{
+    opacity: 0.6;
+    text-decoration: none;
+  }
     </style>
 </head>
 
 <body>
     <div class="container   h-100">
-        <div class="row d-flex justify-content-end">
+        <div class="row mt-3 d-flex justify-content-end">
             @if (Route::has('login'))
             <div class=" top-right links">
                 @auth
-                <a href="{{ url('/home') }}">Home</a>
+                <a class="botones" href="{{ url('/home') }}">Home</a>
                 @else
-                <a href="{{ route('login') }}">Login</a>
-                <a href="{{ route('register') }}">Register</a>
+                <a class="botones" href="{{ route('login') }}">Entrar</a><a class="botones" href="{{ route('register') }}">Registrarse</a>
                 @endauth
             </div>
         </div>
@@ -110,7 +128,7 @@
     function activarTimeout(){
         return setTimeout(function(){
             window.location.href='{{url('/')}}'+'/verAnuncios';
-        },1000)//3 minutos
+        },60000)//3 minutos
     }
 
     function resetearTimeout(){
