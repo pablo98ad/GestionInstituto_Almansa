@@ -18,7 +18,7 @@ Listado de profesores
   <div class="row justify-content-between">
 
     <!-- MODAL PARA LA IMPORTACION  DE PROFESORES POR FICHERO -->
-    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">Importar</button>
+    <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">Importar</button>
 
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -46,12 +46,18 @@ Listado de profesores
       </div>
     </div>
 
-    <a class='col-3 col-sm-2 col-md-2  btn btn-success mb-1 mr-2' href="{{url('profesores/').'/create'}}" role='button'>Añadir</a>
+    <form class="form-inline my-2 my-lg-0" action="{{url('/profesores')}}" role="search" method="get">
+    <!--csrf_field()-->
+      <input class="form-control mr-sm-2" type="text" name="busqueda" placeholder="Buscar" aria-label="Search">
+      <button class="btn btn-success my-2 my-sm-0" type="submit">Buscar</button>
+    </form>
+
+    <a class='col-3 col-sm-2 col-md-2  btn btn-info mb-1 mr-2' href="{{url('profesores/').'/create'}}" role='button'>Añadir</a>
 
 
 
   </div>
-  <div class="row">
+  <div class="row mt-2 ">
     <?php foreach ($profesores as $profesor) { ?>
 
       <div class="card col-md-4 col-sm-6 col-12 mt-1 ">
@@ -99,8 +105,12 @@ Listado de profesores
         </div>
       </div>
 
-    <?php } ?>
-    
+    <?php } 
+    if(sizeOf($profesores)==0){
+    echo "<h3 class='text-center w-100 mt-4'>No hay resultados</h3>";
+    }
+    ?>
+
   </div><br><br>
   <div class="row text-center d-flex justify-content-center">
     {{ $profesores->links() }}

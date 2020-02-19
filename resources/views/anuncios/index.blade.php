@@ -23,7 +23,12 @@ Listado de Anuncios
   @section('tituloCabezera')  
     LISTADO DE ANUNCIOS
   @endsection
-  <div class="row justify-content-end">
+  <div class="row justify-content-between">
+  <form class="form-inline my-2 my-lg-0" action="{{url('/anuncios')}}" role="search" method="get">
+    <!--csrf_field()-->
+      <input class="form-control mr-sm-2" type="text" name="busqueda" placeholder="Buscar" aria-label="Search">
+      <button class="btn btn-success my-2 my-sm-0" type="submit">Buscar</button>
+    </form>
     <a class='col-3 col-sm-2 col-md-2  btn btn-success mb-1 mr-2' href="{{url('anuncios/').'/create'}}" role='button'>Añadir</a>
   </div>
   <div class="row">

@@ -22,11 +22,15 @@ class ProfesorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $req)
     {
-        //
-        //$profesores = Profesor::all()::paginate(3);
-        $profesores = Profesor::paginate(6);
+        if($req->busqueda == ""){
+            $profesores = Profesor::paginate(6);
+        }else{
+            $profesores = Profesor::where('nombre','LIKE','%'.$req->busqueda.'%')->orWhere('apellidos','LIKE','%'.$req->busqueda.'%' )->paginate(6);
+            $profesores->appends($req->only('busqueda'));
+        }
+        
         return view('profesores.index', ['profesores' => $profesores]);
     }
 

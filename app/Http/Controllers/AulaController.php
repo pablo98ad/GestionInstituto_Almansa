@@ -18,11 +18,15 @@ class AulaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $req)
     {
-        //
-        //$aulas = Aula::all();
-        $aulas = Aula::paginate(6);
+
+        if($req->busqueda == ""){
+            $aulas = Aula::paginate(9);
+        }else{
+            $aulas = Aula::where('nombre','LIKE','%'.$req->busqueda.'%')->orWhere('numero','LIKE','%'.$req->busqueda.'%' )->paginate(9);
+            $aulas->appends($req->only('busqueda'));
+        }
         return view('aulas.index', ['aulas' => $aulas]);
     }
 

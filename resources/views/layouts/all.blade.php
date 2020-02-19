@@ -9,9 +9,11 @@
   <link rel="stylesheet" href="{{asset('css/tablaHorarios.css')}}">
   <link rel="stylesheet" href="{{asset('css/menu.css')}}">
   <link rel="stylesheet" href="{{asset('css/general.css')}}">
+  <link rel="icon" type="image/png" sizes="96x96" href="{{asset('img/favicon-96x96.png')}}">
+
   <!-- Bootstrap CSS -->
   <!-- Scrollbar Custom CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+  <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">-->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
   <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
@@ -109,7 +111,7 @@
 
       <ul class="list-unstyled CTAs">
         <li>
-          <a href="https://github.com/pablo98ad" class="download">Por Pablo Ávila</a>
+          <a href="https://github.com/pablo98ad" class="download">Por Pablo Ávila Doñate</a>
         </li>
       </ul>
     </nav>
@@ -129,12 +131,12 @@
           </div>
           <div>
             <h4>@yield('tituloCabezera') </h4>
-          </div>
-          <button class="btn btn-dark d-inline-block d-lg-none " type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          </div><!-- d-inline-block d-lg-none  -->
+          <button class="d-none btn btn-dark  " type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <i class="fas fa-align-justify"></i>
             </button>
           <!--ml-auto collapse navbar-collapse-->
-          <div class="" id="navbarSupportedContent">
+          <div class="d-none d-sm-block" id=" navbarSupportedContent">
             <ul class="nav navbar-nav ">
               @yield('breadcrumb')
             </ul>
@@ -241,9 +243,9 @@
         var total = document.getElementById('sidebar').clientWidth;
         var position = x - total;
         document.getElementById('sidebar').style.left = "";
-        if (position <= -total * 0.6) initialHash();
+        if (position <= -total * 0.7) initialHash();
       }
-      document.querySelector('#sidebar, #content').addEventListener('touchstart', handleTouch, false);
+      //document.querySelector('#sidebar, #content').addEventListener('touchstart', handleTouch, false);
       document.querySelector('#sidebar, #content').addEventListener('touchmove', handleTouch, false);
       document.querySelector('#sidebar, #content').addEventListener('touchend', handleTouchEnd, false);
 

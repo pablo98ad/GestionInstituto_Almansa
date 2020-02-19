@@ -20,10 +20,15 @@ class AnunciosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $req)
     {
-        //
-        $anuncios = Anuncios::orderBy("activo",'desc')->paginate(9);;
+        if($req->busqueda == ""){
+            $anuncios = Anuncios::orderBy("activo",'desc')->paginate(9);
+        }else{
+            $anuncios = Anuncios::where('nombre','LIKE','%'.$req->busqueda.'%')->orderBy("activo",'desc')->paginate(9);
+            $anuncios->appends($req->only('busqueda'));
+        }
+
         return view('anuncios.index', ['anuncios' => $anuncios]);
     }
 
