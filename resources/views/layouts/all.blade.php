@@ -112,6 +112,9 @@
       <ul class="list-unstyled CTAs">
         <li>
           <a href="https://github.com/pablo98ad" class="download">Por Pablo Ávila Doñate</a>
+          @if (!Auth::check())
+          <a href="{{route('login')}}" class="download">Entrar</a>
+          @endif
         </li>
       </ul>
     </nav>

@@ -16,7 +16,8 @@ Listado de profesores
     LISTADO DE PROFESORES
   @endsection
   <div class="row justify-content-between">
-
+    
+  @if (Auth::check())
     <!-- MODAL PARA LA IMPORTACION  DE PROFESORES POR FICHERO -->
     <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">Importar</button>
 
@@ -45,15 +46,16 @@ Listado de profesores
         </div>
       </div>
     </div>
-
+    @endif
     <form class="form-inline my-2 my-lg-0" action="{{url('/profesores')}}" role="search" method="get">
     <!--csrf_field()-->
       <input class="form-control mr-sm-2" type="text" name="busqueda" placeholder="Buscar" aria-label="Search">
       <button class="btn btn-success my-2 my-sm-0" type="submit">Buscar</button>
     </form>
 
+    @if (Auth::check())
     <a class='col-3 col-sm-2 col-md-2  btn btn-info mb-1 mr-2' href="{{url('profesores/').'/create'}}" role='button'>Añadir</a>
-
+    @endif
 
 
   </div>
@@ -94,6 +96,7 @@ Listado de profesores
           </div><br>
           <!--<a class='btn btn-primary' href='profesores/{{$profesor->id}}' role='button'>Visualizar</a>-->
           <a class='btn btn-warning' href='horario/profesor/{{$profesor->id}}' role='button'>Horario</a>
+          @if (Auth::check())
           <a class='btn btn-primary' href='profesores/{{$profesor->id}}/edit' role='button'>Editar</a>
           <div class="d-inline">
             <form class="d-inline" method="POST" action="{{url('profesores/').'/'.$profesor->id}}">
@@ -102,6 +105,7 @@ Listado de profesores
               <input type="submit" name="eliminar" class="btn btn-danger" value="Eliminar">
             </form>
           </div>
+          @endif
         </div>
       </div>
 
