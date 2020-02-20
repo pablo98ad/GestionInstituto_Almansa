@@ -16,6 +16,11 @@ body,
 .pagination {
   display: inline-block;
 }
+.alert{
+  position: absolute !important;
+  z-index: 99999;
+  width: 100%;
+}
 
 .pagination li {
   color: black;

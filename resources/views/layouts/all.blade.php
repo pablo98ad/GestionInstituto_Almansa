@@ -166,7 +166,7 @@
         $(this).hide();
         //$(this).remove();
       });
-    }, 4000);
+    }, 6000);
   </script>
   <!--colapso del menu-->
   <script type="text/javascript">

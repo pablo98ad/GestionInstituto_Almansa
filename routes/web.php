@@ -60,5 +60,6 @@ Route::get('/api/getalumnos', 'AlumnoController@getTodosAlumnosJSON');
 Route::get('/api/getaulas', 'AulaController@getTodasAulasJSON');
 Route::get('/api/getAulasDisponibles', 'ReservasController@getTodasAulasDisponiblesJSON');
 
+
 Route::get('verAnuncios', 'AnunciosController@verAnuncios');
 ?>

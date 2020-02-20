@@ -27,7 +27,7 @@ class ReservasController extends Controller
         $diaActual = date("Y-m-d", strtotime("today"));
         $reservasAulas = Reservas::where('fecha', '>=', $diaActual)->orderBy('fecha', 'asc')->orderBy('hora', 'asc')->get();
            
-        return view('reservas.listado', ['reservas' => $reservasAulas]);
+        return view('reservas.listadoTabla', ['reservas' => $reservasAulas]);
     }
 
     public function destroy($id)
@@ -36,9 +36,9 @@ class ReservasController extends Controller
             $reserva = Reservas::find($id);
             $reserva->delete();
         } catch (\Exception $e) {
-            return redirect()->action('ReservasController@index')->with('error', 'La Reserva del aula ID: ' . $reserva->aula->id.' para el dia '.$reserva->fecha.' a la hora '.$reserva->hora.' con el profesor: '.$reserva->profesor->nombre . ', eliminada correctamente.');
+            return redirect()->action('ReservasController@listado')->with('error', 'La Reserva del aula ID: ' . $reserva->aula->id.' para el dia '.$reserva->fecha.' a la hora '.$reserva->hora.' con el profesor: '.$reserva->profesor->nombre . ', eliminada correctamente.');
         }
-        return redirect()->action('ReservasController@index')->with('notice', 'La Reserva del aula ID: ' . $reserva->aula->id.' para el dia '.$reserva->fecha.' a la hora '.$reserva->hora.' con el profesor: '.$reserva->profesor->nombre . ', no se ha eliminado correctamente.');
+        return redirect()->action('ReservasController@listado')->with('notice', 'La Reserva del aula ID: ' . $reserva->aula->id.' para el dia '.$reserva->fecha.' a la hora '.$reserva->hora.' con el profesor: '.$reserva->profesor->nombre . ', no se ha eliminado correctamente.');
     }
 
     //DESDE RUTA /reservar

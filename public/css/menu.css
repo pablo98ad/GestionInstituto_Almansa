@@ -9,11 +9,15 @@ body {
 }
 
 .components p {
+
     font-family: 'Poppins', sans-serif;
-    font-size: 1.5em;
+    font-size: 1.3em;
     font-weight: 300;
     line-height: 1.7em;
     color: #999;
+    padding:0px;
+    margin: 0px;
+    margin-bottom: 10px;
 }
 
 
@@ -30,7 +34,7 @@ body {
     background: #fff;
     border: none;
     border-radius: 10px;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
@@ -66,7 +70,7 @@ body {
     
     background: rgb(48, 68, 150);
     color: #fff;*/
-
+    overflow-y: auto;
     transition: all 0.6s cubic-bezier(0.945, 0.020, 0.270, 0.665);
     transform-origin: bottom left;
     width: 280px;
@@ -86,8 +90,9 @@ body {
 }
 
 #sidebar .sidebar-header {
-    padding: 20px;
-    
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
 }
 .sidebar-header{
     background: rgb(51,119,64);

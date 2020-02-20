@@ -22,7 +22,7 @@ Ver aula {{$aula->nombre}}
 @section('content')
 <div class="container text-center ">
   @section('tituloCabezera')
-  Mostrar Aula: {{$aula->nombre}}
+    Mostrar Aula: {{$aula->nombre}}
   @endsection
 
   <div class="form-row">
@@ -38,15 +38,13 @@ Ver aula {{$aula->nombre}}
 
   <div class="form-row text-center">
     <div class="form-group col-md-12 ">
-      <?php
-      if ($aula->reservable == false) {
-        echo " <input disabled class='text-center' data-offstyle='danger' data-onstyle='success' data-toggle='toggle' id='chkToggle2' type='checkbox' data-on='Se puede Reservar' data-off='No se puede Reservar' data-width='95' name='reservable' >
-            ";
-      } else {
-        echo " <input disabled class='text-center' data-offstyle='danger' data-onstyle='success' data-toggle='toggle' id='chkToggle2' type='checkbox' data-on='Se puede Reservar' data-off='No se puede Reservar' data-width='95' name='reservable' checked>
-            ";
-      }
-      ?>
+      @if ($aula->reservable == false)
+         <input disabled class='text-center' data-offstyle='danger' data-onstyle='success' data-toggle='toggle' id='chkToggle2' type='checkbox' data-on='Se puede Reservar' data-off='No se puede Reservar' data-width='95' name='reservable' >
+            
+      @else
+        <input disabled class='text-center' data-offstyle='danger' data-onstyle='success' data-toggle='toggle' id='chkToggle2' type='checkbox' data-on='Se puede Reservar' data-off='No se puede Reservar' data-width='95' name='reservable' checked>
+            
+      @endif
     </div>
   </div>
 
