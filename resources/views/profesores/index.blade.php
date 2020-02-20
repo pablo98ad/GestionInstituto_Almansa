@@ -10,8 +10,7 @@ Listado de profesores
 @endsection
 
 @section('content')
-<div class="container-md text-center">
-  <!--Estoy en la vista que se ha llamado a traves del controlador de ProfesorController -->
+<div class="container-XL pl-4 text-center">
   @section('tituloCabezera') 
     LISTADO DE PROFESORES
   @endsection
@@ -48,7 +47,6 @@ Listado de profesores
     </div>
     @endif
     <form class="form-inline my-2 my-lg-0" action="{{url('/profesores')}}" role="search" method="get">
-    <!--csrf_field()-->
       <input class="form-control mr-sm-2" type="text" name="busqueda" placeholder="Buscar" aria-label="Search">
       <button class="btn btn-success my-2 my-sm-0" type="submit">Buscar</button>
     </form>
@@ -57,16 +55,14 @@ Listado de profesores
     <a class='col-3 col-sm-2 col-md-2  btn btn-info mb-1 mr-2' href="{{url('profesores/').'/create'}}" role='button'>Añadir</a>
     @endif
 
-
   </div>
   <div class="row mt-2 ">
-    <?php foreach ($profesores as $profesor) { ?>
+    @foreach  ($profesores as $profesor)
 
-      <div class="card col-md-4 col-sm-6 col-12 mt-1 ">
-        <div class="card-body ">
+      <div class="card col-md-3 col-sm-6 col-12 mt-1 ">
+        <div class="card-body m-0 p-0 mt-2 mb-2">
           <h2 class="card-title d-inline">{{$profesor->nombre}}</h2>
           <img class="card-img-top w-25 d-inline border mb-1" src="{{url('../').'/storage/app/public/'.$profesor->rutaImagen}}" alt="">
-
           <h5 class="card-subtitle mb-2 text-muted">{{$profesor->apellidos}}</h5>
           <div class="table-responsive">
             <table class="table">
@@ -109,17 +105,15 @@ Listado de profesores
         </div>
       </div>
 
-    <?php } 
-    if(sizeOf($profesores)==0){
-    echo "<h3 class='text-center w-100 mt-4'>No hay resultados</h3>";
-    }
-    ?>
-
+    @endforeach
+    @if(sizeOf($profesores)==0)
+      <h3 class='text-center w-100 mt-4'>No hay resultados</h3>
+    @endif
+    
   </div><br><br>
   <div class="row text-center d-flex justify-content-center">
     {{ $profesores->links() }}
     </div>
 </div>
 </div>
-
 @endsection

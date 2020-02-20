@@ -4,6 +4,8 @@
 Listado Reservas
 @endsection
 
+
+
 @section('breadcrumb')
 <li class="d-inline breadcrumb-item"><a href="{{url('/')}}">Instituto</a></li>
 <li class="breadcrumb-item d-inline"><a href="{{url('reservar/')}}">Reservas</a></li>
@@ -18,7 +20,7 @@ Listado Reservas
   @endsection
     
   <div class="row">
-    <?php foreach ($reservas as $reserva) { ?>
+    @foreach ($reservas as $reserva) 
 
       <div class="card col-md-4 col-sm-6 col-12 mt-1 ">
         <div class="card-body ">
@@ -70,11 +72,12 @@ Listado Reservas
         </div>
       </div>
 
-    <?php } ?>
+    @endforeach
     
   </div><br><br>
 </div>
 </div>
+
 <?php
 function obtenerDiaSemanaFecha($date){
   $diaSemana = date('w', strtotime($date));
@@ -101,9 +104,7 @@ function obtenerDiaSemanaFecha($date){
         $diaSemana='Domingo';
           break;
 }
-
   return $diaSemana;
 }
-
 ?>
 @endsection

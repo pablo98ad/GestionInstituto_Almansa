@@ -1,0 +1,62 @@
+body {
+            background: linear-gradient(-45deg, rgb(0, 255, 0), rgb(0, 50, 0));
+            background-size: 400% 400%;
+            animation: gradient 10s ease infinite;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        .position-ref {
+            position: relative;
+        }
+
+        .links {
+            font-size: 15px;
+            background-color: #EEE;
+        }
+
+        .m-b-md {
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            font-size: 30px;
+            color: black;
+        }
+
+        .botones {
+            text-decoration: none;
+            padding: 5px;
+            padding-left: 6px;
+            padding-right: 6px;
+            font-family: helvetica;
+            font-weight: 300;
+            font-size: 1.6em;
+            font-style: italic;
+            color: #002215;
+            background-color: #82b085;
+            border-radius: 2px;
+            border: 3px double #006505;
+        }
+
+        .botones:hover {
+            opacity: 0.6;
+            text-decoration: none;
+        }

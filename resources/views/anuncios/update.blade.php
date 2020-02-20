@@ -5,12 +5,14 @@ Editar anuncio {{$anuncios->nombre}}
 @endsection
 
 @section('scriptsHead')
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-<!-- add summernote -->
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote.min.js"></script>
+<!-- Para el Date time ranger picker del rengo de fechas del anuncio-->
+<script type="text/javascript" src="{{asset('js/moment-2.18.1.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/daterangepicker-3.14.1.min.js')}}"></script>
+<link rel="stylesheet" type="text/css" href="{{asset('css/daterangepicker-3.14.1.css')}}" />
+
+<!-- Para el editor HTML5 de la  descripcion del anuncio -->
+<link href="{{asset('css/summernote-0.8.1.5.min.css')}}" rel="stylesheet">
+<script src="{{asset('js/summernote-0.8.1.5.min.js')}}"></script>
 @endsection
 
 @section('breadcrumb')
@@ -160,4 +162,10 @@ Editar anuncio {{$anuncios->nombre}}
 
 </div>
 
+@endsection
+
+@section('scriptsFooter')
+<!-- Para el switch (input tipo checkbox) de si un anuncio sera activo o no-->
+<link href="{{asset('css/bootstrap4-toggle-3.6.1.min.css')}}" rel="stylesheet">
+<script src="{{asset('js/bootstrap4-toggle-3.6.1.min.js')}}"></script>
 @endsection

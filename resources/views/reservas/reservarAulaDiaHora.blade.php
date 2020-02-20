@@ -49,8 +49,11 @@ Reservar Aula
 
 
 </style>
-<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+<!-- Para que se vea 'bonita' la tabla de los horarios -->
+<link rel="stylesheet" href="{{asset('css/tablaHorarios.css')}}">
+<!-- Para el select personalizado -->
+<link href="{{asset('css/select2-4.0.13.min.css')}}" rel="stylesheet" />
+<script src="{{asset('js/select2-4.0.13.min.js')}}"></script>
 @endsection
 
 @section('breadcrumb')

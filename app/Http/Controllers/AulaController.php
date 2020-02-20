@@ -22,9 +22,9 @@ class AulaController extends Controller
     {
 
         if($req->busqueda == ""){
-            $aulas = Aula::paginate(9);
+            $aulas = Aula::paginate(12);
         }else{
-            $aulas = Aula::where('nombre','LIKE','%'.$req->busqueda.'%')->orWhere('numero','LIKE','%'.$req->busqueda.'%' )->paginate(9);
+            $aulas = Aula::where('nombre','LIKE','%'.$req->busqueda.'%')->orWhere('numero','LIKE','%'.$req->busqueda.'%' )->paginate(12);
             $aulas->appends($req->only('busqueda'));
         }
         return view('aulas.index', ['aulas' => $aulas]);

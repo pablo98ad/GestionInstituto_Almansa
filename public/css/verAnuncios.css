@@ -1,0 +1,9 @@
+.container,
+    body,
+    html {
+      background-color: grey;
+    }
+
+    .anuncioVer {
+      border: 5px dashed red;
+    }

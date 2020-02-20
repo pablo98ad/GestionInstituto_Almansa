@@ -11,7 +11,7 @@ Listado de aulas
 
 @section('content')
 
-<div class="container-md text-center">
+<div class="container-XL pl-4 text-center">
 @section('tituloCabezera') 
 LISTADO DE AULAS
 @endsection
@@ -27,7 +27,7 @@ LISTADO DE AULAS
   <div class="row">
     <?php foreach ($aulas as $aula) { ?>
 
-      <div class="card col-md-4 col-sm-6 col-12 mt-1 ">
+      <div class="card col-md-3 col-sm-6 col-12 mt-1 ">
         <div class="card-body  ">
           <h2 class="card-title">{{$aula->nombre}}</h2>
           <h4 class="card-subtitle mb-2 text-muted">{{$aula->numero}}</h4>

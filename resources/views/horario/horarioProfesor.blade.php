@@ -1,5 +1,10 @@
 @extends('layouts/all')
 
+@section('scriptsHead')
+<!-- Para que se vea 'bonita' la tabla de los horarios -->
+<link rel="stylesheet" href="{{asset('css/tablaHorarios.css')}}">
+@endsection
+
 @section('titulo')
 Horario del profesor {{$horariosProfe['nombreProfesor']}}
 @endsection
@@ -15,7 +20,7 @@ Horario del profesor {{$horariosProfe['nombreProfesor']}}
 <div class="container-md text-center">
 
 @section('tituloCabezera')  
-Horario profesor: {{$horariosProfe['nombreProfesor']}} + reservas de esta semana
+Horario profesor: {{$horariosProfe['nombreProfesor']}} y reservas de esta semana
 @endsection
 <?php if (!isset($horariosProfe['L']['1'])){
     echo "<h1>No se han encontrado registros para esta tabla</h1><br>";

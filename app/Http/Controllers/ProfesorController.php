@@ -25,9 +25,9 @@ class ProfesorController extends Controller
     public function index(Request $req)
     {
         if($req->busqueda == ""){
-            $profesores = Profesor::paginate(6);
+            $profesores = Profesor::paginate(12);
         }else{
-            $profesores = Profesor::where('nombre','LIKE','%'.$req->busqueda.'%')->orWhere('apellidos','LIKE','%'.$req->busqueda.'%' )->paginate(6);
+            $profesores = Profesor::where('nombre','LIKE','%'.$req->busqueda.'%')->orWhere('apellidos','LIKE','%'.$req->busqueda.'%' )->paginate(12);
             $profesores->appends($req->only('busqueda'));
         }
         

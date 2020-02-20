@@ -5,11 +5,10 @@ Listado de Anuncios
 @endsection
 
 @section('scriptsHead')
-
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-
+<!-- Para el Date time ranger picker del rengo de fechas del anuncio-->
+<script type="text/javascript" src="{{asset('js/moment-2.18.1.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/daterangepicker-3.14.1.min.js')}}"></script>
+<link rel="stylesheet" type="text/css" href="{{asset('css/daterangepicker-3.14.1.css')}}" />
 @endsection
 
 @section('breadcrumb')
@@ -19,7 +18,7 @@ Listado de Anuncios
 
 @section('content')
 
-<div class="container-md text-center">
+<div class="container-XL pl-4 text-center">
   @section('tituloCabezera')  
     LISTADO DE ANUNCIOS
   @endsection
@@ -34,7 +33,7 @@ Listado de Anuncios
   <div class="row">
     <?php foreach ($anuncios as $anuncio) { ?>
 
-      <div class="card col-md-4 col-sm-6 col-12 mt-1 ">
+      <div class="card col-md-6 col-sm-6 col-12 mt-1 ">
         <div class="card-body  ">
           <h2 class="card-title">{{$anuncio->nombre}}</h2>
           <?php
@@ -136,13 +135,6 @@ Listado de Anuncios
                 </div>
               </div>
             </div>
-
-
-
-
-
-
-
           </div>
         </div>
       </div>

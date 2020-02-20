@@ -39,7 +39,6 @@ Editar Profesor {{$profesor->nombre}}
       </div>
     </div>
 
-
     <div class="form-row ">
       <div class="form-group col-md-4">
         <label for="inputAddress2">Especialidad</label>
@@ -58,10 +57,9 @@ Editar Profesor {{$profesor->nombre}}
         <textarea cols="70" class="form-control" name="observaciones" id="inputObservaciones">{{$profesor->observaciones}}</textarea>
       </div>
       <div class="form-group col-md-12 ">
-        <?php if (substr($profesor->rutaImagen, -11, 12) != 'default.png') { //comprobamos si tiene la foto por defecto
-        ?>
+        @if (substr($profesor->rutaImagen, -11, 12) != 'default.png')  <!--comprobamos si tiene la foto por defecto-->
           <img class="d-inline border" width="250px" src="{{url('../').'/storage/app/public/'.$profesor->rutaImagen}}" alt="">
-        <?php } ?>
+        @endif
         <input type="file" name="imagenProfesor" class="d-inline w-25 form-control-file" id="exampleFormControlFile1">
       </div>
 

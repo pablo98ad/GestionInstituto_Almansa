@@ -1,15 +1,48 @@
-html,body, #content, .container-md,.wrapper{
-    background-color: rgb(170, 221, 168);
-
- }
-
- .pagination > li{
-     background-color: white;
- }
- .pagination li  a , .pagination li  a:hover{
-    
-    text-transform: none !important;
-  
+html,
+body,
+#content,
+.container-md,
+.wrapper {
+  background-color: rgb(170, 221, 168);
 }
 
- 
+.pagination > li {
+  background-color: white;
+}
+.pagination li a,
+.pagination li a:hover {
+  text-transform: none !important;
+}
+.pagination {
+  display: inline-block;
+}
+
+.pagination li {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+.pagination li.active {
+  background-color: #4caf50;
+  color: white;
+}
+
+.pagination li:hover:not(.active) {
+  background-color: #ddd;
+}
+.pagination li {
+  transition: background-color 0.3s;
+}
+.pagination li {
+  border: 1px solid #ddd; /* Gray */
+}
+.pagination li:first-child {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.pagination li:last-child {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}

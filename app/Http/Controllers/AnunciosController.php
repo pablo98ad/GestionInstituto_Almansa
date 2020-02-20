@@ -23,9 +23,9 @@ class AnunciosController extends Controller
     public function index(Request $req)
     {
         if($req->busqueda == ""){
-            $anuncios = Anuncios::orderBy("activo",'desc')->paginate(9);
+            $anuncios = Anuncios::orderBy("activo",'desc')->paginate(6);
         }else{
-            $anuncios = Anuncios::where('nombre','LIKE','%'.$req->busqueda.'%')->orderBy("activo",'desc')->paginate(9);
+            $anuncios = Anuncios::where('nombre','LIKE','%'.$req->busqueda.'%')->orderBy("activo",'desc')->paginate(6);
             $anuncios->appends($req->only('busqueda'));
         }
 

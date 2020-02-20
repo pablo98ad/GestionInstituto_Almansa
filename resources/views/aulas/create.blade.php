@@ -48,3 +48,9 @@ Formulario Añadir Aula
   </form>
 </div>
 @endsection
+
+@section('scriptsFooter')
+<!-- Para el switch (input tipo checkbox) de si un aula es reservable o no-->
+<link href="{{asset('css/bootstrap4-toggle-3.6.1.min.css')}}" rel="stylesheet">
+<script src="{{asset('js/bootstrap4-toggle-3.6.1.min.js')}}"></script>
+@endsection

@@ -4,6 +4,11 @@
 Horario del aula {{$horariosAula['nombreAula']}}
 @endsection
 
+@section('scriptsHead')
+<!-- Para que se vea 'bonita' la tabla de los horarios -->
+<link rel="stylesheet" href="{{asset('css/tablaHorarios.css')}}">
+@endsection
+
 @section('breadcrumb')
 <li class="breadcrumb-item d-inline"><a href="{{url('/')}}">Instituto</a></li>
 <li class="breadcrumb-item d-inline"><a href="{{url('/aulas')}}">Aulas</a></li>

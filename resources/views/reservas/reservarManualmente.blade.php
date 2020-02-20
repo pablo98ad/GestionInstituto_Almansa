@@ -58,12 +58,15 @@ Reservar Aula Manualmente
   }
 
 </style>
-  
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+<!-- Para que se vea 'bonita' la tabla de los horarios -->
+<link rel="stylesheet" href="{{asset('css/tablaHorarios.css')}}">
+<!-- Para el Date time ranger picker del dia que reservamos-->
+<script type="text/javascript" src="{{asset('js/moment-2.18.1.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/daterangepicker-3.14.1.min.js')}}"></script>
+<link rel="stylesheet" type="text/css" href="{{asset('css/daterangepicker-3.14.1.css')}}" />
+<!-- Para el select personalizado -->
+<link href="{{asset('css/select2-4.0.13.min.css')}}" rel="stylesheet" />
+<script src="{{asset('js/select2-4.0.13.min.js')}}"></script>
 @endsection
 
 @section('breadcrumb')
@@ -140,8 +143,6 @@ Reservar Aula Manualmente
       </div>
     </div>
 </form>
-    
-
     <br>
     <hr>
 
@@ -153,13 +154,6 @@ Reservar Aula Manualmente
   let urlProfes = directorioBase + '/api/getprofesores';
   let urlAulas = directorioBase + '/api/getAulasDisponibles';
   let directorioImagenes = "{{url('../').'/storage/app/public/'}}";
-
-  $('#profes').select2({
-    placeholder: "Cargando..."
-  });
-  $('#aulas').select2({
-    placeholder: "Cargando..."
-  });
 
   /////
   fetch(urlProfes) //pedimos a nuestra api la lista completa de los profes disponibles con horas para reservar
@@ -311,16 +305,8 @@ fetch(urlAulas) //pedimos a nuestra api la lista completa de los profes disponib
     },
     });
 
-
-
-
-
-
-
-
-
   document.getElementById('enviar').addEventListener('click',validarForm);
-
+    //COMPROBAMOS QUE HA SELECCIONADO UNA AULA Y UN PROFESOR
   function validarForm(e){
     if(document.getElementById('aula_id').value=='no' ){
       document.getElementById('selectAulas').className="error";
@@ -334,9 +320,6 @@ fetch(urlAulas) //pedimos a nuestra api la lista completa de los profes disponib
     }else{
       document.getElementById('selectProfes').className="";
     }
-
-
-    
   }
 
 </script>
