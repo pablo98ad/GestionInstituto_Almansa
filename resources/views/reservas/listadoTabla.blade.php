@@ -42,6 +42,7 @@ Listado Reservas
       <thead>
         <tr>
           <th>Profesor</th>
+          <th>Imagen</th>
           <th>Aula</th>
           <th>Fecha</th>
           <th>Dia Semana</th>
@@ -56,6 +57,7 @@ Listado Reservas
         @foreach ($reservas as $reserva)
         <tr>
           <td>{{$reserva->profesor->nombre}} {{$reserva->profesor->apellidos}}</td>
+          <td><img class="p-0 m-0"width="60px" src="{{url('../').'/storage/app/public/'.$reserva->profesor->rutaImagen}}" alt=""></td>
           <td>{{$reserva->aula->nombre}} ({{$reserva->aula->numero}})</td>
           <td>{{$reserva->fecha}}</td>
           <td>{{obtenerDiaSemanaFecha($reserva->fecha)}}</td>
@@ -126,7 +128,7 @@ Listado Reservas
         "zeroRecords": "Resgistros no encontrados",
         "searchPlaceholder": "Buscar Registros"
       },
-      "pageLength": 30,
+      "pageLength": 10,
       "paging": false,
       "responsive": true,
       "columns": [{
@@ -146,11 +148,14 @@ Listado Reservas
         },
         {
           "responsivePriority": 6
+        },
+        {
+          "responsivePriority": 7
         }
       ],
       "columnDefs": [{
             "orderable": false,
-            "targets": [6]
+            "targets": [1,7]
         }]
 
     });
