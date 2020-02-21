@@ -58,7 +58,7 @@ Editar Profesor {{$profesor->nombre}}
       </div>
       <div class="form-group col-md-12 ">
         @if (substr($profesor->rutaImagen, -11, 12) != 'default.png')  <!--comprobamos si tiene la foto por defecto-->
-          <img class="d-inline border" width="250px" src="{{url('../').'/storage/app/public/'.$profesor->rutaImagen}}" alt="">
+          <img class="d-inline border" width="250px" src="{{url('/').'/storage/'.$profesor->rutaImagen/*url('../').'/storage/app/public/'.$profesor->rutaImagen*/}}" alt="">
         @endif
         <input type="file" name="imagenProfesor" class="d-inline w-25 form-control-file" id="exampleFormControlFile1">
       </div>

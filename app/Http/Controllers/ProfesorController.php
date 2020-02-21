@@ -71,7 +71,7 @@ class ProfesorController extends Controller
             $archivo = $request->file('imagenProfesor');
             if($archivo!==null){
                 $nuevoNombre = now()->format('Y-m-d-H-i-s') . '.' . $archivo->getClientOriginalName();
-                $storagePath  = Storage::disk('public')->path('/');
+                $storagePath  = Storage::disk('local')->path('/');
                 $archivo->move($storagePath . 'imagenes/profesores/', $nuevoNombre);
                 $profesor->rutaImagen = 'imagenes/profesores/'.$nuevoNombre;   
             }else{
@@ -96,7 +96,7 @@ class ProfesorController extends Controller
         $nombre = $archivo->getClientOriginalName();
 
         try { //no se haria asi...
-            Storage::disk('public')->put($nombre, File::get($archivo));
+            Storage::disk('local')->put($nombre, File::get($archivo));
         } catch (\Exception  $e) {
             return redirect()->action('ProfesorController@index')->with('error', 'Error, no se ha podido guardar el fichero');
         }
@@ -153,7 +153,7 @@ class ProfesorController extends Controller
         if ($request->file('imagenProfesor') !== null) {
             $imagenAntigua= $profesor->rutaImagen;
             if( substr($imagenAntigua,-11,12)!='default.png'){//si no es la imagen por defecto la borramos
-                unlink(storage_path('app/public/'.$imagenAntigua));
+                unlink(Storage::disk('local')->path('/').$imagenAntigua);
             }
             //comprobamos si es una imagen
             $this->validate($request, [
@@ -164,7 +164,7 @@ class ProfesorController extends Controller
 
             // $archivo->move($ruta, $nuevoNombre);
             $profesor->rutaImagen = 'imagenes/profesores/' . $nuevoNombre;
-            $storagePath  = Storage::disk('public')->path('/');
+            $storagePath  = Storage::disk('local')->path('/');
 
             $profesor->save();
             //Storage::disk('public')->put($nuevoNombre, File::get($archivo));
@@ -190,7 +190,7 @@ class ProfesorController extends Controller
             //Si se ha podido borrar el profesor borramos su imagen
             $imagenAntigua= $profesor->rutaImagen;
             if($imagenAntigua!==null && substr($imagenAntigua,-11,12)!='default.png'){//si no es la imagen por defecto la borramos
-                unlink(storage_path('app/public/'.$imagenAntigua));
+                unlink(Storage::disk('local')->path('/').$imagenAntigua);
             }
         } catch (\Exception $e) {
 

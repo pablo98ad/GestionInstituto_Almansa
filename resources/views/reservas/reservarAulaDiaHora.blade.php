@@ -127,7 +127,7 @@ Reservar Aula {{$parametros[0] }} el dia {{$parametros[1]}}, hora {{$parametros[
 <script>
   let directorioBase = '{{url('/')}}';
   let url = directorioBase + '/api/getprofesores';
-  let directorioImagenes = "{{url('../').'/storage/app/public/'}}";
+  let directorioImagenes = "{{url('/').'/storage/'/*url('../').'/storage/app/public/'*/}}";
 
   $('#profes').select2({
     placeholder: "Cargando..."

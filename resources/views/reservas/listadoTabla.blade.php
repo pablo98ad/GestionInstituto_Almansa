@@ -38,7 +38,7 @@ Listado Reservas
 
   <div class="tableContainer row text-center d-flex justify-content-center">
     <!--cell-border display hover stripe-->
-    <table id="tabla" class=" col-12 table  table-bordered hover" style="width:100%">
+    <table id="tabla" class=" col-12 table  table-bordered hover" >
       <thead>
         <tr>
           <th>Profesor</th>
@@ -57,7 +57,7 @@ Listado Reservas
         @foreach ($reservas as $reserva)
         <tr>
           <td>{{$reserva->profesor->nombre}} {{$reserva->profesor->apellidos}}</td>
-          <td><img class="p-0 m-0"width="60px" src="{{url('../').'/storage/app/public/'.$reserva->profesor->rutaImagen}}" alt=""></td>
+          <td><img class="p-0 m-0"width="60px" src="{{url('/').'/storage/'.$reserva->profesor->rutaImagen/*url('../').'/storage/app/public/'.$reserva->profesor->rutaImagen*/}}" alt=""></td>
           <td>{{$reserva->aula->nombre}} ({{$reserva->aula->numero}})</td>
           <td>{{$reserva->fecha}}</td>
           <td>{{obtenerDiaSemanaFecha($reserva->fecha)}}</td>
@@ -128,10 +128,13 @@ Listado Reservas
         "zeroRecords": "Resgistros no encontrados",
         "searchPlaceholder": "Buscar Registros"
       },
-      "pageLength": 10,
+      "pageLength": 50,
       "paging": false,
       "responsive": true,
       "columns": [{
+          "responsivePriority": 0
+        },
+        {
           "responsivePriority": 1
         },
         {
@@ -141,15 +144,14 @@ Listado Reservas
           "responsivePriority": 3
         },
         {
-          "responsivePriority": 5
-        },
-        {
           "responsivePriority": 4
         },
         {
-          "responsivePriority": 6
+          "responsivePriority": 5
         },
         {
+          "responsivePriority": 6
+        },{
           "responsivePriority": 7
         }
       ],

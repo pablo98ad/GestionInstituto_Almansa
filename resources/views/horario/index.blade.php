@@ -87,7 +87,7 @@ Horarios y reservas de <b>esta semana</b>
 
 <script>
   let directorioBase = '{{url('/')}}';
-  let directorioImagenes = "{{url('../').'/storage/app/public/'}}";
+  let directorioImagenes = "{{url('/').'/storage/'/*url('../').'/storage/app/public/'*/}}";
 
   document.getElementById('filtro').addEventListener('change', cargar);
 

@@ -62,7 +62,7 @@ Listado de profesores
       <div class="card col-md-3 col-sm-6 col-12 mt-1 ">
         <div class="card-body m-0 p-0 mt-2 mb-2">
           <h2 class="card-title d-inline">{{$profesor->nombre}}</h2>
-          <img class="card-img-top w-25 d-inline border mb-1" src="{{url('../').'/storage/app/public/'.$profesor->rutaImagen}}" alt="">
+          <img class="card-img-top w-25 d-inline border mb-1" src="{{url('/').'/storage/'.$profesor->rutaImagen/*url('../').'/storage/app/public/'.$profesor->rutaImagen*/}}" alt="">
           <h5 class="card-subtitle mb-2 text-muted">{{$profesor->apellidos}}</h5>
           <div class="table-responsive">
             <table class="table">

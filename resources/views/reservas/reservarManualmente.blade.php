@@ -153,7 +153,7 @@ Reservar Aula Manualmente
   let directorioBase = '{{url('/')}}';
   let urlProfes = directorioBase + '/api/getprofesores';
   let urlAulas = directorioBase + '/api/getAulasDisponibles';
-  let directorioImagenes = "{{url('../').'/storage/app/public/'}}";
+  let directorioImagenes = "{{url('/').'/storage/'/*url('../').'/storage/app/public/'*/}}";
 
   /////
   fetch(urlProfes) //pedimos a nuestra api la lista completa de los profes disponibles con horas para reservar
