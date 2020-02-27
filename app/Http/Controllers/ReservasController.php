@@ -7,6 +7,7 @@ use App\Reservas;
 use App\Aula;
 use App\Horario;
 use Illuminate\Support\Facades\DB;
+use Exception;
 
 class ReservasController extends Controller
 {   
@@ -18,7 +19,7 @@ class ReservasController extends Controller
  */
     public function __construct()
     {
-        $this->middleware('auth')->except('index','getTodasAulasDisponiblesJSON','horariosDisponiblesAula','reservarAula');
+       // $this->middleware('auth')->except('index','getTodasAulasDisponiblesJSON','horariosDisponiblesAula','reservarAula');
     }
 
     //DESDE RUTA /reservas/listado

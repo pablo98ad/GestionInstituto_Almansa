@@ -46,6 +46,7 @@ Ver Profesor {{$profesor->nombre}}
       <h5 class="card-title ">Imagen</h5>
       <img class="border d-inline border " width="250px"  src="{{url('/').'/storage/'.$profesor->rutaImagen/*url('../').'/storage/app/public/'.$profesor->rutaImagen*/}}" alt=""><br>
       <hr>
+      <a class='btn btn-warning' href='{{url('/horario/profesor/').'/'.$profesor->id}}' role='button'>Horario</a>
       <a class='btn btn-primary' href='{{$profesor->id}}/edit' role='button'>Editar</a>
       <!--<a class='btn btn-danger' href="{{route('profesores.destroy', [$profesor->id])}}" role='button'>Borrar</a>-->
       <div class="d-inline">

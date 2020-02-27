@@ -7,6 +7,7 @@ use App\Horario;
 use App\Profesor;
 use App\Aula;
 use App\Reservas;
+use Exception;
 
 class HorarioController extends Controller
 {
@@ -168,7 +169,7 @@ class HorarioController extends Controller
                 $encontrado=true;
                 $aux.= /*'Grupo: '.*/$horario[$i]->grupo->nombre.' </br> ';
                 $aux.= '<a href="'.url('/').'/aulas/'.$horario[$i]->aula->id.'">'.$horario[$i]->aula->nombre.'</a> </br> ';
-                $aux.= /*'Materia: '.*/$horario[$i]->materia->nombre.' </br> ';
+                $aux.= '<a href="'.url('/').'/materia/'.$horario[$i]->materia->id.'">'.$horario[$i]->materia->nombre.'</a> </br> ';
             }
         }
           
@@ -204,7 +205,7 @@ class HorarioController extends Controller
                 $encontrado=true;
                 $aux.= /*'Grupo: '.*/$horario[$i]->grupo->nombre.' </br> ';
                 $aux.= '<a href="'.url('/').'/profesores/'.$horario[$i]->profesor->id.'">'.$horario[$i]->profesor->nombre.' - '.$horario[$i]->profesor->codigo.'</a> </br> ';
-                $aux.= /*'Materia: '.*/$horario[$i]->materia->nombre.' </br> ';
+                $aux.= '<a href="'.url('/').'/materia/'.$horario[$i]->materia->id.'">'.$horario[$i]->materia->nombre.'</a> </br> ';
             }
         }
           
@@ -215,74 +216,4 @@ class HorarioController extends Controller
     }
 
 
-
-
-
-
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

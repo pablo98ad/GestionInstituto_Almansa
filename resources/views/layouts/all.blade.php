@@ -13,8 +13,11 @@
   <link rel="icon" type="image/png" sizes="96x96" href="{{asset('img/favicon-96x96.png')}}">
   <!-- Bootstrap 4.4.1 -->
   <link rel="stylesheet" href="{{asset('css/bootstrap-4.4.1.min.css')}}">
+  <!--Font-awesome-->
+  <link rel="stylesheet" href="{{asset('css/font-awesome-4.7.0/css/font-awesome.min.css')}}">
   <!-- JQuery  3.4.1 -->
   <script src="{{asset('js/jquery-3.4.1.min.js')}}"></script>
+
   @yield('scriptsHead')
 </head>
 
@@ -37,7 +40,7 @@
     <nav id="sidebar">
       <div class="sidebar-header">
         <a class="navbar-brand " href="{{url('/')}}">
-          <img src="{{asset('img/logoGestionInstituto.png')}}" width="220" height="105" class="d-inline-block align-center" alt="">
+          <img src="{{asset('img/logoGestionInstituto.png')}}" width="200" height="94" class="d-inline-block align-center" alt="">
         </a>
       </div>
 
@@ -66,15 +69,30 @@
         <li>
           <a href="#anuncios" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Anuncios</a>
           <ul class="collapse list-unstyled" id="anuncios">
+          @if (Auth::check())
             <li>
               <a href="{{url('/anuncios')}}">Listado Anuncios</a>
             </li>
             <li>
               <a href="{{url('/anuncios/create')}}">Crear nuevo Anuncio</a>
             </li>
+            @endif
             <li>
               <a href="{{url('/verAnuncios')}}">Invocar Pagina Anuncios</a>
             </li>
+          </ul>
+        </li>
+        <li>
+          <a href="#alumnos" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Alumnos</a>
+          <ul class="collapse list-unstyled" id="alumnos">
+            <li>
+              <a href="{{url('/alumno')}}">Listado de Alumnos</a>
+            </li>
+            @if (Auth::check())
+            <li>
+              <a href="{{url('/alumno/create')}}">Alta nuevo Alumno</a>
+            </li>
+            @endif
           </ul>
         </li>
         <li>
@@ -83,9 +101,11 @@
             <li>
               <a href="{{url('/profesores')}}">Listado de Profesores</a>
             </li>
+            @if (Auth::check())
             <li>
               <a href="{{url('/profesores/create')}}">Alta nuevo Profesor</a>
             </li>
+            @endif
           </ul>
         </li>
         <li>
@@ -94,17 +114,53 @@
             <li>
               <a href="{{url('/aulas')}}">Listado de Aulas</a>
             </li>
+            @if (Auth::check())
             <li>
               <a href="{{url('/aulas/create')}}">Alta nueva Aula</a>
             </li>
+            @endif
+          </ul>
+        </li>
+        <li>
+          <a href="#materias" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Materias</a>
+          <ul class="collapse list-unstyled" id="materias">
+            <li>
+              <a href="{{url('/materia')}}">Listado de Materias</a>
+            </li>
+            @if (Auth::check())
+            <li>
+              <a href="{{url('/materia/create')}}">Alta nueva Materia</a>
+            </li>
+            @endif
+          </ul>
+        </li>
+        <li>
+          <a href="#grupos" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Grupos</a>
+          <ul class="collapse list-unstyled" id="grupos">
+            <li>
+              <a href="{{url('/grupo')}}">Listado de Grupos</a>
+            </li>
+            @if (Auth::check())
+            <li>
+              <a href="{{url('/grupo/create')}}">Alta nuevo Grupo</a>
+            </li>
+            @endif
           </ul>
         </li>
       </ul>
       <ul class="list-unstyled CTAs">
         <li>
-          <a href="https://github.com/pablo98ad" class="download">Por Pablo Ávila Doñate</a>
-          @if (!Auth::check())
-          <a href="{{route('login')}}" class="download">Entrar</a>
+        
+          
+          @if (Auth::check())
+           <a href="{{url('/')}}" class="botonesGrandesMenu">Bienvenido {{ Auth::user()->name }}</a>
+          <form id="logout-form" action="{{route('logout')}}" method="POST" >
+            {{ csrf_field()}}
+            <a class="botonesGrandesMenu btn " onClick="document.getElementById('logout-form').submit();">Cerrar Sesion</a>
+          </form>
+          @else
+          <a href="{{route('login')}}" class="botonesGrandesMenu">Entrar</a>
+          <a target="_blank" href="https://github.com/pablo98ad" class="botonesGrandesMenu">Por Pablo Ávila Doñate</a>
           @endif
         </li>
       </ul>
@@ -112,7 +168,7 @@
 
     <!-- Page Content Holder -->
     <div id="content">
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light p-0 ">
         <div class="container-fluid d-flex justify-content-between w-100">
           <div>
             <button type="button" id="sidebarCollapse" class="navbar-btn">
@@ -120,9 +176,11 @@
               <span></span>
               <span></span>
             </button>
+            <!--<a class="ml-5 mb-2 btn btn-secondary my-auto" href="{{URL::previous()}}">Atras</a>-->
           </div>
+          
           <div>
-            <h4>@yield('tituloCabezera') </h4>
+            <h4 class="p-0 m-0">@yield('tituloCabezera') </h4>
           </div><!-- d-inline-block d-lg-none  -->
           <button class="d-none btn btn-dark  " type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <i class="fas fa-align-justify"></i>
@@ -149,25 +207,15 @@
 
 
   <script type="text/javascript">
-    /*var slideout = new Slideout({
-        'panel': document.getElementById('content'),
-        'menu': document.getElementById('sidebar'),
-        'padding': 256,
-        'tolerance': 70
-      });*/
-    //slideout.toggle();
-    //slideout.toggle();
-
-
-
+    //PARA ERRORES Y CONFIRMACIONES
     window.setTimeout(function() {
-      //slideout.toggle();
       $(".alert").fadeTo(500, 0).slideUp(500, function() {
         $(this).hide();
         //$(this).remove();
       });
     }, 6000);
   </script>
+
   <!--colapso del menu-->
   <script type="text/javascript">
     $(document).ready(function() {
@@ -224,11 +272,11 @@
 
 
 
-
+      //SELECION DE MODULO EN EL MENU AUTOMATICO
       let enlace = window.location.href.split('?')[0];
       $("a").each(function() {
         //console.log(enlace+'   -----   '+$(this).parent().attr('href'));
-        if (enlace == $(this).attr('href')) {
+        if (enlace == $(this).attr('href') && !$(this).hasClass('botonesGrandesMenu')) {
           $(this).parent().addClass(' active ');
           $(this).parent().parent().addClass(' show ');
           $(this).parent().parent().prev().addClass(' dropdown-toggle ');
@@ -237,6 +285,13 @@
       });
 
     });
+    //try{
+    //PARA QUE CUANDO ESTE EN UNA PAGINA CON UN FORMULARIO, LE PIDA CONFIRMACION PARA SALIR
+    if(document.querySelectorAll(".paginaFormulario").length>0 ){
+      window.onbeforeunload = ()=>{return 'Es posible que los cambios no se guarden'};
+    }
+    //}catch(e){}
+
     /*$(document).ready(function() {
 
       $("#sidebar").mCustomScrollbar({

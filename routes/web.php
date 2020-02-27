@@ -18,10 +18,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/ejemplo', function () {
-    return view('ejemplo');
-});
-
 Route::resource('profesores', 'ProfesorController');//para crear las rutas de las funciones del controlador de profesor
 Route::resource('grupo', 'GrupoController');//para crear las rutas de las funciones del controlador 
 Route::resource('aulas', 'AulaController');//para crear las rutas de las funciones del controlador 
@@ -29,7 +25,7 @@ Route::resource('alumno', 'AlumnoController');//para crear las rutas de las func
 //Route::resource('reservas', 'ReservasController');//para crear las rutas de las funciones del controlador
 Route::resource('ausencias', 'AusenciasController');//para crear las rutas de las funciones del controlador 
 Route::resource('anuncios', 'AnunciosController');//para crear las rutas de las funciones del controlador 
-Route::resource('horarios', 'HorarioController');//para crear las rutas de las funciones del controlador 
+//Route::resource('horarios', 'HorarioController');//para crear las rutas de las funciones del controlador 
 Route::resource('materia', 'MateriaController');//para crear las rutas de las funciones del controlador 
 
 
@@ -59,6 +55,7 @@ Route::get('/api/getprofesores', 'ProfesorController@getTodosProfesoresJSON');
 Route::get('/api/getalumnos', 'AlumnoController@getTodosAlumnosJSON');
 Route::get('/api/getaulas', 'AulaController@getTodasAulasJSON');
 Route::get('/api/getAulasDisponibles', 'ReservasController@getTodasAulasDisponiblesJSON');
+Route::get('/api/getgrupos', 'GrupoController@getTodosGruposJSON');
 
 
 Route::get('verAnuncios', 'AnunciosController@verAnuncios');

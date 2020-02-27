@@ -42,7 +42,7 @@ Listado Reservas
           <div class="d-inline">
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal-{{$reserva->id}}">
-              Eliminar
+            <i class="fa fa-trash" aria-hidden="true"></i>
             </button>
             <!-- Modal -->
             <div class="modal fade " id="exampleModal-{{$reserva->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

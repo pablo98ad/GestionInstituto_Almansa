@@ -7,6 +7,7 @@ use App\Profesor;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\ImageManagerStatic as Image;
+use Exception;
 
 
 
@@ -15,7 +16,7 @@ class ProfesorController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth')->except('index','getTodosProfesoresJSON');
+        $this->middleware('auth')->except('index', 'getTodosProfesoresJSON','show');
     }
     /**
      * Display a listing of the resource.
@@ -24,13 +25,13 @@ class ProfesorController extends Controller
      */
     public function index(Request $req)
     {
-        if($req->busqueda == ""){
+        if ($req->busqueda == "") {
             $profesores = Profesor::paginate(12);
-        }else{
-            $profesores = Profesor::where('nombre','LIKE','%'.$req->busqueda.'%')->orWhere('apellidos','LIKE','%'.$req->busqueda.'%' )->paginate(12);
+        } else {
+            $profesores = Profesor::where('nombre', 'LIKE', '%' . $req->busqueda . '%')->orWhere('apellidos', 'LIKE', '%' . $req->busqueda . '%')->paginate(12);
             $profesores->appends($req->only('busqueda'));
         }
-        
+
         return view('profesores.index', ['profesores' => $profesores]);
     }
 
@@ -69,18 +70,18 @@ class ProfesorController extends Controller
                 'imagenProfesor'  => 'nullable|image|mimes:jpg,png,gif,jpeg,bmp|max:10240'
             ]);
             $archivo = $request->file('imagenProfesor');
-            if($archivo!==null){
+            if ($archivo !== null) {
                 $nuevoNombre = now()->format('Y-m-d-H-i-s') . '.' . $archivo->getClientOriginalName();
                 $storagePath  = Storage::disk('local')->path('/');
                 $archivo->move($storagePath . 'imagenes/profesores/', $nuevoNombre);
-                $profesor->rutaImagen = 'imagenes/profesores/'.$nuevoNombre;   
-            }else{
+                $profesor->rutaImagen = 'imagenes/profesores/' . $nuevoNombre;
+            } else {
                 $profesor->rutaImagen = 'imagenes/profesores/default.png';
             }
-           // $archivo->move($ruta, $nuevoNombre);
+            // $archivo->move($ruta, $nuevoNombre);
             $profesor->save();
             //Storage::disk('public')->put($nuevoNombre, File::get($archivo));
-            
+
         } catch (\Exception  $e) {
             return redirect()->action('ProfesorController@index')->with('error', 'Error: ' . $e->getMessage() . ', no se ha podido guardar');
         }
@@ -111,10 +112,17 @@ class ProfesorController extends Controller
      */
     public function show($id)
     {
-        //Aqui tengo que mostrar el registro seleccionado 
-        $profesor = Profesor::find($id);
-        //$profesor->nombre=ucfirst($profesor->nombre); //Para que salga la primera letra del nombre siempre en mayusculas
-        return view('profesores.show', ['profesor' => $profesor]);
+        try {
+            //Aqui tengo que mostrar el registro seleccionado 
+            $profesor = Profesor::find($id);
+            if (!isset($profesor->nombre)) { //si no lo ha encontrado
+                throw new Exception();
+            }
+            //$profesor->nombre=ucfirst($profesor->nombre); //Para que salga la primera letra del nombre siempre en mayusculas
+            return view('profesores.show', ['profesor' => $profesor]);
+        } catch (\Exception  $e) {
+            return redirect()->action('ProfesorController@index')->with('error', 'Error, no se ha encontrado el profesor con el ID: ' . $id);
+        }
     }
 
     /**
@@ -125,9 +133,16 @@ class ProfesorController extends Controller
      */
     public function edit($id)
     {
-        //recupera el id ylo manda a la vista
-        $profesor = Profesor::find($id);
-        return view('profesores.update', ['profesor' => $profesor]);
+        try {
+            //recupera el id ylo manda a la vista
+            $profesor = Profesor::find($id);
+            if (!isset($profesor->nombre)) { //si no lo ha encontrado
+                throw new Exception();
+            }
+            return view('profesores.update', ['profesor' => $profesor]);
+        } catch (\Exception  $e) {
+            return redirect()->action('ProfesorController@index')->with('error', 'Error, no se ha encontrado el profesor con el ID: ' . $id);
+        }
     }
 
     /**
@@ -140,39 +155,45 @@ class ProfesorController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $profesor = Profesor::find($id);
-
-        $profesor->nombre = $request->input('nombre');
-        $profesor->apellidos = $request->input('apellidos');
-        $profesor->departamento = $request->input('departamento');
-        $profesor->especialidad = $request->input('especialidad');
-        $profesor->cargo = $request->input('cargo');
-        $profesor->observaciones = $request->input('observaciones');
-        $profesor->codigo = $request->input('codigo');
-
-        if ($request->file('imagenProfesor') !== null) {
-            $imagenAntigua= $profesor->rutaImagen;
-            if( substr($imagenAntigua,-11,12)!='default.png'){//si no es la imagen por defecto la borramos
-                unlink(Storage::disk('local')->path('/').$imagenAntigua);
+        try {
+            $profesor = Profesor::find($id);
+            if (!isset($profesor->nombre)) { //si no lo ha encontrado
+                throw new Exception();
             }
-            //comprobamos si es una imagen
-            $this->validate($request, [
-                'imagenProfesor'  => 'nullable|image|mimes:jpg,png,gif,jpeg|max:10240'
-            ]);
-            $archivo = $request->file('imagenProfesor');
-            $nuevoNombre = now()->format('Y-m-d-H-i-s') . '.' . $archivo->getClientOriginalName();
+            $profesor->nombre = $request->input('nombre');
+            $profesor->apellidos = $request->input('apellidos');
+            $profesor->departamento = $request->input('departamento');
+            $profesor->especialidad = $request->input('especialidad');
+            $profesor->cargo = $request->input('cargo');
+            $profesor->observaciones = $request->input('observaciones');
+            $profesor->codigo = $request->input('codigo');
 
-            // $archivo->move($ruta, $nuevoNombre);
-            $profesor->rutaImagen = 'imagenes/profesores/' . $nuevoNombre;
-            $storagePath  = Storage::disk('local')->path('/');
+            if ($request->file('imagenProfesor') !== null) {
+                $imagenAntigua = $profesor->rutaImagen;
+                if (substr($imagenAntigua, -11, 12) != 'default.png') { //si no es la imagen por defecto la borramos
+                    unlink(Storage::disk('local')->path('/') . $imagenAntigua);
+                }
+                //comprobamos si es una imagen
+                $this->validate($request, [
+                    'imagenProfesor'  => 'nullable|image|mimes:jpg,png,gif,jpeg|max:10240'
+                ]);
+                $archivo = $request->file('imagenProfesor');
+                $nuevoNombre = now()->format('Y-m-d-H-i-s') . '.' . $archivo->getClientOriginalName();
 
+                // $archivo->move($ruta, $nuevoNombre);
+                $profesor->rutaImagen = 'imagenes/profesores/' . $nuevoNombre;
+                $storagePath  = Storage::disk('local')->path('/');
+
+                $profesor->save();
+                //Storage::disk('public')->put($nuevoNombre, File::get($archivo));
+                $archivo->move($storagePath . 'imagenes/profesores/', $nuevoNombre);
+            }
             $profesor->save();
-            //Storage::disk('public')->put($nuevoNombre, File::get($archivo));
-            $archivo->move($storagePath . 'imagenes/profesores/', $nuevoNombre);
-        }
-        $profesor->save();
 
-        return redirect()->action('ProfesorController@index')->with('notice', 'El Profesor ' . $profesor->nombre . ' modificado correctamente.');
+            return redirect()->action('ProfesorController@index')->with('notice', 'El Profesor ' . $profesor->nombre . ' modificado correctamente.');
+        } catch (Exception  $e) {
+            return redirect()->action('ProfesorController@index')->with('error', 'Error, no se ha encontrado el profesor con el ID: ' . $id);
+        }
     }
 
     /**
@@ -186,15 +207,18 @@ class ProfesorController extends Controller
         //
         $profesor = Profesor::find($id);
         try {
+            if (!isset($profesor->nombre)) { //si no lo ha encontrado
+                throw new Exception();
+            }
             $profesor->delete();
             //Si se ha podido borrar el profesor borramos su imagen
-            $imagenAntigua= $profesor->rutaImagen;
-            if($imagenAntigua!==null && substr($imagenAntigua,-11,12)!='default.png'){//si no es la imagen por defecto la borramos
-                unlink(Storage::disk('local')->path('/').$imagenAntigua);
+            $imagenAntigua = $profesor->rutaImagen;
+            if ($imagenAntigua !== null && substr($imagenAntigua, -11, 12) != 'default.png') { //si no es la imagen por defecto la borramos
+                unlink(Storage::disk('local')->path('/') . $imagenAntigua);
             }
         } catch (\Exception $e) {
 
-            return redirect()->action('ProfesorController@index')->with('error', 'Error: ' . $e->getMessage() . ' - El Profesor ' . $profesor->nombre . ', no se ha podido eliminar');
+            return redirect()->action('ProfesorController@index')->with('error', 'Error: ' . $e->getMessage());
         }
         return redirect()->action('ProfesorController@index')->with('notice', 'El Profesor ' . $profesor->nombre . ' eliminado correctamente.');
     }
@@ -204,6 +228,5 @@ class ProfesorController extends Controller
         //
         $profesor = Profesor::all();
         echo $profesor;
-        
     }
 }

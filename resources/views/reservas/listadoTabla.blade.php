@@ -18,7 +18,9 @@ Listado Reservas
  
   .tableContainer{
     /*border: 3px solid green;*/
-    padding-top: 10px;
+    padding-top: 15px;
+    background-color: white;
+    border-radius: 10px;
   }
 </style>
 @endsection
@@ -38,7 +40,7 @@ Listado Reservas
 
   <div class="tableContainer row text-center d-flex justify-content-center">
     <!--cell-border display hover stripe-->
-    <table id="tabla" class=" col-12 table  table-bordered hover" >
+    <table id="tabla" class=" col-12 table display stripe table-bordered hover" >
       <thead>
         <tr>
           <th>Profesor</th>
@@ -68,7 +70,7 @@ Listado Reservas
             <div class="d-inline">
               
               <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal-{{$reserva->id}}">
-                Eliminar
+              <i class="fa fa-trash" aria-hidden="true"></i>
               </button>
              
               <div class="modal fade " id="exampleModal-{{$reserva->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -151,13 +153,20 @@ Listado Reservas
         },
         {
           "responsivePriority": 6
-        },{
-          "responsivePriority": 7
         }
       ],
       "columnDefs": [{
-            "orderable": false,
-            "targets": [1,7]
+            "orderable": false
+            <?php
+            use Illuminate\Support\Facades\Auth;
+            if (Auth::check()){//con blade VSC me lo marca como error
+            echo',"targets": [1,7]';
+            }else{
+            echo',"targets": [1]';
+            }
+            ?>
+        
+
         }]
 
     });

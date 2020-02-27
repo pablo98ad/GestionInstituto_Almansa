@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-
+use Illuminate\Support\Facades\DB;
 class AlumnoTableSeeder extends Seeder
 {
     /**
@@ -23,6 +23,7 @@ class AlumnoTableSeeder extends Seeder
                 'telefono2' => rand(600000000,999999999),
                 'fechaNacimiento' => new DateTime('NOW'),
                 'observaciones' => str_random(12),
+                'rutaImagen' => 'imagenes/alumnos/default.png'
                             
             ]);
         }

@@ -12,10 +12,10 @@ Editar aula {{$aula->nombre}}
 
 @section('content')
 <div class="container text-center justify-content-center ">
-@section('tituloCabezera') 
-Formulario editar Aula
-@endsection
-  <form id="actualizar" class="text-center justify-content-center" action="{{url('aulas/').'/'.$aula->id}}" method="POST">
+  @section('tituloCabezera')
+  Formulario editar Aula
+  @endsection
+  <form id="actualizar" class="paginaFormulario text-center justify-content-center" action="{{url('aulas/').'/'.$aula->id}}" method="POST">
     {{ csrf_field()}}
     {{ method_field('PUT') }}
     <div class="form-row">
@@ -53,11 +53,34 @@ Formulario editar Aula
   </form>
   <button type="submit" name="enviar" form="actualizar" class="btn btn-primary">Guardar</button>
   <div class="d-inline">
-    <form class="d-inline" method="POST" action="{{url('aulas/').'/'.$aula->id}}">
-      {{ csrf_field() }}
-      {{ method_field('DELETE') }}
-      <input type="submit" name="eliminar" class="btn btn-danger" value="Eliminar">
-    </form>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal-{{$aula->id}}">
+    <i class="fa fa-trash" aria-hidden="true"></i>
+    </button>
+    <!-- Modal -->
+    <div class="modal fade " id="exampleModal-{{$aula->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog " role="document">
+        <div class="modal-content ">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">AVISO</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <h5 class="modal-title" id="exampleModalLabel">¿Esta seguro que quiere eliminar la aula seleccionada?</h5>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            <form class="d-inline" method="POST" action="{{url('aulas/').'/'.$aula->id}}">
+              {{ csrf_field() }}
+              {{ method_field('DELETE') }}
+              <input type="submit" name="eliminar" class="btn btn-danger" value="Eliminar">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
 </div>

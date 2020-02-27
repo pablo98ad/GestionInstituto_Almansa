@@ -26,7 +26,7 @@ Crear un nuevo anuncio
 @section('tituloCabezera')  
     Formulario añadir nuevo anuncio
 @endsection
-    <form id="actualizar" class="text-center justify-content-center" action="{{url('anuncios')}}" method="POST">
+    <form id="actualizar" class="paginaFormulario text-center justify-content-center" action="{{url('anuncios')}}" method="POST">
         {{ csrf_field()}}
         <div class="form-row">
             <div class="form-group col-md-12">

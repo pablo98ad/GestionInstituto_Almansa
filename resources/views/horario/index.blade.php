@@ -78,7 +78,7 @@ Horarios y reservas de <b>esta semana</b>
           </option>
       </select>
       </div>   
-  </div><br>
+  </div>
   <hr>
 
   <div id="tabla"></div>
@@ -95,7 +95,7 @@ Horarios y reservas de <b>esta semana</b>
     placeholder: "Selecciona"
   });
 
-  function formato(item) { alert(item);return item.nombre; };
+  function formato(item) { /*alert(item);*/return item.nombre; };
 
   function cargar() {
       // alert(this.selectedIndex);
@@ -150,8 +150,8 @@ Horarios y reservas de <b>esta semana</b>
                                     </div>`;
 
                     }else if(document.getElementById('filtro').value=='alumnos'){
-                      var final = `<div class="resulDiv"><h2 class="nombreResul"> ${result.nombre} - ${result.apellidos}    (ID: ${result.id}) </h2><br>
-                                    <h3 class="segundaLineaResul"> Grupo: ${result.Grupo_id} | ${result.observaciones}   </h3>
+                      var final = `<div class="resulDiv"><div class="imagen"><img class="imagenResul" src="${directorioImagenes}${result.rutaImagen}"/></div><h2 class="nombreResul"> ${result.nombre} ${result.apellidos}    (ID: ${result.id}) </h2><br>
+                                    <h3 class="segundaLineaResul"> ${result.Grupo_id}   (${result.Telefono1}) </h3>
                                     </div>`;
                     }
                     return final;

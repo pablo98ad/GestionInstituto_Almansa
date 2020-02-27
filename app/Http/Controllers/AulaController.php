@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Aula;
+use Exception;
 
 class AulaController extends Controller
 {
@@ -11,7 +12,7 @@ class AulaController extends Controller
     public function __construct()
     {   
     
-        //$this->middleware('auth')->except('index','getTodasAulasJSON');
+        $this->middleware('auth')->except('index','getTodasAulasJSON','show');
     }
     /**
      * Display a listing of the resource.

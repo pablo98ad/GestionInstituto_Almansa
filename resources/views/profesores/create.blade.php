@@ -16,7 +16,7 @@ Crear un nuevo profesor
 @section('tituloCabezera') 
   Formulario Añadir Profesor
 @endsection
-  <form class="" action="{{url('profesores')}}" method="POST" enctype="multipart/form-data">
+  <form class="paginaFormulario" action="{{url('profesores')}}" method="POST" enctype="multipart/form-data">
     {{ csrf_field()}}
 
     <input type="hidden" class="form-control" name="id">

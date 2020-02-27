@@ -92,7 +92,8 @@ body {
 #sidebar .sidebar-header {
     padding-left: 20px;
     padding-right: 20px;
-    padding-top: 10px;
+    padding-top: 3px;
+    text-align: center;
 }
 .sidebar-header{
     background: rgb(51,119,64);
@@ -100,13 +101,13 @@ body {
 }
 
 #sidebar ul.components {
-    padding: 20px 0;
+    padding: 10px 0;
     border-bottom: 1px solid #ffffff;
 }
 
 #sidebar ul p {
     color: #fff;
-    padding: 10px;
+    padding: 6px;
 }
 
 #sidebar ul li a {
@@ -148,7 +149,8 @@ ul ul a {
 }
 
 ul.CTAs {
-    padding: 20px;
+    padding-left: 17px;
+    padding-right: 17px;
 }
 
 ul.CTAs a {
@@ -159,13 +161,13 @@ ul.CTAs a {
     margin-bottom: 5px;
 }
 
-a.download {
+a.botonesGrandesMenu {
     background: #015319;
     color: rgb(255, 255, 255);
     text-transform: none !important;
 }
 
-a.download:hover {
+a.botonesGrandesMenu:hover {
     background: #95c799 !important;
     color: rgb(80, 82, 228) !important;
     text-transform: none !important;

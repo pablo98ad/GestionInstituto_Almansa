@@ -26,7 +26,7 @@ Editar anuncio {{$anuncios->nombre}}
     @section('tituloCabezera')
         Formulario editar anuncio {{$anuncios->nombre}}
     @endsection
-    <form id="actualizar" class="text-center justify-content-center" action="{{url('anuncios/').'/'.$anuncios->id}}" method="POST">
+    <form id="actualizar" class="paginaFormulario text-center justify-content-center" action="{{url('anuncios/').'/'.$anuncios->id}}" method="POST">
         {{ csrf_field()}}
         {{ method_field('PUT') }}
         <div class="form-row">
@@ -133,7 +133,7 @@ Editar anuncio {{$anuncios->nombre}}
 
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal-{{$anuncios->id}}">
-        Eliminar
+    <i class="fa fa-trash" aria-hidden="true"></i>
     </button>
     <!-- Modal -->
     <div class="modal fade " id="exampleModal-{{$anuncios->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

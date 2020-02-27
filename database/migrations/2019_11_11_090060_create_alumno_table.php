@@ -27,6 +27,7 @@ class CreateAlumnoTable extends Migration
             $table->string('Telefono2')->nullable();
             $table->date('fechaNacimiento')->nullable();
             $table->longText('observaciones')->nullable();
+            $table->string('rutaImagen');
 
             $table->timestamps();//para ver cuando se ha cambiado
            // $table->primary('id');	

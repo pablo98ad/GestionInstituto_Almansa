@@ -69,7 +69,7 @@ Reservar Aula
 Reservar Aula {{$parametros[0] }} el dia {{$parametros[1]}}, hora {{$parametros[2]}}
 @endsection
 
-<form id="actualizar" class="text-center d-flex justify-content-center" action="{{url('/')}}/reservar" method="POST">
+<form id="actualizar" class="paginaFormulario text-center d-flex justify-content-center" action="{{url('/')}}/reservar" method="POST">
     {{ csrf_field()}}
     {{ method_field('POST') }}
 

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Anuncios;
 use Illuminate\Support\Facades\DB;
 use DateTime;
+use Exception;
 
 
 
@@ -23,9 +24,9 @@ class AnunciosController extends Controller
     public function index(Request $req)
     {
         if($req->busqueda == ""){
-            $anuncios = Anuncios::orderBy("activo",'desc')->paginate(6);
+            $anuncios = Anuncios::orderBy("activo",'desc')->orderBy("fin",'asc')->paginate(6);//ordenados por activos primero y a puntos de acabar primero
         }else{
-            $anuncios = Anuncios::where('nombre','LIKE','%'.$req->busqueda.'%')->orderBy("activo",'desc')->paginate(6);
+            $anuncios = Anuncios::where('nombre','LIKE','%'.$req->busqueda.'%')->orderBy("activo",'desc')->orderBy("fin",'asc')->paginate(6);
             $anuncios->appends($req->only('busqueda'));
         }
 

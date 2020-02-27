@@ -82,7 +82,7 @@ Reservar Aula Manualmente
   Reservar Manualmente
 @endsection
 
-<form id="actualizar" class="text-center d-flex justify-content-center" action="{{url('/')}}/reservar" method="POST">
+<form id="actualizar" class="paginaFormulario text-center d-flex justify-content-center" action="{{url('/')}}/reservar" method="POST">
     {{ csrf_field()}}
     {{ method_field('POST') }}
 

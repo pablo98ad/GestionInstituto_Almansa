@@ -53,6 +53,7 @@ Reservar Aula
     opacity: 0.6;
     text-decoration: none;
   }
+  
 
 </style>
 <!-- Para que se vea 'bonita' la tabla de los horarios -->
@@ -85,7 +86,7 @@ Reservar Aula
         <option value="no" selected></option>
       </select>
     </div>
-  </div><br>
+  </div>
   <hr>
 
   <div id="tabla"></div>

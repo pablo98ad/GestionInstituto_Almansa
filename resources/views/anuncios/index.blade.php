@@ -25,10 +25,10 @@ Listado de Anuncios
   <div class="row justify-content-between">
   <form class="form-inline my-2 my-lg-0" action="{{url('/anuncios')}}" role="search" method="get">
     <!--csrf_field()-->
-      <input class="form-control mr-sm-2" type="text" name="busqueda" placeholder="Buscar" aria-label="Search">
-      <button class="btn btn-success my-2 my-sm-0" type="submit">Buscar</button>
+      <input class="form-control mr-sm-1" type="text" name="busqueda" placeholder="Buscar" aria-label="Search">
+      <button class="btn btn-success my-2 my-sm-0" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
     </form>
-    <a class='col-3 col-sm-2 col-md-2  btn btn-success mb-1 mr-2' href="{{url('anuncios/').'/create'}}" role='button'>Añadir</a>
+    <a class='col-3 col-sm-2 col-md-2  btn btn-success mb-1 mr-2' href="{{url('anuncios/').'/create'}}" role='button'><i class="fa fa-plus" aria-hidden="true"></i></a>
   </div>
   <div class="row">
     <?php foreach ($anuncios as $anuncio) { ?>
@@ -109,7 +109,7 @@ Listado de Anuncios
           <div class="d-inline">
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal-{{$anuncio->id}}">
-              Eliminar
+            <i class="fa fa-trash" aria-hidden="true"></i>
             </button>
             <!-- Modal -->
             <div class="modal fade " id="exampleModal-{{$anuncio->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
