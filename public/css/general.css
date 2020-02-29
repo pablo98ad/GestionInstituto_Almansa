@@ -51,3 +51,10 @@ body,
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
 }
+
+/*Para simular separacion entre tarjetas en los listados*/
+.card{
+  border: 0px solid rgb(170, 221, 168) !important ;
+  border-right: 5px solid rgb(170, 221, 168) !important;
+  border-radius: 0.25rem !important;
+}

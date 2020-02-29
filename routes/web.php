@@ -23,7 +23,7 @@ Route::resource('grupo', 'GrupoController');//para crear las rutas de las funcio
 Route::resource('aulas', 'AulaController');//para crear las rutas de las funciones del controlador 
 Route::resource('alumno', 'AlumnoController');//para crear las rutas de las funciones del controlador 
 //Route::resource('reservas', 'ReservasController');//para crear las rutas de las funciones del controlador
-Route::resource('ausencias', 'AusenciasController');//para crear las rutas de las funciones del controlador 
+//Route::resource('ausencias', 'AusenciasController');//para crear las rutas de las funciones del controlador 
 Route::resource('anuncios', 'AnunciosController');//para crear las rutas de las funciones del controlador 
 //Route::resource('horarios', 'HorarioController');//para crear las rutas de las funciones del controlador 
 Route::resource('materia', 'MateriaController');//para crear las rutas de las funciones del controlador 
@@ -32,9 +32,15 @@ Route::resource('materia', 'MateriaController');//para crear las rutas de las fu
 
 //Route::resource('telefono', 'TelefonoController');
 Auth::routes();
-//Route::post('/aulas', 'AulaController@index')->name('aulas.');
-Route::get('/home', 'HomeController@index')->name('home');
+
+//Route::get('/home', 'HomeController@index')->name('home');
+
+//Rutas archivos de importaciones
 Route::post('/profesores/importar', 'ProfesorController@importar')->name('profesorImportar');
+Route::post('/alumno/importar', 'AlumnoController@importar')->name('alumnoImportar');
+Route::post('/grupo/importar', 'GrupoController@importar')->name('grupoImportar');
+Route::post('/aulas/importar', 'AulaController@importar')->name('aulaImportar');
+Route::post('/materia/importar', 'MateriaController@importar')->name('materiaImportar');
 
 //horarios!!
 Route::get('/horario/profesor/{id}','HorarioController@horarioProfesor')->name('verHorarioProfesor');

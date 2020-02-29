@@ -28,28 +28,39 @@ Listado de Anuncios
       <input class="form-control mr-sm-1" type="text" name="busqueda" placeholder="Buscar" aria-label="Search">
       <button class="btn btn-success my-2 my-sm-0" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
     </form>
-    <a class='col-3 col-sm-2 col-md-2  btn btn-success mb-1 mr-2' href="{{url('anuncios/').'/create'}}" role='button'><i class="fa fa-plus" aria-hidden="true"></i></a>
+    <a class='col-3 col-sm-2 col-md-2  btn btn-success mb-1 mr-2' href="{{url('anuncios/').'/create'}}" role='button'><i class="fa fa-plus fa-lg" aria-hidden="true"></i></a>
   </div>
-  <div class="row">
+  <div class="row pt-2 justify-content-center">
     <?php foreach ($anuncios as $anuncio) { ?>
 
-      <div class="card col-md-6 col-sm-6 col-12 mt-1 ">
+      <div class="card col-md-11 col-sm-6 col-11 mt-1 mb-5">
         <div class="card-body  ">
           <h2 class="card-title">{{$anuncio->nombre}}</h2>
-          <?php
-          if ($anuncio->activo == true) {
-            echo "<span class='p-2 w-50 badge badge-warning'>Activo</span>";
-          } else {
-            echo "<span class='p-2 w-50 badge badge-secondary'>No Activo</span>";
-          }
-          ?>
+          @if (Auth::check())
+            @if ($anuncio->activo == true) 
+              <span class='mb-2 p-2 w-25 badge badge-warning'>Activo</span>
+            @else
+              <span class='mb-2 p-2 w-25 badge badge-secondary'>No Activo</span>
+            @endif
+            <br>
+          @endif
+
+          @if (estaCaducado($anuncio->fin)) 
+            <span class='p-2 w-25 badge badge-danger'>Caducado</span>
+          @else
+            <span class='p-2 w-25 badge badge-success'>En plazo</span>
+          @endif
+
           <h5 class="card-title mt-3 ">Descripción</h5>
           <div style="height: 200px;" class="border overflow-auto">
             <!--<p class="card-text">-->{!!$anuncio->descripcion!!}
             <!--</p>-->
           </div><br>
 
-          <input readonly="readonly" type="text" class="form-control" name="rangos" id="rango{{$anuncio->id}}" />
+          <h5>{{ponerFechaDecente($anuncio->inicio,$anuncio->fin)}}</h5><br>
+          <input readonly="readonly" type="text" class=" form-control" name="rangos" id="rango{{$anuncio->id}}" />
+
+
           <script>
             $(function() {
               $('#rango{{$anuncio->id}}').daterangepicker({
@@ -105,11 +116,11 @@ Listado de Anuncios
 
 
           <!--<a class='btn btn-primary' href='aulas/{{$anuncio->id}}' role='button'>Visualizar</a>-->
-          <a class='btn btn-primary' href='anuncios/{{$anuncio->id}}/edit' role='button'>Editar</a>
+          <a class='btn btn-primary' href='anuncios/{{$anuncio->id}}/edit' role='button'><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
           <div class="d-inline">
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal-{{$anuncio->id}}">
-            <i class="fa fa-trash" aria-hidden="true"></i>
+            <i class="fa fa-trash fa-lg" aria-hidden="true"></i>
             </button>
             <!-- Modal -->
             <div class="modal fade " id="exampleModal-{{$anuncio->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -149,3 +160,42 @@ Listado de Anuncios
 </div>
 
 @endsection
+
+<?php
+function ponerFechaDecente($inicio, $fin){
+  setlocale(LC_TIME, 'spanish');
+
+  $inicio= new DateTime($inicio);
+  $fin= new DateTime($fin);
+  /*NO TRADUCE
+  $fechaEntendible='Desde ';  
+  $fechaEntendible.= $inicio->format('l d').' de '.$inicio->format('F').' del '.$inicio->format('Y');
+  $fechaEntendible.=' a las '.$inicio->format('H:i:s');
+  $fechaEntendible.=' hasta el '.$fin->format('l d').' de '.$fin->format('F').' del '.$fin->format('Y');
+  $fechaEntendible.=' a las '.$fin->format('H:i:s');
+  */
+  //ASI SI QUE NOS LO TRADUCE
+  $fechaEntendible='Desde el ';  
+  $fechaEntendible.= strftime('%A, %d',$inicio->getTimestamp()).' de '.strftime('%B',$inicio->getTimestamp()).' del '.$inicio->format('Y');
+  $fechaEntendible.=' a las '.$inicio->format('H:i');
+  $fechaEntendible.= ' hasta el '.strftime('%A, %d',$fin->getTimestamp()).' de '.strftime('%B',$fin->getTimestamp()).' del '.$fin->format('Y');
+  $fechaEntendible.=' a las '.$fin->format('H:i');
+
+  return $fechaEntendible;
+}
+
+
+function estaCaducado($fechaFin){
+  $ahora= new DateTime('now');
+  $fechaFin=new DateTime($fechaFin);
+  //echo $ahora->format('%Y-%m-%d %H:%i:%s');
+  //echo $fechaFin->format('%Y-%m-%d %H:%i:%s');
+  $aTiempo=false;
+  if($fechaFin<=$ahora){
+    $aTiempo=true;
+  }
+  return $aTiempo;
+}
+
+
+?>

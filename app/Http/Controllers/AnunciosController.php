@@ -7,14 +7,13 @@ use App\Anuncios;
 use Illuminate\Support\Facades\DB;
 use DateTime;
 use Exception;
-
-
+use Illuminate\Support\Facades\Auth;
 
 class AnunciosController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->except('verAnuncios');
+        $this->middleware('auth')->except('index','verAnuncios');
     }
     /**
      * Display a listing of the resource.
@@ -23,12 +22,22 @@ class AnunciosController extends Controller
      */
     public function index(Request $req)
     {
-        if($req->busqueda == ""){
-            $anuncios = Anuncios::orderBy("activo",'desc')->orderBy("fin",'asc')->paginate(6);//ordenados por activos primero y a puntos de acabar primero
-        }else{
-            $anuncios = Anuncios::where('nombre','LIKE','%'.$req->busqueda.'%')->orderBy("activo",'desc')->orderBy("fin",'asc')->paginate(6);
-            $anuncios->appends($req->only('busqueda'));
+        if (Auth::check()) {
+            if ($req->busqueda == "") {
+                $anuncios = Anuncios::orderBy("activo", 'desc')->orderBy("fin", 'asc')->paginate(6); //ordenados por activos primero y a puntos de acabar primero
+            } else {
+                $anuncios = Anuncios::where('nombre', 'LIKE', '%' . $req->busqueda . '%')->orderBy("activo", 'desc')->orderBy("fin", 'asc')->paginate(6);
+                $anuncios->appends($req->only('busqueda'));
+            }
+        } else {//los no logueados no ven los anuncios desactivados
+            if ($req->busqueda == "") {
+                $anuncios = Anuncios::where('activo',true)->orderBy("fin", 'asc')->paginate(6); //ordenados por activos primero y a puntos de acabar primero
+            } else {
+                $anuncios = Anuncios::where('nombre', 'LIKE', '%' . $req->busqueda . '%')->where('activo',true)->orderBy("fin", 'asc')->paginate(6);
+                $anuncios->appends($req->only('busqueda'));
+            }
         }
+
 
         return view('anuncios.index', ['anuncios' => $anuncios]);
     }
@@ -56,23 +65,23 @@ class AnunciosController extends Controller
         $anuncio = new Anuncios();
         $anuncio->nombre = $request->input('nombre');
         $anuncio->descripcion = $request->input('descripcion');
-        if($request->input('activo')!=null){
+        if ($request->input('activo') != null) {
             $anuncio->activo = true;
-         }else{
+        } else {
             $anuncio->activo = false;
-         }
+        }
         //$anuncio->inicio = $request->input('inicio');
         //$anuncio->fin = $request->input('fin');
-        $fechas=explode('a',$request->input('rangos'));
-        $anuncio->inicio=substr($fechas[0],0,-1).':00';
-        $anuncio->fin=$fechas[1].':00';
-        try{
+        $fechas = explode('a', $request->input('rangos'));
+        $anuncio->inicio = substr($fechas[0], 0, -1) . ':00';
+        $anuncio->fin = $fechas[1] . ':00';
+        try {
             $anuncio->save();
-        }catch(\Exception  $e){
+        } catch (\Exception  $e) {
             return redirect()->action('AnunciosController@index')->with('error', 'Error: "' . $e->getMessage() . '", el anuncio no se ha podido guardar');
         }
         return redirect()->action('AnunciosController@index')->with('notice', 'Anuncio con titulo "' . $anuncio->nombre . '", guardado correctamente.');
-    }   
+    }
 
     /**
      * Display the specified resource.
@@ -105,7 +114,7 @@ class AnunciosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    
+
     public function update(Request $request, $id)
     {
         //
@@ -114,27 +123,26 @@ class AnunciosController extends Controller
         $anuncio->nombre = $request->input('nombre');
         $anuncio->descripcion = $request->input('descripcion');
         //$anuncio->activado = $request->input('activo');
-        if($request->input('activo')!=null){
+        if ($request->input('activo') != null) {
             $anuncio->activo = true;
-         }else{
+        } else {
             $anuncio->activo = false;
-         }
+        }
         //$inicio= date_create_from_format('YYYY-MM-DD HH:MM' , $request->input('inicio'),null);
         //$anuncio->inicio = $request->input('inicio');
         //$fin= date_create_from_format ( 'YYYY-MM-DD HH:MM' , $request->input('fin'),null);
         //$anuncio->fin = $request->input('fin');
-       // $anuncio->fin = $request->input('fin');
-       $fechas=explode('a',$request->input('rangos'));
-       $anuncio->inicio=substr($fechas[0],0,-1).':00';
-       $anuncio->fin=$fechas[1].':00';
+        // $anuncio->fin = $request->input('fin');
+        $fechas = explode('a', $request->input('rangos'));
+        $anuncio->inicio = substr($fechas[0], 0, -1) . ':00';
+        $anuncio->fin = $fechas[1] . ':00';
 
-        try{
+        try {
             $anuncio->save();
-        }catch(\Exception $e){
-            return redirect()->action('AnunciosController@index')->with('Error: '. $e->getMessage() . ' - El Anuncio ' . $anuncio->nombre . ', no se ha podido editar.');
-        } 
+        } catch (\Exception $e) {
+            return redirect()->action('AnunciosController@index')->with('Error: ' . $e->getMessage() . ' - El Anuncio ' . $anuncio->nombre . ', no se ha podido editar.');
+        }
         return redirect()->action('AnunciosController@index')->with('notice', 'El Anuncio con nombre "' . $anuncio->nombre . '" modificado correctamente.');
-        
     }
 
     /**
@@ -150,27 +158,21 @@ class AnunciosController extends Controller
         try {
             $anuncio->delete();
             //Si se ha podido borrar el profesor borramos su imagen
-            
+
         } catch (\Exception $e) {
 
             return redirect()->action('AnunciosController@index')->with('error', 'Error: ' . $e->getMessage() . ' - El Anuncio ' . $anuncio->nombre . ', no se ha podido eliminar');
         }
-        return redirect()->action('AnunciosController@index')->with('notice', 'El Anuncio con titulo "' . $anuncio->nombre .'" eliminado correctamente.');
+        return redirect()->action('AnunciosController@index')->with('notice', 'El Anuncio con titulo "' . $anuncio->nombre . '" eliminado correctamente.');
     }
 
     public function verAnuncios()
     {
-        date_default_timezone_set('CET');//para que estamos en la hora de madrid
-        $hoy=  (new DateTime())->format('Y-m-d H:i:s');
+        date_default_timezone_set('CET'); //para que estamos en la hora de madrid
+        $hoy =  (new DateTime())->format('Y-m-d H:i:s');
         //echo $hoy;
-        $anunciosATiempo = DB::table('Anuncios') ->where('fin','>=', $hoy)->where('activo', '=', '1')->orderBy('fin') ->get();
+        $anunciosATiempo = DB::table('Anuncios')->where('fin', '>=', $hoy)->where('activo', '=', '1')->orderBy('fin')->get();
         //echo $anunciosATiempo;
         return view('anuncios.verAnuncios', ['anuncios' => $anunciosATiempo]);
-
-
     }
-
-
-
-
 }

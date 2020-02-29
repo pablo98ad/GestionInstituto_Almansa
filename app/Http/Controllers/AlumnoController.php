@@ -205,7 +205,19 @@ class AlumnoController extends Controller
         return redirect()->action('AlumnoController@index')->with('notice', 'El Alumno' . $alumno->nombre . ' eliminado correctamente.');
     }
     
+    public function importar(Request $request) //metodo del controlador que recibe un archivo xml para importar los alumnos de la aplicacion
+    {
+        //guardar los datos que se envian en la base de datos 
+        $archivo = $request->file('ficheroAlumnos');
+        $nombre = 'ArchivoIMPAlumnos'.$archivo->getClientOriginalName();
 
+        try { //no se haria asi...
+            Storage::disk('local')->put($nombre, File::get($archivo));
+        } catch (\Exception  $e) {
+            return redirect()->action('AlumnoController@index')->with('error', 'Error, no se ha podido guardar el fichero');
+        }
+        return redirect()->action('AlumnoController@index')->with('notice', 'El fichero ' . $nombre . ', importado correctamente.');
+    }
 
 
     /**
@@ -216,4 +228,6 @@ class AlumnoController extends Controller
         $alumnos = Alumno::all();
         echo $alumnos;
     }
+
+    
 }

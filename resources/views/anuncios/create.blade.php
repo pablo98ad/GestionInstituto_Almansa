@@ -119,7 +119,7 @@ Crear un nuevo anuncio
         </div>
 
     </form>
-    <button type="submit" name="enviar" form="actualizar" class="btn btn-primary">Añadir</button>
+    <button type="submit" name="enviar" form="actualizar" class="btn btn-primary"><i class="fa fa-floppy-o fa-lg" aria-hidden="true"></i></button>
 
 </div>
 @endsection

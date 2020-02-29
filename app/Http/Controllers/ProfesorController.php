@@ -89,20 +89,7 @@ class ProfesorController extends Controller
     }
 
 
-    public function importar(Request $request) //metodo del controlador que recibe un archivo xml para importar los profesores de la aplicacion
-    {
-        // echo "estoy aqui";
-        //guardar los datos que se envian en la base de datos 
-        $archivo = $request->file('ficheroProfesores');
-        $nombre = $archivo->getClientOriginalName();
-
-        try { //no se haria asi...
-            Storage::disk('local')->put($nombre, File::get($archivo));
-        } catch (\Exception  $e) {
-            return redirect()->action('ProfesorController@index')->with('error', 'Error, no se ha podido guardar el fichero');
-        }
-        return redirect()->action('ProfesorController@index')->with('notice', 'El fichero ' . $nombre . ', importado correctamente.');
-    }
+    
 
     /**
      * Display the specified resource.
@@ -221,6 +208,20 @@ class ProfesorController extends Controller
             return redirect()->action('ProfesorController@index')->with('error', 'Error: ' . $e->getMessage());
         }
         return redirect()->action('ProfesorController@index')->with('notice', 'El Profesor ' . $profesor->nombre . ' eliminado correctamente.');
+    }
+
+    public function importar(Request $request) //metodo del controlador que recibe un archivo xml para importar los profesores de la aplicacion
+    {
+        //guardar los datos que se envian en la base de datos 
+        $archivo = $request->file('ficheroProfesores');
+        $nombre = 'ArchivoIMPProfesores'.$archivo->getClientOriginalName();
+
+        try { //no se haria asi...
+            Storage::disk('local')->put($nombre, File::get($archivo));
+        } catch (\Exception  $e) {
+            return redirect()->action('ProfesorController@index')->with('error', 'Error, no se ha podido guardar el fichero');
+        }
+        return redirect()->action('ProfesorController@index')->with('notice', 'El fichero ' . $nombre . ', importado correctamente.');
     }
 
     public function getTodosProfesoresJSON()

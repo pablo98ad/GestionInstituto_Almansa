@@ -7,6 +7,8 @@ use App\Grupo;
 use App\Horario;
 use App\Alumno;
 use Exception;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class GrupoController extends Controller
 {   
@@ -113,6 +115,21 @@ class GrupoController extends Controller
   
         }
     }
+
+    public function importar(Request $request) //metodo del controlador que recibe un archivo xml para importar los grupos de la aplicacion
+    {
+        //guardar los datos que se envian en la base de datos 
+        $archivo = $request->file('ficheroGrupos');
+        $nombre = 'ArchivoIMPGrupos'.$archivo->getClientOriginalName();
+
+        try { //no se haria asi...
+            Storage::disk('local')->put($nombre, File::get($archivo));
+        } catch (\Exception  $e) {
+            return redirect()->action('GrupoController@index')->with('error', 'Error, no se ha podido guardar el fichero');
+        }
+        return redirect()->action('GrupoController@index')->with('notice', 'El fichero ' . $nombre . ', importado correctamente.');
+    }
+
     /**
      * Controlador del api, devuelve todos los grupos en formato json
      */

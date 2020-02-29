@@ -33,7 +33,7 @@
   <div id="container" class="container-md text-center">
     <h1>LISTADO DE ANUNCIOS</h1><br><br>
     <div class="row d-flex justify-content-center">
-      <div class="anuncioVer card col-md-8 col-sm-8 col-12 mt-1 ">
+      <div class="anuncioVer card col-md-11 col-sm-11 col-12 mt-1 ">
         <div class=" card-body  ">
           <h2 class="card-title">Pulsa <img width="60px" src="{{url('/').'/img/enter.png'}}" /> <br>para quedarte. <br>Para volver pulsa <a href="{{ URL::previous() }}">Aqui</a></h2>
         </div>
@@ -43,7 +43,7 @@
     @if (sizeOf($anuncios) > 0)
     @foreach ($anuncios as $anuncio)
     <div class="row d-flex justify-content-center">
-      <div class="anuncioVer card col-md-8 col-sm-8 col-12 mt-1 ">
+      <div class="anuncioVer card col-md-11 col-sm-11 col-12 mt-1 ">
         <div class=" card-body  ">
           <h2 class="card-title">{{$anuncio->nombre}}</h2>
           <hr>

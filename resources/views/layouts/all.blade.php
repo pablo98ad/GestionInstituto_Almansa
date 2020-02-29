@@ -180,7 +180,7 @@
           </div>
           
           <div>
-            <h4 class="p-0 m-0">@yield('tituloCabezera') </h4>
+            <h3 class="p-0 m-0">@yield('tituloCabezera') </h3>
           </div><!-- d-inline-block d-lg-none  -->
           <button class="d-none btn btn-dark  " type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <i class="fas fa-align-justify"></i>

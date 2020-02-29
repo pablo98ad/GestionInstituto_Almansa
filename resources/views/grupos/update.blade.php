@@ -41,11 +41,11 @@ Editar grupo {{$grupo->nombre}}
     </div>
 
   </form>
-  <button type="submit" name="enviar" form="actualizar" class="btn btn-primary">Guardar</button>
+  <button type="submit" name="enviar" form="actualizar" class="btn btn-primary"><i class="fa fa-floppy-o fa-lg" aria-hidden="true"></i></button>
   <div class="d-inline">
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal-{{$grupo->id}}">
-    <i class="fa fa-trash" aria-hidden="true"></i>
+    <i class="fa fa-trash fa-lg" aria-hidden="true"></i>
     </button>
     <!-- Modal -->
     <div class="modal fade " id="exampleModal-{{$grupo->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

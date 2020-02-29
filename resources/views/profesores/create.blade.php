@@ -59,7 +59,7 @@ Crear un nuevo profesor
       </div>
 
     </div>
-    <button type="submit" class="btn btn-primary">Añadir</button>
+    <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o fa-lg" aria-hidden="true"></i></button>
   </form>
 </div>
 @endsection

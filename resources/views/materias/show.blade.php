@@ -78,7 +78,39 @@ Ver materia {{$materia->nombre}}
       @endif
     </div>
   </div>
-
+  @if (Auth::check())
+        <a class='btn btn-primary' href='{{url('materia/'.$materia->id.'/edit')}}' role='button'><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
+        <div class="d-inline">
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal-{{$materia->id}}">
+          <i class="fa fa-trash fa-lg" aria-hidden="true"></i>
+          </button>
+          <!-- Modal -->
+          <div class="modal fade " id="exampleModal-{{$materia->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog " role="document">
+              <div class="modal-content ">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">AVISO</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <h5 class="modal-title" id="exampleModalLabel">¿Esta seguro que quiere eliminar la materia seleccionada?</h5>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                  <form class="d-inline" method="POST" action="{{url('materia/').'/'.$materia->id}}">
+                    {{ csrf_field() }}
+                    {{ method_field('DELETE') }}
+                    <input type="submit" name="eliminar" class="btn btn-danger" value="Eliminar">
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        @endif
 
 </div>
 @endsection

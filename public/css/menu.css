@@ -32,10 +32,11 @@ body {
 #content > .navbar {
     padding: 8px 4px;
     background: #fff;
+    padding-bottom: 3px !important;
     border: none;
     border-radius: 10px;
     margin-bottom: 30px;
-    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
 }
 
 .navbar-btn {
@@ -209,11 +210,13 @@ a.botonesGrandesMenu:hover {
 
 
 #sidebarCollapse {
+    padding-top: 6px;
     width: 35px;
     height: 35px;
     background: #f7f7f7;
     cursor: pointer;
 }
+
 
 #sidebarCollapse span {
     width: 80%;

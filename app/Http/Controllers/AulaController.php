@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Aula;
 use Exception;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
+
 
 class AulaController extends Controller
 {
@@ -146,6 +149,20 @@ class AulaController extends Controller
             return redirect()->action('AulaController@index')->with('error', 'Error: La aula ' .$aula->nombre.', no se ha podido eliminar');
         }
         return redirect()->action('AulaController@index')->with('notice', 'La aula ' . $aula->nombre . ' eliminado correctamente.');
+    }
+
+    public function importar(Request $request) //metodo del controlador que recibe un archivo xml para importar las aulas de la aplicacion
+    {
+        //guardar los datos que se envian en la base de datos 
+        $archivo = $request->file('ficheroAulas');
+        $nombre = 'ArchivoIMPAulas'.$archivo->getClientOriginalName();
+
+        try { //no se haria asi...
+            Storage::disk('local')->put($nombre, File::get($archivo));
+        } catch (\Exception  $e) {
+            return redirect()->action('AulaController@index')->with('error', 'Error, no se ha podido guardar el fichero');
+        }
+        return redirect()->action('AulaController@index')->with('notice', 'El fichero ' . $nombre . ', importado correctamente.');
     }
 
     /**

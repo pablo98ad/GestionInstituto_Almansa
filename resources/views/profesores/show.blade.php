@@ -46,16 +46,40 @@ Ver Profesor {{$profesor->nombre}}
       <h5 class="card-title ">Imagen</h5>
       <img class="border d-inline border " width="250px"  src="{{url('/').'/storage/'.$profesor->rutaImagen/*url('../').'/storage/app/public/'.$profesor->rutaImagen*/}}" alt=""><br>
       <hr>
-      <a class='btn btn-warning' href='{{url('/horario/profesor/').'/'.$profesor->id}}' role='button'>Horario</a>
-      <a class='btn btn-primary' href='{{$profesor->id}}/edit' role='button'>Editar</a>
-      <!--<a class='btn btn-danger' href="{{route('profesores.destroy', [$profesor->id])}}" role='button'>Borrar</a>-->
-      <div class="d-inline">
-        <form class="d-inline" method="POST" action="{{url('profesores/').'/'.$profesor->id}}">
-          {{ csrf_field() }}
-          {{ method_field('DELETE') }}
-          <input type="submit" class="btn btn-danger" value="Eliminar">
-        </form>
-      </div>
+      <a class='btn btn-warning' href='{{url('/horario/profesor/').'/'.$profesor->id}}' role='button'><i class="fa fa-table fa-lg" aria-hidden="true"></i></a>
+      @if (Auth::check())
+        <a class='btn btn-primary' href='{{url('/profesores/').'/'.$profesor->id.'/edit'}}' role='button'><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
+        <div class="d-inline">
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal-{{$profesor->id}}">
+          <i class="fa fa-trash fa-lg" aria-hidden="true"></i>
+          </button>
+          <!-- Modal -->
+          <div class="modal fade " id="exampleModal-{{$profesor->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog " role="document">
+              <div class="modal-content ">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">AVISO</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <h5 class="modal-title" id="exampleModalLabel">¿Esta seguro que quiere eliminar el profesor seleccionads?</h5>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                  <form class="d-inline" method="POST" action="{{url('profesores/').'/'.$profesor->id}}">
+                    {{ csrf_field() }}
+                    {{ method_field('DELETE') }}
+                    <input type="submit" name="eliminar" class="btn btn-danger" value="Eliminar">
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        @endif
     </div>
   </div>
 </div>
