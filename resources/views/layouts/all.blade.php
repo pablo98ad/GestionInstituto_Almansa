@@ -47,8 +47,8 @@
       <ul class="list-unstyled components">
         <p>Seleccion de Modulos</p>
         <li>
-          <a href="#horarios" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Horarios</a>
-          <ul class="collapse list-unstyled" id="horarios">
+          <a href="#horarioss" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Horarios</a>
+          <ul class="collapse list-unstyled" id="horarioss">
             <li>
               <a href="{{url('/horarios')}}">Ver Horarios</a>
             </li>
@@ -56,8 +56,8 @@
         </li>
         <li>
         <li>
-          <a href="#reservas" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Reservas</a>
-          <ul class="collapse list-unstyled" id="reservas">
+          <a href="#reservass" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Reservas</a>
+          <ul class="collapse list-unstyled" id="reservass">
             <li>
               <a href="{{url('/reservar')}}">Hacer reserva</a>
             </li>
@@ -67,8 +67,8 @@
           </ul>
         </li>
         <li>
-          <a href="#anuncios" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Anuncios</a>
-          <ul class="collapse list-unstyled" id="anuncios">
+          <a href="#anuncioss" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Anuncios</a>
+          <ul class="collapse list-unstyled" id="anuncioss">
           @if (Auth::check())
             <li>
               <a href="{{url('/anuncios')}}">Listado Anuncios</a>
@@ -83,8 +83,8 @@
           </ul>
         </li>
         <li>
-          <a href="#alumnos" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Alumnos</a>
-          <ul class="collapse list-unstyled" id="alumnos">
+          <a href="#alumnoss" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Alumnos</a>
+          <ul class="collapse list-unstyled" id="alumnoss">
             <li>
               <a href="{{url('/alumno')}}">Listado de Alumnos</a>
             </li>
@@ -96,8 +96,8 @@
           </ul>
         </li>
         <li>
-          <a href="#profesores" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Profesores</a>
-          <ul class="collapse list-unstyled" id="profesores">
+          <a href="#profesoress" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Profesores</a>
+          <ul class="collapse list-unstyled" id="profesoress">
             <li>
               <a href="{{url('/profesores')}}">Listado de Profesores</a>
             </li>
@@ -109,8 +109,8 @@
           </ul>
         </li>
         <li>
-          <a href="#aulas" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Aulas</a>
-          <ul class="collapse list-unstyled" id="aulas">
+          <a href="#aulass" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Aulas</a>
+          <ul class="collapse list-unstyled" id="aulass">
             <li>
               <a href="{{url('/aulas')}}">Listado de Aulas</a>
             </li>
@@ -122,8 +122,8 @@
           </ul>
         </li>
         <li>
-          <a href="#materias" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Materias</a>
-          <ul class="collapse list-unstyled" id="materias">
+          <a href="#materiass" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Materias</a>
+          <ul class="collapse list-unstyled" id="materiass">
             <li>
               <a href="{{url('/materia')}}">Listado de Materias</a>
             </li>
@@ -135,8 +135,8 @@
           </ul>
         </li>
         <li>
-          <a href="#grupos" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Grupos</a>
-          <ul class="collapse list-unstyled" id="grupos">
+          <a href="#gruposs" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Grupos</a>
+          <ul class="collapse list-unstyled" id="gruposs">
             <li>
               <a href="{{url('/grupo')}}">Listado de Grupos</a>
             </li>

@@ -22,21 +22,7 @@ Pagina Principal Gestion Escultor
         border-right: 10px solid white !important;
         border-radius: 0.25rem !important;
     }
-    .icon{
-        vertical-align: bottom !important;
-    }
-    .opcionBoton{
     
-        background-color: #006AAA !important;
-    }
-    .opcionBoton img{
-        transition: filter .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out !important;
-    }
-    .opcionBoton:hover img{
-       /* color:black;*/
-        filter: invert(100%); 
-
-    }
 </style>
 @endsection
 

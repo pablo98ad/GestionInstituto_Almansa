@@ -58,3 +58,20 @@ body,
   border-right: 5px solid rgb(170, 221, 168) !important;
   border-radius: 0.25rem !important;
 }
+
+/*Para los botones donde se muestra el icono de los modulos*/
+.icon{
+  vertical-align: bottom !important;
+}
+.opcionBoton{
+
+  background-color: #006AAA !important;
+}
+.opcionBoton img{
+  transition: filter .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out !important;
+}
+.opcionBoton:hover img{
+ /* color:black;*/
+  filter: invert(100%); 
+
+}

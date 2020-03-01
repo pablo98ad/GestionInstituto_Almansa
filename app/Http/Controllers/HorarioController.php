@@ -86,10 +86,10 @@ class HorarioController extends Controller
                 $diaSemana = date('w', strtotime($reserva->fecha));
                 $diaSemana= $dias[$diaSemana-1];
                 if($tablaHorario[$diaSemana][$reserva->hora]=='GUARDIA'){//con esto conseguimos que pueda estar en 2 cosas a la vez (hecho por peticion de profesores)
-                    $tablaHorario[$diaSemana][$reserva->hora]='Ha reservado la aula <br>
+                    $tablaHorario[$diaSemana][$reserva->hora]='Ha reservado la aula 
                                                             <a href="'.url('/').'/aulas/'.$reserva->aula_id.'">'.$reserva->aula->numero.'</a>';
                 }else{
-                    $tablaHorario[$diaSemana][$reserva->hora].='<hr>Ha reservado la aula <br>
+                    $tablaHorario[$diaSemana][$reserva->hora].='<hr>Ha reservado la aula 
                                                             <a href="'.url('/').'/aulas/'.$reserva->aula_id.'">'.$reserva->aula->numero.'</a>';
                 }
             }

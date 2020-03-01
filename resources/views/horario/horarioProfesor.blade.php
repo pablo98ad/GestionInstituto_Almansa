@@ -3,6 +3,12 @@
 @section('scriptsHead')
 <!-- Para que se vea 'bonita' la tabla de los horarios -->
 <link rel="stylesheet" href="{{asset('css/tablaHorarios.css')}}">
+<style>
+hr{
+  padding: 0px;
+  margin: 0px;
+}
+</style>
 @endsection
 
 @section('titulo')
