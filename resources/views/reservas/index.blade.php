@@ -9,11 +9,13 @@ Reservar Aula
   
 
   .imagenResul {
-    width: 50px;
+    width: 40px;
+    height: 40px;
     margin: 0px;
+    font-size: 35px;
     padding: 0px;
     padding-right: 5px;
-    float:left;
+    float: left !important;
   }
   .resulDiv{
     height: 50px;
@@ -52,6 +54,10 @@ Reservar Aula
   .botonReservar:hover{
     opacity: 0.6;
     text-decoration: none;
+  }
+  .select2-selection {
+    height: 40px !important;
+    font-size: 18px;
   }
   
 
@@ -124,7 +130,9 @@ Reservar Aula
         //para cuando se seleccione uno, que se muestra en el select cerrado
         templateSelection: function(result) {
           if (result.id != 'no') {
-            return 'Aula: '+result.nombre + ' (ID: ' + result.id + ') ';
+            return `<div class="resulDiv"><div class="imagen"><p class="imagenResul">${result.numero}</p></div><h2 class="nombreResul"> ${result.nombre}</h2><br>
+                                    <h3 class="segundaLineaResul"></h3>
+                                    </div>`;
           }
         },
         //Para que decidamos como se ve en el menu desplegable
@@ -132,8 +140,8 @@ Reservar Aula
           if (result.id == 'no' || typeof result.id == 'undefined') { //para que no haga nada cuando es el 1º resultado
             return '';
           } else{
-            var final = `<div class="resulDiv"><h2 class="nombreResul"> Nombre: ${result.nombre}  Numero: ${result.numero}    (ID: ${result.id}) </h2><br>
-                                    <h3 class="segundaLineaResul"> Desc: ${result.descripcion}   (Reservable: ${result.reservable}) </h3>
+            var final = `<div class="resulDiv"><div class="imagen"><p class="imagenResul">${result.numero}</p></div><h2 class="nombreResul"> ${result.nombre}</h2><br>
+                                    <h3 class="segundaLineaResul"> </h3>
                                     </div>`;
           }
           return final;

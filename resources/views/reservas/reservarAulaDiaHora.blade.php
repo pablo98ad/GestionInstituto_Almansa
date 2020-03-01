@@ -12,21 +12,30 @@ Reservar Aula
     text-align: center;
   }
 
+  imagen {
+    display: inline;
+  }
+
   .imagenResul {
     width: 50px;
+    height: 45px;
     margin: 0px;
+    font-size: 35px;
     padding: 0px;
     padding-right: 5px;
-    float: left;
+    float: left !important;
   }
 
   .resulDiv {
-    height: 50px;
+    padding-top:4px;
+    height: 50px !important;
     overflow: auto;
+    text-align: left !important;
   }
 
   .nombreResul {
-    top: 0px;
+    /*top: 0px;
+    left:0px;*/
     display: inline;
     font-size: 15px;
     margin: 0px;
@@ -34,10 +43,10 @@ Reservar Aula
   }
 
   .segundaLineaResul {
-    display: inline;
-    font-size: 10px;
-    margin: 0px;
-    padding: 0px;
+  /*  display: inline !important;*/
+    font-size: 10px !important;
+    margin: 0px !important;
+    padding: 0px !important;
   }
 
   #filtro {
@@ -46,7 +55,10 @@ Reservar Aula
   .error{
     border: red 3px solid;
   }
-
+  .select2-selection {
+    height: 55px !important;
+    font-size: 18px;
+  }
 
 </style>
 <!-- Para que se vea 'bonita' la tabla de los horarios -->
@@ -84,7 +96,7 @@ Reservar Aula {{$parametros[0] }} el dia {{$parametros[1]}}, hora {{$parametros[
       <div class="row">
         <div class="form-group col-md-12">
           <label for="diaReserva">Dia</label>
-          <input readonly="readonly" type="text" class="form-control" value="{{$parametros[1]}}" name="diaReserva" id="diaReserva">
+          <input readonly="readonly" type="text" class="form-control" value="{{ponerFechaFormatoESP($parametros[1])}}" name="diaReserva" id="diaReserva">
         </div>
       </div>
       <div class="w-100"></div>
@@ -156,7 +168,9 @@ Reservar Aula {{$parametros[0] }} el dia {{$parametros[1]}}, hora {{$parametros[
         //para cuando se seleccione uno, que se muestra en el select cerrado
         templateSelection: function(result) {
           if (result.id != 'no') {
-            return result.nombre + ' ' + result.apellidos;
+            return `<div class="resulDiv"><div class="imagen"><img class="imagenResul" src="${directorioImagenes}${result.rutaImagen}"/></div><h2 class="nombreResul"> ${result.nombre} ${result.apellidos}</h2><br>
+                                    <h3 class="segundaLineaResul"> ${result.departamento}   (${result.especialidad}) </h3>
+                                    </div>`;
           }
         },
         //Para que decidamos como se ve en el menu desplegable
@@ -164,7 +178,7 @@ Reservar Aula {{$parametros[0] }} el dia {{$parametros[1]}}, hora {{$parametros[
           if (result.id == 'no' || typeof result.id == 'undefined') { //para que no haga nada cuando es el 1º resultado
             return '';
           } else {
-            var final = `<div class="resulDiv"><div class="imagen"><img class="imagenResul" src="${directorioImagenes}${result.rutaImagen}"/></div><h2 class="nombreResul"> ${result.nombre} ${result.apellidos}    (ID: ${result.id}) </h2><br>
+            var final = `<div class="resulDiv"><div class="imagen"><img class="imagenResul" src="${directorioImagenes}${result.rutaImagen}"/></div><h2 class="nombreResul"> ${result.nombre} ${result.apellidos}</h2><br>
                                     <h3 class="segundaLineaResul"> ${result.departamento}   (${result.especialidad}) </h3>
                                     </div>`;
           }
@@ -202,3 +216,11 @@ Reservar Aula {{$parametros[0] }} el dia {{$parametros[1]}}, hora {{$parametros[
 
 </script>
 @endsection
+
+<?php
+function ponerFechaFormatoESP($fecha){
+$fecha= new DateTime($fecha);
+  
+  return strftime("%d/%m/%Y", $fecha->getTimestamp());
+}
+?>

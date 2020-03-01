@@ -12,21 +12,30 @@ Reservar Aula Manualmente
     text-align: center;
   }
 
+  imagen {
+    display: inline;
+  }
+
   .imagenResul {
     width: 50px;
+    height: 45px;
     margin: 0px;
+    font-size: 35px;
     padding: 0px;
     padding-right: 5px;
-    float: left;
+    float: left !important;
   }
 
   .resulDiv {
-    height: 50px;
+    padding-top:4px;
+    height: 55px !important;
     overflow: auto;
+    text-align: left !important;
   }
 
   .nombreResul {
-    top: 0px;
+    /*top: 0px;
+    left:0px;*/
     display: inline;
     font-size: 15px;
     margin: 0px;
@@ -34,11 +43,12 @@ Reservar Aula Manualmente
   }
 
   .segundaLineaResul {
-    display: inline;
-    font-size: 10px;
-    margin: 0px;
-    padding: 0px;
+  /*  display: inline !important;*/
+    font-size: 10px !important;
+    margin: 0px !important;
+    padding: 0px !important;
   }
+
 
   #filtro {
     font-size: 18px;
@@ -55,6 +65,10 @@ Reservar Aula Manualmente
   #datepicker{
     height: 50px;
     font-size: 20px;
+  } 
+  .select2-selection {
+    height: 55px !important;
+    font-size: 18px;
   }
 
 </style>
@@ -178,7 +192,9 @@ Reservar Aula Manualmente
         //para cuando se seleccione uno, que se muestra en el select cerrado
         templateSelection: function(result) {
           if (result.id != 'no') {
-            return result.nombre + ' ' + result.apellidos;
+            return `<div class="resulDiv"><div class="imagen"><img class="imagenResul" src="${directorioImagenes}${result.rutaImagen}"/></div><h2 class="nombreResul"> ${result.nombre} ${result.apellidos}</h2><br>
+                                    <h3 class="segundaLineaResul"> ${result.departamento}   (${result.especialidad}) </h3>
+                                    </div>`;
           }
         },
         //Para que decidamos como se ve en el menu desplegable
@@ -186,9 +202,9 @@ Reservar Aula Manualmente
           if (result.id == 'no' || typeof result.id == 'undefined') { //para que no haga nada cuando es el 1º resultado
             return '';
           } else {
-            var final = `<div class="resulDiv"><div class="imagen"><img class="imagenResul" src="${directorioImagenes}${result.rutaImagen}"/></div><h2 class="nombreResul"> ${result.nombre} ${result.apellidos}    (ID: ${result.id}) </h2><br>
+            var final = `<div class="resulDiv"><div class="imagen"><img class="imagenResul" src="${directorioImagenes}${result.rutaImagen}"/></div><h2 class="nombreResul"> ${result.nombre} ${result.apellidos}</h2><br>
                                     <h3 class="segundaLineaResul"> ${result.departamento}   (${result.especialidad}) </h3>
-                                    </div>`;
+                                    </div>`
           }
           return final;
         },
@@ -235,7 +251,9 @@ fetch(urlAulas) //pedimos a nuestra api la lista completa de los profes disponib
         //para cuando se seleccione uno, que se muestra en el select cerrado
         templateSelection: function(result) {
           if (result.id != 'no') {
-            return result.nombre + ' (num: ' + result.numero+')';
+            return `<div class="resulDiv"><div class="imagen"><p class="imagenResul">${result.numero}</p></div><h2 class="nombreResul"> ${result.nombre}</h2><br>
+                                    <h3 class="segundaLineaResul"></h3>
+                                    </div>`;
           }
         },
         //Para que decidamos como se ve en el menu desplegable
@@ -243,9 +261,9 @@ fetch(urlAulas) //pedimos a nuestra api la lista completa de los profes disponib
           if (result.id == 'no' || typeof result.id == 'undefined') { //para que no haga nada cuando es el 1º resultado
             return '';
           } else {
-            var final = `<div class="resulDiv"><h2 class="nombreResul"> Nombre: ${result.nombre}  Numero: ${result.numero}    (ID: ${result.id}) </h2><br>
-                                    <h3 class="segundaLineaResul"> Desc: ${result.descripcion}   (Reservable: ${result.reservable}) </h3>
-                                    </div>`;
+            var final = `<div class="resulDiv"><div class="imagen"><p class="imagenResul">${result.numero}</p></div><h2 class="nombreResul"> ${result.nombre}</h2><br>
+                                    <h3 class="segundaLineaResul"></h3>
+                                    </div>`;;
           }
           return final;
         },
@@ -324,3 +342,11 @@ fetch(urlAulas) //pedimos a nuestra api la lista completa de los profes disponib
 
 </script>
 @endsection
+
+<?php
+function ponerFechaFormatoESP($fecha){
+$fecha= new DateTime($fecha);
+  
+  return strftime("%d/%m/%Y", $fecha->getTimestamp());
+}
+?>

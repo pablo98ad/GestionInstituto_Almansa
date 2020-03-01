@@ -12,7 +12,9 @@ Horario Instituto
 
   .imagenResul {
     width: 50px;
+    height: 45px;
     margin: 0px;
+    font-size: 35px;
     padding: 0px;
     padding-right: 5px;
     float: left !important;
@@ -20,7 +22,7 @@ Horario Instituto
 
   .resulDiv {
     padding-top:4px;
-    height: 50px !important;
+    height: 55px !important;
     overflow: auto;
     text-align: left !important;
   }
@@ -204,10 +206,20 @@ table a{
               final= result.nombre + ' (ID: ' + result.id + ') ';
             }*/
             if (elementoSeleccionado == 'profesores' && result.id != 'no') {
-              final = `<div class="resulDiv"><div class="imagen"><img class="imagenResul" src="${directorioImagenes}${result.rutaImagen}"/></div><h2 class="nombreResul"> ${result.nombre} ${result.apellidos}    (ID: ${result.id}) </h2><br>
+              final = `<div class="resulDiv"><div class="imagen"><img class="imagenResul" src="${directorioImagenes}${result.rutaImagen}"/></div><h2 class="nombreResul"> ${result.nombre} ${result.apellidos}</h2><br>
                                     <h3 class="segundaLineaResul"> ${result.departamento}   (${result.especialidad}) </h3>
                                     </div>`;
 
+            } else if (elementoSeleccionado == 'aulas'  && result.id != 'no') {
+              let reservable= result.reservable == 1 ? "Reservable" : "No Reservable"
+              final =`<div class="resulDiv"><div class="imagen"><p class="imagenResul">${result.numero}</p></div><h2 class="nombreResul"> ${result.nombre}</h2><br>
+                                    <h3 class="segundaLineaResul">  (${reservable}) </h3>
+                                    </div>`;
+
+            }else if (elementoSeleccionado == 'alumnos' && result.id != 'no') {
+              final = `<div class="resulDiv"><div class="imagen"><img class="imagenResul" src="${directorioImagenes}${result.rutaImagen}"/></div><h2 class="nombreResul"> ${result.nombre} ${result.apellidos}</h2><br>
+                                    <h3 class="segundaLineaResul"> ${result.Grupo_id}   (${result.Telefono1}) </h3>
+                                    </div>`;
             }
 
             return final;
@@ -216,21 +228,23 @@ table a{
           },
           //Para que decidamos como se ve en el menu desplegable
           templateResult: function(result) {
+            let final;
             if (result.id == 'no' || typeof result.id == 'undefined') { //para que no haga nada cuando es el 1º resultado
               return '';
             }
             if (elementoSeleccionado == 'profesores' && result.id != 'no') {
-              var final = `<div class="resulDiv"><div class="imagen"><img class="imagenResul" src="${directorioImagenes}${result.rutaImagen}"/></div><h2 class="nombreResul"> ${result.nombre} ${result.apellidos}    (ID: ${result.id}) </h2><br>
+              final = `<div class="resulDiv"><div class="imagen"><img class="imagenResul" src="${directorioImagenes}${result.rutaImagen}"/></div><h2 class="nombreResul"> ${result.nombre} ${result.apellidos}</h2><br>
                                     <h3 class="segundaLineaResul"> ${result.departamento}   (${result.especialidad}) </h3>
                                     </div>`;
 
             } else if (elementoSeleccionado == 'aulas') {
-              var final = `<div class="resulDiv"><h2 class="nombreResul"> Nombre: ${result.nombre}  Numero: ${result.numero}    (ID: ${result.id}) </h2><br>
-                                    <h3 class="segundaLineaResul"> Desc: ${result.descripcion}   (Reservable: ${result.reservable}) </h3>
+              let reservable= result.reservable == 1 ? "Reservable" : "No Reservable"
+              final =`<div class="resulDiv"><div class="imagen"><p class="imagenResul">${result.numero}</p></div><h2 class="nombreResul"> ${result.nombre}</h2><br>
+                                    <h3 class="segundaLineaResul">  (${reservable}) </h3>
                                     </div>`;
 
             } else if (elementoSeleccionado == 'alumnos') {
-              var final = `<div class="resulDiv"><div class="imagen"><img class="imagenResul" src="${directorioImagenes}${result.rutaImagen}"/></div><h2 class="nombreResul"> ${result.nombre} ${result.apellidos}    (ID: ${result.id}) </h2><br>
+              final = `<div class="resulDiv"><div class="imagen"><img class="imagenResul" src="${directorioImagenes}${result.rutaImagen}"/></div><h2 class="nombreResul"> ${result.nombre} ${result.apellidos}</h2><br>
                                     <h3 class="segundaLineaResul"> ${result.Grupo_id}   (${result.Telefono1}) </h3>
                                     </div>`;
             }
