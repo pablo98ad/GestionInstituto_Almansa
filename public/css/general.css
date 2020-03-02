@@ -4,6 +4,7 @@ body,
 .container-md,
 .wrapper {
   background-color: rgb(170, 221, 168);
+  
 }
 
 .pagination > li {
@@ -73,5 +74,13 @@ body,
 .opcionBoton:hover img{
  /* color:black;*/
   filter: invert(100%); 
+}
+
+.elementoMenu >span{
+  font-size: 1.4em !important;
+
+}
+.elementoMenu >img{
+  filter: invert(100%) !important; 
 
 }

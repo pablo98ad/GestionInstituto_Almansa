@@ -39,5 +39,11 @@
       echo "<h1>Esta Aula no se puede reservar</h1>";
     }
     ?>
-
+<?php
+function ponerFechaFormatoESP($fecha){
+$fecha= new DateTime($fecha);
+  
+  return strftime("%d/%m/%Y", $fecha->getTimestamp());
+}
+?>
 

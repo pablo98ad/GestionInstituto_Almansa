@@ -45,113 +45,36 @@
       </div>
 
       <ul class="list-unstyled components">
-        <p>Seleccion de Modulos</p>
+        <!--<p>Seleccion de Modulos</p>-->
         <li>
-          <a href="#horarioss" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Horarios</a>
-          <ul class="collapse list-unstyled" id="horarioss">
-            <li>
-              <a href="{{url('/horarios')}}">Ver Horarios</a>
-            </li>
-          </ul>
+          <a href="{{url('/horarios')}}" aria-expanded="false" class="elementoMenu"><i class="fa fa-table fa-lg"></i><span> Horarios</span></a>
         </li>
         <li>
         <li>
-          <a href="#reservass" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Reservas</a>
-          <ul class="collapse list-unstyled" id="reservass">
-            <li>
-              <a href="{{url('/reservar')}}">Hacer reserva</a>
-            </li>
-            <li>
-              <a href="{{url('/reservas/listado')}}">Listado de Reservas</a>
-            </li>
-          </ul>
+          <a href="{{url('/reservar')}}"  aria-expanded="false" class="elementoMenu"> <i class="fa fa-book fa-lg"></i><span> Reservas</span></a>
         </li>
         <li>
-          <a href="#anuncioss" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Anuncios</a>
-          <ul class="collapse list-unstyled" id="anuncioss">
-          @if (Auth::check())
-            <li>
-              <a href="{{url('/anuncios')}}">Listado Anuncios</a>
-            </li>
-            <li>
-              <a href="{{url('/anuncios/create')}}">Crear nuevo Anuncio</a>
-            </li>
-            @endif
-            <li>
-              <a href="{{url('/verAnuncios')}}">Invocar Pagina Anuncios</a>
-            </li>
-          </ul>
+          <a href="{{url('/anuncios')}}" aria-expanded="false" class="elementoMenu"><img class="icon" width="33px" src="{{asset('img/iconoAnuncios.png')}}"><span> Anuncios</span></a>
         </li>
         <li>
-          <a href="#alumnoss" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Alumnos</a>
-          <ul class="collapse list-unstyled" id="alumnoss">
-            <li>
-              <a href="{{url('/alumno')}}">Listado de Alumnos</a>
-            </li>
-            @if (Auth::check())
-            <li>
-              <a href="{{url('/alumno/create')}}">Alta nuevo Alumno</a>
-            </li>
-            @endif
-          </ul>
+          <a href="{{url('/alumno')}}" aria-expanded="false" class="elementoMenu"><img class=" icon" width="33px" src="{{asset('img/iconoAlumno.png')}}"><span> Alumnos</span></a>
         </li>
         <li>
-          <a href="#profesoress" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Profesores</a>
-          <ul class="collapse list-unstyled" id="profesoress">
-            <li>
-              <a href="{{url('/profesores')}}">Listado de Profesores</a>
-            </li>
-            @if (Auth::check())
-            <li>
-              <a href="{{url('/profesores/create')}}">Alta nuevo Profesor</a>
-            </li>
-            @endif
-          </ul>
+          <a href="{{url('/profesores')}}" aria-expanded="false" class="elementoMenu"><img class="icon" width="35px" src="{{asset('img/iconoProfesor.svg')}}"><span> Profesores</span></a>
         </li>
         <li>
-          <a href="#aulass" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Aulas</a>
-          <ul class="collapse list-unstyled" id="aulass">
-            <li>
-              <a href="{{url('/aulas')}}">Listado de Aulas</a>
-            </li>
-            @if (Auth::check())
-            <li>
-              <a href="{{url('/aulas/create')}}">Alta nueva Aula</a>
-            </li>
-            @endif
-          </ul>
+          <a href="{{url('/aulas')}}" aria-expanded="false" class="elementoMenu"><img class="icon" width="35px" src="{{asset('img/iconoAula.svg')}}"><span> Aulas</span></a>
         </li>
         <li>
-          <a href="#materiass" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Materias</a>
-          <ul class="collapse list-unstyled" id="materiass">
-            <li>
-              <a href="{{url('/materia')}}">Listado de Materias</a>
-            </li>
-            @if (Auth::check())
-            <li>
-              <a href="{{url('/materia/create')}}">Alta nueva Materia</a>
-            </li>
-            @endif
-          </ul>
+          <a href="{{url('/materia')}}" aria-expanded="false" class="elementoMenu"><i class="fa fa-file-text fa-lg" aria-hidden="true"></i><span> Materias</span></a>
         </li>
         <li>
-          <a href="#gruposs" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Grupos</a>
-          <ul class="collapse list-unstyled" id="gruposs">
-            <li>
-              <a href="{{url('/grupo')}}">Listado de Grupos</a>
-            </li>
-            @if (Auth::check())
-            <li>
-              <a href="{{url('/grupo/create')}}">Alta nuevo Grupo</a>
-            </li>
-            @endif
-          </ul>
+          <a href="{{url('/grupo')}}" aria-expanded="false" class="elementoMenu"><img class="icon" width="35px" src="{{asset('img/iconoGrupo.png')}}"><span> Grupos</span></a>
         </li>
       </ul>
       <ul class="list-unstyled CTAs">
         <li>
-        
-          
+
           @if (Auth::check())
            <a href="{{url('/')}}" class="botonesGrandesMenu">Bienvenido {{ Auth::user()->name }}</a>
           <form id="logout-form" action="{{route('logout')}}" method="POST" >
@@ -204,8 +127,6 @@
 <script src="{{asset('js/bootstrap-4.4.1.min.js')}}"></script>
 
 <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/1.0.1/slideout.min.js" type="text/javascript"></script>-->
-
-
   <script type="text/javascript">
     //PARA ERRORES Y CONFIRMACIONES
     window.setTimeout(function() {
@@ -218,6 +139,8 @@
 
   <!--colapso del menu-->
   <script type="text/javascript">
+  let urlBase="{{url('/')}}";
+
     $(document).ready(function() {
       ////PARA RECORDAR SI EL USUARIO TIENE CERRADO EL MENU
       var state = localStorage.getItem('menu-closed');
@@ -274,13 +197,29 @@
 
       //SELECION DE MODULO EN EL MENU AUTOMATICO
       let enlace = window.location.href.split('?')[0];
+      //alert(urlBase.length);
+      //enlace=enlace.substring(0,enlace.lastIndexOf('/'));
+      //alert(enlace);
+      enlace=enlace.substring(urlBase.length+1,enlace.length);
+      //alert(enlace);
+      if(enlace.indexOf('/')!=-1){
+        enlace=enlace=enlace.substring(0,enlace.indexOf('/'));
+      }
+      //alert(enlace.indexOf('/'));
+      //alert(enlace);
+
       $("a").each(function() {
         //console.log(enlace+'   -----   '+$(this).parent().attr('href'));
-        if (enlace == $(this).attr('href') && !$(this).hasClass('botonesGrandesMenu')) {
+        let enlaceA=$(this).attr('href');
+        //alert(typeof enlaceA);
+        enlaceA=enlaceA.substring(enlaceA.lastIndexOf('/')+1,enlaceA.length);
+        //alert(enlaceA);
+        if (enlace == enlaceA && !$(this).hasClass('botonesGrandesMenu')) {
+          
           $(this).parent().addClass(' active ');
-          $(this).parent().parent().addClass(' show ');
-          $(this).parent().parent().prev().addClass(' dropdown-toggle ');
-          $(this).parent().parent().prev().attr("aria-expanded", "true");
+          $(this).parent().addClass(' show ');
+          //$(this).parent().parent().prev().addClass(' dropdown-toggle ');
+          $(this).parent().attr("aria-expanded", "true");
         }
       });
 

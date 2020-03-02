@@ -57,7 +57,7 @@ Listado de Anuncios
             <!--</p>-->
           </div><br>
 
-          <h5>{{ponerFechaDecente($anuncio->inicio,$anuncio->fin)}}</h5><br>
+          <h5>{{ponerFechaDecente(substr($anuncio->inicio,0,16),substr($anuncio->fin,0,16))}}</h5><br>
           <input readonly="readonly" type="text" class=" form-control" name="rangos" id="rango{{$anuncio->id}}" />
 
 
@@ -164,9 +164,10 @@ Listado de Anuncios
 <?php
 function ponerFechaDecente($inicio, $fin){
   setlocale(LC_TIME, 'spanish');
-
+  echo $inicio.' - '.$fin.'<br>';
   $inicio= new DateTime($inicio);
   $fin= new DateTime($fin);
+  
   /*NO TRADUCE
   $fechaEntendible='Desde ';  
   $fechaEntendible.= $inicio->format('l d').' de '.$inicio->format('F').' del '.$inicio->format('Y');
