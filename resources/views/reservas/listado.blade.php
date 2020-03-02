@@ -71,9 +71,7 @@ Listado Reservas
           </div>
         </div>
       </div>
-
     @endforeach
-    
   </div><br><br>
 </div>
 </div>

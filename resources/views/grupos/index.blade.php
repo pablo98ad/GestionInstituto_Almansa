@@ -78,7 +78,7 @@ Listado de grupos
         <div style="height: 55px;" class="border overflow-auto">
           <p class="card-text">{{$grupo->descripcion}}</p>
         </div><br>-->
-
+        <a class='btn btn-warning' href='{{url('/horario/grupo/').'/'.$grupo->id}}' role='button'><i class="fa fa-table fa-lg" aria-hidden="true"></i></a>
         <a class='btn btn-success' href='grupo/{{$grupo->id}}' role='button'><i class="fa fa-eye fa-lg" aria-hidden="true"></i></a>
         @if (Auth::check())
         <a class='btn btn-primary' href='grupo/{{$grupo->id}}/edit' role='button'><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>

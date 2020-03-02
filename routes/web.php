@@ -45,6 +45,8 @@ Route::post('/materia/importar', 'MateriaController@importar')->name('materiaImp
 //horarios!!
 Route::get('/horario/profesor/{id}','HorarioController@horarioProfesor')->name('verHorarioProfesor');
 Route::get('/horario/aula/{id}','HorarioController@horarioAula')->name('verHorarioAula');
+Route::get('/horario/grupo/{id}','HorarioController@horarioGrupo')->name('verHorarioGrupo');
+
 Route::get('/horarios', 'HorarioController@index');
 Route::get('/horario/tabla/{por}/{quien}', 'HorarioController@getSoloTabla');
 //reservas de aulas

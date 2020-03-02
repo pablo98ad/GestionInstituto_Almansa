@@ -29,6 +29,7 @@ Horario del Aula: {{$horariosAula['nombreAula']}} y reservas de <b>esta semana</
     echo "<h1>No se han encontrado registros para esta tabla</h1><br>";
   }
   ?>
+  <!--<h1>Horario del Aula: {{$horariosAula['nombreAula']}}</h1>-->
    <div class="row">
   
     <table class="greenTable">

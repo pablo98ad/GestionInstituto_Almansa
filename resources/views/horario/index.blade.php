@@ -129,9 +129,9 @@ table a{
 -->
     </div>
 
-    <div class="col-12 col-md-4 ">
+    <div style="display:none "class="contenedorCampos col-12 col-md-4 ">
       <label for="campos">Seleccione:</label><br>
-      <select class="mt-3 w-100" id="campos" disabled name="campos">
+      <select class="h-50 mt-3 w-100" id="campos" disabled name="campos">
         <option value="no" selected>
         </option>
       </select>
@@ -164,7 +164,9 @@ table a{
   };
 
   function cargar() {
+    $('#campos').empty();
     elementoSeleccionado=this.id;
+    $('.contenedorCampos').show();
     $('#profesores').removeClass('activo');
     $('#aulas').removeClass('activo');
     $('#alumnos').removeClass('activo');
@@ -190,6 +192,8 @@ table a{
         return response.json(); //pasamos de json a array de objetos...
       })
       .then(datos => {
+        
+
         //IMPORTANTISIMO, para poder buscar, introduce un nuevo campo en los objetos llamado text que se usara para la busqueda
         var datos = $.map(datos, function(obj) {
           obj.text = obj.text || (obj.nombre + ' ' + obj.apellidos); // replace name with the property used for the text
@@ -218,7 +222,7 @@ table a{
 
             }else if (elementoSeleccionado == 'alumnos' && result.id != 'no') {
               final = `<div class="resulDiv"><div class="imagen"><img class="imagenResul" src="${directorioImagenes}${result.rutaImagen}"/></div><h2 class="nombreResul"> ${result.nombre} ${result.apellidos}</h2><br>
-                                    <h3 class="segundaLineaResul"> ${result.Grupo_id}   (${result.Telefono1}) </h3>
+                                    <h3 class="segundaLineaResul"> ${result.grupo.nombre}   (${result.Telefono1}) </h3>
                                     </div>`;
             }
 
@@ -237,15 +241,15 @@ table a{
                                     <h3 class="segundaLineaResul"> ${result.departamento}   (${result.especialidad}) </h3>
                                     </div>`;
 
-            } else if (elementoSeleccionado == 'aulas') {
+            } else if (elementoSeleccionado == 'aulas' && result.id != 'no') {
               let reservable= result.reservable == 1 ? "Reservable" : "No Reservable"
               final =`<div class="resulDiv"><div class="imagen"><p class="imagenResul">${result.numero}</p></div><h2 class="nombreResul"> ${result.nombre}</h2><br>
                                     <h3 class="segundaLineaResul">  (${reservable}) </h3>
                                     </div>`;
 
-            } else if (elementoSeleccionado == 'alumnos') {
+            } else if (elementoSeleccionado == 'alumnos' && result.id != 'no') {
               final = `<div class="resulDiv"><div class="imagen"><img class="imagenResul" src="${directorioImagenes}${result.rutaImagen}"/></div><h2 class="nombreResul"> ${result.nombre} ${result.apellidos}</h2><br>
-                                    <h3 class="segundaLineaResul"> ${result.Grupo_id}   (${result.Telefono1}) </h3>
+                                    <h3 class="segundaLineaResul"> ${result.grupo.nombre}   (${result.Telefono1}) </h3>
                                     </div>`;
             }
             return final;
@@ -263,7 +267,11 @@ table a{
               return "Buscando..";
             }
           }
-        });
+        }
+        
+        );
+        cargarTabla('');//hago que carge el primer indice
+        $('#campos').select2("open");//lo abro para que elija el que quiera
       });
 
     $('#campos').on('select2:select', function(e) { //Para que cuando seleccionemos un option del select, se carge el horario correspondiente

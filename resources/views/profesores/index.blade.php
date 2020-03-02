@@ -48,7 +48,7 @@ Listado de profesores
               {{ csrf_field()}}
               <div class="form-group">
                 <label for="exampleFormControlFile1">Subir fichero XML con profesores</label>
-                <input type="file" name="ficheroProfesores" class="form-control-file" id="exampleFormControlFile1" required>
+                <input type="file" accept=".csv" name="ficheroProfesores" class="form-control-file" id="exampleFormControlFile1" required>
               </div>
             </form>
           </div>
@@ -91,9 +91,9 @@ Listado de profesores
         <div style="height: 90px;" class="border overflow-auto">
           <p class="card-text">{{$profesor->observaciones}}</p>
         </div><br>-->
-
         <a class='btn btn-warning' href='horario/profesor/{{$profesor->id}}' role='button'><i class="fa fa-table fa-lg" aria-hidden="true"></i></a>
         <a class='btn btn-success' href='profesores/{{$profesor->id}}' role='button'><i class="fa fa-eye fa-lg" aria-hidden="true"></i></a>
+        
         @if (Auth::check())
         <a class='btn btn-primary' href='profesores/{{$profesor->id}}/edit' role='button'><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
         <div class="d-inline">

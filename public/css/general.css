@@ -64,23 +64,17 @@ body,
 .icon{
   vertical-align: bottom !important;
 }
-.opcionBoton{
 
-  background-color: #006AAA !important;
-}
-.opcionBoton img{
-  transition: filter .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out !important;
-}
-.opcionBoton:hover img{
- /* color:black;*/
-  filter: invert(100%); 
-}
 
 .elementoMenu >span{
   font-size: 1.4em !important;
 
 }
-.elementoMenu >img{
+.elementoMenu div{
+  display: inline-block;
+  width: 35px !important;
+}
+.elementoMenu > div >img{
   filter: invert(100%) !important; 
 
 }

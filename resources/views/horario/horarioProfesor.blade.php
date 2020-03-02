@@ -34,7 +34,8 @@ Horario profesor: {{$horariosProfe['nombreProfesor']}} y reservas de esta semana
   ?>
  <!-- <div class="row justify-content-end">
     <a class='col-3 col-sm-2 col-md-2  btn btn-success mb-1 mr-2' href="{{url('aulas/').'/create'}}" role='button'>Añadir</a>
-  </div>-->
+  </div>
+  <h1>Horario profesor: {{$horariosProfe['nombreProfesor']}}</h1>-->
    <div class="row">
    
     <table class="greenTable">

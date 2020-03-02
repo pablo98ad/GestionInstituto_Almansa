@@ -159,7 +159,7 @@ Mostrar Alumno {{$alumno->nombre}}
 
 
   <hr>
-  <a class='btn btn-warning' href='{{url('/horario/alumno/').'/'.$alumno->id}}' role='button'><i class="fa fa-table fa-lg" aria-hidden="true"></i></a>
+  <a class='btn btn-warning' href='{{url('/horario/grupo/').'/'.$alumno->Grupo_id}}' role='button'><i class="fa fa-table fa-lg" aria-hidden="true"></i></a>
    @if (Auth::check())
         <a class='btn btn-primary' href='{{url('/alumno/').'/'.$alumno->id.'/edit'}}' role='button'><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
         <div class="d-inline">

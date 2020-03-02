@@ -47,29 +47,31 @@
       <ul class="list-unstyled components">
         <!--<p>Seleccion de Modulos</p>-->
         <li>
-          <a href="{{url('/horarios')}}" aria-expanded="false" class="elementoMenu"><i class="fa fa-table fa-lg"></i><span> Horarios</span></a>
+          <a href="{{url('/horarios')}}" aria-expanded="false" class="elementoMenu"><div><i class="fa fa-table fa-lg"></i></div><span> Horarios</span></a>
         </li>
         <li>
-        <li>
-          <a href="{{url('/reservar')}}"  aria-expanded="false" class="elementoMenu"> <i class="fa fa-book fa-lg"></i><span> Reservas</span></a>
+          <a href="{{url('/guardias')}}" aria-expanded="false" class="elementoMenu"><div><i class="fa fa-address-book-o fa-lg"></i></div><span> Guardias</span></a>
         </li>
         <li>
-          <a href="{{url('/anuncios')}}" aria-expanded="false" class="elementoMenu"><img class="icon" width="33px" src="{{asset('img/iconoAnuncios.png')}}"><span> Anuncios</span></a>
+          <a href="{{url('/reservar')}}"  aria-expanded="false" class="elementoMenu"><div> <i class="fa fa-book fa-lg"></i></div><span> Reservas</span></a>
         </li>
         <li>
-          <a href="{{url('/alumno')}}" aria-expanded="false" class="elementoMenu"><img class=" icon" width="33px" src="{{asset('img/iconoAlumno.png')}}"><span> Alumnos</span></a>
+          <a href="{{url('/anuncios')}}" aria-expanded="false" class="elementoMenu"><div><img class="icon" width="30px" src="{{asset('img/iconoAnuncios.png')}}"></div><span> Anuncios</span></a>
         </li>
         <li>
-          <a href="{{url('/profesores')}}" aria-expanded="false" class="elementoMenu"><img class="icon" width="35px" src="{{asset('img/iconoProfesor.svg')}}"><span> Profesores</span></a>
+          <a href="{{url('/alumno')}}" aria-expanded="false" class="elementoMenu"><div><img class=" icon" width="30px" src="{{asset('img/iconoAlumno.png')}}"></div><span> Alumnos</span></a>
         </li>
         <li>
-          <a href="{{url('/aulas')}}" aria-expanded="false" class="elementoMenu"><img class="icon" width="35px" src="{{asset('img/iconoAula.svg')}}"><span> Aulas</span></a>
+          <a href="{{url('/profesores')}}" aria-expanded="false" class="elementoMenu"><div><img class="icon" width="33px" src="{{asset('img/iconoProfesor.svg')}}"></div><span> Profesores</span></a>
         </li>
         <li>
-          <a href="{{url('/materia')}}" aria-expanded="false" class="elementoMenu"><i class="fa fa-file-text fa-lg" aria-hidden="true"></i><span> Materias</span></a>
+          <a href="{{url('/aulas')}}" aria-expanded="false" class="elementoMenu"><div><img class="icon" width="30px" src="{{asset('img/iconoAula.svg')}}"></div><span> Aulas</span></a>
         </li>
         <li>
-          <a href="{{url('/grupo')}}" aria-expanded="false" class="elementoMenu"><img class="icon" width="35px" src="{{asset('img/iconoGrupo.png')}}"><span> Grupos</span></a>
+          <a href="{{url('/materia')}}" aria-expanded="false" class="elementoMenu"><div><i class="fa fa-file-text fa-lg" aria-hidden="true"></i></div><span> Materias</span></a>
+        </li>
+        <li>
+          <a href="{{url('/grupo')}}" aria-expanded="false" class="elementoMenu"><div><img class="icon" width="30px" src="{{asset('img/iconoGrupo.png')}}"></div><span> Grupos</span></a>
         </li>
       </ul>
       <ul class="list-unstyled CTAs">
@@ -208,7 +210,7 @@
       //alert(enlace.indexOf('/'));
       //alert(enlace);
 
-      $("a").each(function() {
+      $(".elementoMenu").each(function() {
         //console.log(enlace+'   -----   '+$(this).parent().attr('href'));
         let enlaceA=$(this).attr('href');
         //alert(typeof enlaceA);

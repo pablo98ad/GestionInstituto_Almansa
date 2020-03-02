@@ -95,7 +95,7 @@ Listado de alumnos
         <div style="height: 80px;" class="border overflow-auto">
           <p class="card-text">{{$alumno->observaciones}}</p>
         </div><br>-->
-        <a class='btn btn-warning' href='{{url('/horario/alumno/').'/'.$alumno->id}}' role='button'><i class="fa fa-table fa-lg" aria-hidden="true"></i></a>
+        <a class='btn btn-warning' href='{{url('/horario/grupo/').'/'.$alumno->Grupo_id}}' role='button'><i class="fa fa-table fa-lg" aria-hidden="true"></i></a>
         <a class='btn btn-success' href='alumno/{{$alumno->id}}' role='button'><i class="fa fa-eye fa-lg" aria-hidden="true"></i></a>
         <!--<a class='btn btn-warning' href='horario/alumno/{{$alumno->id}}' role='button'>Horario</a>-->
         @if (Auth::check())

@@ -59,3 +59,26 @@ body,.fondoPPrincipal,#content{
   opacity: 0.6;
   text-decoration: none;
 }
+.opcionBoton{
+
+  background-color: #337740 !important;
+}
+.opcionBoton:hover{
+  background-color: #95c799 !important;
+
+}
+
+.opcionBoton >div {
+  display: inline-block !important;;
+  width: 120px !important;;
+}
+
+.opcionBoton img{
+  padding: 0px !important;
+  margin: 0px !important;
+  transition: filter .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out !important;
+}
+.opcionBoton:hover img{
+ /* color:black;*/
+  filter: invert(100%); 
+}

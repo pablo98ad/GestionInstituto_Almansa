@@ -23,7 +23,7 @@ Ver Profesor {{$profesor->nombre}}
         <table class="table">
           <thead>
             <tr>
-              <th scope="col">ID</th>
+              
               <th scope="col">Departamento</th>
               <th scope="col">Especialidad</th>
               <th scope="col">Cargo</th>
@@ -32,7 +32,7 @@ Ver Profesor {{$profesor->nombre}}
           </thead>
           <tbody>
             <tr>
-              <td>{{$profesor->id}}</td>
+              
               <td>{{$profesor->departamento}}</td>
               <td>{{$profesor->especialidad}}</td>
               <td>{{$profesor->cargo}}</td>

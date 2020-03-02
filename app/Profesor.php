@@ -8,6 +8,8 @@ class Profesor extends Model
 {
     protected $table = 'profesor';
     //
+    protected $fillable = ['id','nombre', 'apellidos','departamento','especialidad','cargo','observaciones','codigo','rutaImagen'];
+
 
     public function horarios(){
         return $this->hasMany('App\Horario','profesor_id');

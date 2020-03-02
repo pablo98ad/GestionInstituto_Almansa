@@ -97,7 +97,7 @@ Ver grupo {{$grupo->nombre}}
       @endif
     </div>
   </div>
-
+  <a class='btn btn-warning' href='{{url('/horario/grupo/').'/'.$grupo->id}}' role='button'><i class="fa fa-table fa-lg" aria-hidden="true"></i></a>
   @if (Auth::check())
         <a class='btn btn-primary' href='{{url('grupo/'.$grupo->id.'/edit')}}' role='button'><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
         <div class="d-inline">

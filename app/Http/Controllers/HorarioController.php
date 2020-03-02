@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Alumno;
 use Illuminate\Http\Request;
 use App\Horario;
 use App\Profesor;
 use App\Aula;
+use App\Grupo;
 use App\Reservas;
 use Exception;
 
@@ -20,7 +22,7 @@ class HorarioController extends Controller
     {   
         return view('horario.index');
     }
-    //¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡INTEGRAR MODULO RESERVAS!!!!!!!!!!!!!!!!!!!!!!!!!!
+
     public function horarioProfesor($id)
     {   
         $tablaHorario=[];
@@ -58,6 +60,29 @@ class HorarioController extends Controller
             return view('horario.horarioAula', ['horariosAula' => $tablaHorario]);
         }
     }
+
+    ///HORARIO POR Alumno
+
+    public function horarioGrupo($id)
+    {   
+        try{
+           // $alum=Alumno::find($id);
+           $grupo=Grupo::find($id);
+            $horariosGrupo = Horario::where('grupo_id', /*$alum->grupo->*/$id)->get();
+            if(sizeof($horariosGrupo)>0){
+                $tablaHorario= $this->generarHorarioGrupo($horariosGrupo);
+                $tablaHorario['nombreGrupo']= $grupo->nombre;
+                return view('horario.horarioGrupo', ['horariosGrupo' => $tablaHorario]);
+            }else{  
+                $tablaHorario['nombreGrupo']= $grupo->nombre;
+                return view('horario.horarioGrupo', ['horariosGrupo' => $tablaHorario]);
+            }
+        }catch(\Exception $e){
+            return redirect()->action('AlumnoController@index')->with('error', 'No existe el horario para el grupo id:'.$id);
+        }
+
+    }   
+    
 
 
     private function ponerReservasAula($tablaHorario,$reservasAula){
@@ -127,16 +152,17 @@ class HorarioController extends Controller
 
     public function getSoloTabla($por,$quien){
        //echo $quien;
+       
         if($por=='profesores'){
+            $horariosProfe='';
             $horariosProfe = Horario::where('profesor_id', $quien)->get();
             $reservasProfe = Reservas::where('profesor_id', $quien)->get();
             if(sizeof($horariosProfe)>0){
                 $tablaHorario= $this->generarHorarioProfe($horariosProfe);
                 $tablaHorario=$this->ponerReservasProfe($tablaHorario,$reservasProfe);
+            }else{
+                $tablaHorario=['error' => 'Este profesor no tiene horario'];
             }
-            return view('horario.tablaHorario', ['horario' => $tablaHorario]);
-
-
         }else if($por=='aulas'){
             $horariosAula = Horario::where('aula_id', $quien)->get();
             $reservasAula = Reservas::where('aula_id', $quien)->get();
@@ -144,16 +170,24 @@ class HorarioController extends Controller
                 $tablaHorario= $this->generarHorarioAula($horariosAula);
                 $tablaHorario=$this->ponerReservasAula($tablaHorario,$reservasAula);
                // $tablaHorario['nombreAula']= $horariosAula[0]->aula->nombre;
-                return view('horario.tablaHorario', ['horario' => $tablaHorario]);
+                //return view('horario.tablaHorario', ['horario' => $tablaHorario]);
             }else {
-                $tablaHorario=Aula::find($quien);
+               // $tablaHorario=Aula::find($quien);
                // $tablaHorario['nombreAula']= $tablaHorario->nombre;
-                return view('horario.tablaHorario', ['horario' => $tablaHorario]);
+               $tablaHorario=['error' => 'Esta aula no tiene horario'];
+            }
+            
+        }else if($por=='alumnos'){
+            $alum=Alumno::find($quien);
+            $horariosGrupo = Horario::where('aula_id', $alum->grupo->id)->get();
+            if(sizeof($horariosGrupo)>0){
+                $tablaHorario= $this->generarHorarioGrupo($horariosGrupo);
+            }else{
+                $tablaHorario=['error' => 'Esta alumno no tiene horario'];
             }
         }
-        //FALTA POR ALUMNO
 
-
+        return view('horario.tablaHorario', ['horario' => $tablaHorario]);
     }
     /**
      *Funcion que encuentra en un array de objetos tipo modelo horario, el dia y la hora requerida por los valores que le pasamos 
@@ -211,6 +245,40 @@ class HorarioController extends Controller
           
         if(!$encontrado){
             $aux.= "LIBRE";
+        }
+        return $aux;
+    }
+
+
+    public function generarHorarioGrupo($horariosG){
+        $horario=[];
+        $dias=array('L','M','X','J','V');
+        $horas=array('1','2','3','R','4','5','6','7');
+        foreach ($dias as $dia){
+            foreach ($horas as $hora){
+                $horario[$dia][$hora]= $this->encontrarEnHorarioGrupo($horariosG,$dia,$hora);
+
+            }
+        }     
+        return $horario;
+    }
+
+    public static function encontrarEnHorarioGrupo($horario,$dia,$hora){
+        $encontrado=false;
+        $aux='';
+
+        for($i=0; $i<sizeof($horario) && !$encontrado;$i++){
+          
+            if($horario[$i]->dia==$dia &&$horario[$i]->hora==$hora){
+                $encontrado=true;
+                $aux.= '<a href="'.url('/').'/aulas/'.$horario[$i]->aula->id.'">'.$horario[$i]->aula->nombre.'</a> </br> ';
+                $aux.= '<a href="'.url('/').'/profesores/'.$horario[$i]->profesor->id.'">'.$horario[$i]->profesor->nombre.' - '.$horario[$i]->profesor->codigo.'</a> </br> ';
+                $aux.= '<a href="'.url('/').'/materia/'.$horario[$i]->materia->id.'">'.$horario[$i]->materia->nombre.'</a> </br> ';
+            }
+        }
+          
+        if(!$encontrado){
+            $aux.= "SIN CLASE";
         }
         return $aux;
     }

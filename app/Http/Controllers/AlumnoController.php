@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\ImageManagerStatic as Image;
 use Exception;
+use Illuminate\Http\JsonResponse;
 
 class AlumnoController extends Controller
 {
@@ -16,7 +17,7 @@ class AlumnoController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth')->except('index', 'getTodosAlumnosJSON');
+        $this->middleware('auth')->except('index','show', 'getTodosAlumnosJSON');
     }
 
 
@@ -225,8 +226,8 @@ class AlumnoController extends Controller
      */
     public function getTodosAlumnosJSON()
     {
-        $alumnos = Alumno::all();
-        echo $alumnos;
+        $alumnos = Alumno::with('grupo')->get();//asi podemos devolver todas sus relacciones!
+        return new JsonResponse( $alumnos);
     }
 
     

@@ -7,6 +7,7 @@ use App\Profesor;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\ImageManagerStatic as Image;
+use Maatwebsite\Excel\Facades\Excel;
 use Exception;
 
 
@@ -215,13 +216,35 @@ class ProfesorController extends Controller
         //guardar los datos que se envian en la base de datos 
         $archivo = $request->file('ficheroProfesores');
         $nombre = 'ArchivoIMPProfesores'.$archivo->getClientOriginalName();
-
+        $indice=0;
         try { //no se haria asi...
             Storage::disk('local')->put($nombre, File::get($archivo));
+            $rutaArchivo=Storage::disk('local')->path($nombre)/*Storage::disk('local')->get($nombre)*/;
+            
+            Excel::load($rutaArchivo, function($reader) {
+                $indice=0;
+                foreach ($reader->get() as $profe) {
+                    //echo $profe;
+                    Profesor::create([
+                        'id' => $profe->codigo,
+                        'nombre' => $profe->nombre,
+                        'apellidos' =>$profe->apellidos,
+                        'departamento' =>$profe->departamento,
+                        'especialidad' =>$profe->cuerpo.' - '.$profe->especialidad,
+                        'cargo' =>$profe->cargo,
+                        'observaciones' => '',
+                        'codigo' =>$profe->abreviatura,
+                        'rutaImagen' => 'imagenes/profesores/default.png'
+                    ]);
+                    $indice=$indice+1;
+                 }
+                 //return $indice;
+           });
+
         } catch (\Exception  $e) {
-            return redirect()->action('ProfesorController@index')->with('error', 'Error, no se ha podido guardar el fichero');
+            return redirect()->action('ProfesorController@index')->with('error', $rutaArchivo.'Error, no se ha podido guardar el fichero'.$e->getMessage());
         }
-        return redirect()->action('ProfesorController@index')->with('notice', 'El fichero ' . $nombre . ', importado correctamente.');
+        return redirect()->action('ProfesorController@index')->with('notice', 'El fichero ' . $nombre . ', importado correctamente.' );
     }
 
     public function getTodosProfesoresJSON()

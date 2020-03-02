@@ -52,7 +52,8 @@ Listado de Anuncios
           @endif
 
           <h5 class="card-title mt-3 ">Descripción</h5>
-          <div style="height: 200px;" class="border overflow-auto">
+          <!-- style="height: 200px;"   overflow-auto -->
+          <div  class="border ">
             <!--<p class="card-text">-->{!!$anuncio->descripcion!!}
             <!--</p>-->
           </div><br>
@@ -163,11 +164,13 @@ Listado de Anuncios
 
 <?php
 function ponerFechaDecente($inicio, $fin){
+  try{
   setlocale(LC_TIME, 'spanish');
   echo $inicio.' - '.$fin.'<br>';
+  
   $inicio= new DateTime($inicio);
   $fin= new DateTime($fin);
-  
+  echo $inicio->getTimestamp().' - '.$fin->getTimestamp().'<br>';
   /*NO TRADUCE
   $fechaEntendible='Desde ';  
   $fechaEntendible.= $inicio->format('l d').' de '.$inicio->format('F').' del '.$inicio->format('Y');
@@ -177,11 +180,13 @@ function ponerFechaDecente($inicio, $fin){
   */
   //ASI SI QUE NOS LO TRADUCE
   $fechaEntendible='Desde el ';  
-  $fechaEntendible.= strftime('%A, %d',$inicio->getTimestamp()).' de '.strftime('%B',$inicio->getTimestamp()).' del '.$inicio->format('Y');
-  $fechaEntendible.=' a las '.$inicio->format('H:i');
-  $fechaEntendible.= ' hasta el '.strftime('%A, %d',$fin->getTimestamp()).' de '.strftime('%B',$fin->getTimestamp()).' del '.$fin->format('Y');
-  $fechaEntendible.=' a las '.$fin->format('H:i');
-
+  //$fechaEntendible.= strftime('%A, %d',$inicio->getTimestamp()).' de '.strftime('%B',$inicio->getTimestamp()).' del '.$inicio->format('Y');
+  //$fechaEntendible.=' a las '.$inicio->format('H:i');
+  //$fechaEntendible.= ' hasta el '.strftime('%A, %d',$fin->getTimestamp()).' de '.strftime('%B',$fin->getTimestamp()).' del '.$fin->format('Y');
+  //$fechaEntendible.=' a las '.$fin->format('H:i');
+  }catch(\Exception $e){
+    echo $e->getMessage();
+  }
   return $fechaEntendible;
 }
 

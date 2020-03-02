@@ -53,33 +53,33 @@ Pagina Principal Gestion Escultor
 
     <div class=" pl-2 pr-2 row d-flex justify-content-between">
         <a href="reservar" class="opcionBoton simulacionSeparacion mt-2 pt-1 pb-1 col-6  col-sm-6 col-md-4 btn btn-primary btn-lg " role="button" aria-pressed="false">
-            <i class="fa fa-book fa-3x"></i> Reservas
+        <div><i class="fa fa-book fa-3x"></i></div> Reservas
         </a>
         <a href="horarios" class="opcionBoton simulacionSeparacion mt-2 pt-1 pb-1 col-6 col-sm-6 col-md-4 btn btn-primary btn-lg " role="button" aria-pressed="false">
-            <i class="fa fa-table fa-3x"></i> Horarios
+            <div><i class="fa fa-table fa-3x"></i></div> Horarios
         </a>
-        <a href="materia" class="opcionBoton simulacionSeparacion mt-2 pt-1 pb-1 col-6 col-sm-6  col-md-4 btn btn-primary btn-lg " role="button" aria-pressed="true">
-            <i class="fa fa-address-book-o fa-3x"></i> Guardias
+        <a href="guardias" class="opcionBoton simulacionSeparacion mt-2 pt-1 pb-1 col-6 col-sm-6  col-md-4 btn btn-primary btn-lg " role="button" aria-pressed="true">
+        <div><i class="fa fa-address-book-o fa-3x"></i></div> Guardias
         </a>
 
         <a href="alumno" class="opcionBoton simulacionSeparacion mt-2 pt-1 pb-1 col-6 col-sm-6 col-md-4 btn btn-primary btn-lg " role="button" aria-pressed="true">
-            <img class="d-inline-block icon" width="90px" src="{{asset('img/iconoAlumno.png')}}"> Alumnos
+        <div><img class="d-inline-block icon" width="100px" src="{{asset('img/iconoAlumno.png')}}"></div> Alumnos
         </a>
         <a href="anuncios" class="opcionBoton simulacionSeparacion mt-2 pt-1 pb-1 col-6 col-sm-6 col-md-4 btn btn-primary btn-lg " role="button" aria-pressed="true">
-            <img class="icon" width="90px" src="{{asset('img/iconoAnuncios.png')}}"> Anuncios
+        <div><img class="icon" width="95px" src="{{asset('img/iconoAnuncios.png')}}"></div> Anuncios
         </a>
         <a href="profesores" class="opcionBoton simulacionSeparacion mt-2 pt-1 pb-1 col-6 col-sm-6 col-md-4 btn btn-primary btn-lg " role="button" aria-pressed="true">
-            <img class="icon" width="100px" src="{{asset('img/iconoProfesor.svg')}}"> Profesores
+        <div><img class="icon" width="115px" src="{{asset('img/iconoProfesor.svg')}}"></div> Profesores
         </a>
 
         <a href="grupo" class="opcionBoton simulacionSeparacion mt-2 pt-1 pb-1 col-6 col-sm-6 col-md-4 btn btn-primary btn-lg " role="button" aria-pressed="true">
-            <img class="icon" width="90px" src="{{asset('img/iconoGrupo.png')}}"> Grupos
+        <div> <img class="icon" width="90px" src="{{asset('img/iconoGrupo.png')}}"></div> Grupos
         </a>
         <a href="aulas" class="opcionBoton simulacionSeparacion mt-2 pt-1 pb-1 col-6 col-sm-6  col-md-4 btn btn-primary btn-lg " role="button" aria-pressed="true">
-            <img class="icon" width="100px" src="{{asset('img/iconoAula.svg')}}"> Aulas
+        <div> <img class="icon" width="110px" src="{{asset('img/iconoAula.svg')}}"></div> Aulas
         </a>
         <a href="materia" class="opcionBoton simulacionSeparacion mt-2 pt-1 pb-1 col-6 col-sm-6  col-md-4 btn btn-primary btn-lg " role="button" aria-pressed="true">
-            <i class="fa fa-file-text fa-3x" aria-hidden="true"></i> Materias
+        <div><i class="fa fa-file-text fa-3x" aria-hidden="true"></i></div> Materias
         </a>
     </div>
 
