@@ -96,7 +96,8 @@ Reservar Aula {{$parametros[0] }} el dia {{$parametros[1]}}, hora {{$parametros[
       <div class="row">
         <div class="form-group col-md-12">
           <label for="diaReserva">Dia</label>
-          <input readonly="readonly" type="text" class="form-control" value="{{ponerFechaFormatoESP($parametros[1])}}" name="diaReserva" id="diaReserva">
+          <input readonly="readonly" type="hidden" class="form-control" value="{{$parametros[1]}}" name="diaReserva">
+          <input readonly="readonly" type="text" class="form-control" value="{{ponerFechaFormatoESP($parametros[1])}}" name="diaaReserva" id="diaReserva">
         </div>
       </div>
       <div class="w-100"></div>
@@ -119,7 +120,7 @@ Reservar Aula {{$parametros[0] }} el dia {{$parametros[1]}}, hora {{$parametros[
         </div>
         <div class="mt-4">
         <label for="inputObservaciones">Observaciones</label>
-        <textarea maxlength="50" rows="2" cols="80" class="form-control" name="observaciones" id="inputObservaciones"></textarea>
+        <textarea required maxlength="50" rows="2" cols="80" class="form-control" name="observaciones" id="inputObservaciones"></textarea>
         </div>
         <br><br>
         <div class="mt-3">

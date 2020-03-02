@@ -64,7 +64,7 @@ Horario Instituto
   margin-top: 2px;
   margin-bottom: 2px;
 }
-
+/*
 table a{
     text-decoration: none;
     padding: 2px;
@@ -84,7 +84,7 @@ table a{
     opacity: 0.6;
     text-decoration: none;
     color:004430;
-  }
+  }*/
 
 </style>
 <!-- Para que se vea 'bonita' la tabla de los horarios -->
