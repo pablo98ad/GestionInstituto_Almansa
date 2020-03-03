@@ -11,7 +11,7 @@ Reservar Aula
   #aula_id {
     text-align: center;
   }
-
+/*
   imagen {
     display: inline;
   }
@@ -34,16 +34,16 @@ Reservar Aula
   }
 
   .nombreResul {
-    /*top: 0px;
-    left:0px;*/
+    *//*top: 0px;
+    left:0px;*//*
     display: inline;
     font-size: 15px;
     margin: 0px;
     padding: 0px;
-  }
-
-  .segundaLineaResul {
-  /*  display: inline !important;*/
+  }*/
+/*
+  .segundaLineaResul {*/
+  /*  display: inline !important;*//*
     font-size: 10px !important;
     margin: 0px !important;
     padding: 0px !important;
@@ -51,16 +51,18 @@ Reservar Aula
 
   #filtro {
     font-size: 18px;
-  }
+  }*/
   .error{
     border: red 3px solid;
-  }
+  }/*
   .select2-selection {
     height: 55px !important;
     font-size: 18px;
-  }
+  }*/
 
 </style>
+<!--Para el desplegable select2-->
+<link rel="stylesheet" href="{{asset('css/menuSelect2.css')}}">
 <!-- Para que se vea 'bonita' la tabla de los horarios -->
 <link rel="stylesheet" href="{{asset('css/tablaHorarios.css')}}">
 <!-- Para el select personalizado -->

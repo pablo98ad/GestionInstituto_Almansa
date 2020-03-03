@@ -1,0 +1,58 @@
+.imagen {
+  display: inline;
+}
+
+.imagenResul {
+  width: 50px;
+  height: 45px;
+  margin: 0px;
+  font-size: 35px;
+  padding: 0px;
+  padding-right: 5px;
+  float: left !important;
+}
+
+.resulDiv {
+  height: 55px !important;
+  overflow: auto;
+  text-align: left !important;
+}
+
+.resulDiv > div > img {
+  margin-top: 4px !important;
+}
+
+.resulDiv p {
+  margin-top: 6px;
+  width: 60px;
+}
+
+.nombreResul {
+  /*top: 0px;
+    left:0px;*/
+  display: inline;
+  font-size: 17px;
+  margin: 0px;
+  padding: 0px;
+}
+
+.segundaLineaResul {
+  /*  display: inline !important;*/
+  font-size: 13px !important;
+  margin: 0px !important;
+  padding: 0px !important;
+}
+
+#filtro {
+  /*width: 200px;
+    height: 40px;*/
+  font-size: 18px;
+}
+.select2-selection {
+  height: 60px !important;
+  font-size: 18px;
+}
+
+.select2-selection__rendered p {
+  margin-top: 10px;
+}

@@ -6,8 +6,9 @@ Horario Instituto
 
 @section('scriptsHead')
 <style>
-  .imagen {
+ /* .imagen {
     display: inline;
+
   }
 
   .imagenResul {
@@ -20,34 +21,44 @@ Horario Instituto
     float: left !important;
   }
 
-  .resulDiv {
-    padding-top:4px;
+  .resulDiv  {
+
     height: 55px !important;
     overflow: auto;
     text-align: left !important;
   }
 
-  .nombreResul {
+  .resulDiv > div > img{
+    margin-top:4px !important;
+  }
+
+
+  .resulDiv p{
+    margin-top: 6px;
+    width: 60px;
+  }*/
+
+  /*.nombreResul {*/
     /*top: 0px;
     left:0px;*/
-    display: inline;
-    font-size: 15px;
+   /* display: inline;
+    font-size: 17px;
     margin: 0px;
     padding: 0px;
-  }
+  }*/
 
-  .segundaLineaResul {
+  /*.segundaLineaResul {*/
   /*  display: inline !important;*/
-    font-size: 10px !important;
+    /*font-size: 13px !important;
     margin: 0px !important;
     padding: 0px !important;
-  }
+  }*/
 
-  #filtro {
+  /*#filtro {*/
     /*width: 200px;
     height: 40px;*/
-    font-size: 18px;
-  }
+    /*font-size: 18px;
+  }*/
   .activo img{
     filter: invert(100%); 
   }
@@ -55,10 +66,14 @@ Horario Instituto
     background-color: grey !important;
     color:white !important;
   }
-  .select2-selection {
+  /*.select2-selection {
     height: 60px !important;
     font-size: 18px;
   }
+
+  .select2-selection__rendered  p{
+    margin-top: 10px;
+  }*/
   hr{
   padding:0px;
   margin-top: 2px;
@@ -87,6 +102,9 @@ table a{
   }*/
 
 </style>
+<!--Para el desplegable select2-->
+<link rel="stylesheet" href="{{asset('css/menuSelect2.css')}}">
+
 <!-- Para que se vea 'bonita' la tabla de los horarios -->
 <link rel="stylesheet" href="{{asset('css/tablaHorarios.css')}}">
 <!-- Para el select personalizado -->
@@ -113,20 +131,11 @@ table a{
         <img class="icon" width="60px" src="{{asset('img/iconoProfesor.svg')}}"><br> Profesores
       </a>
       <a id="aulas" class="opcionBoton simulacionSeparacion  btn btn-primary btn-lg " role="button" aria-pressed="true">
-        <img class="icon" width="60px" src="{{asset('img/iconoAula.svg')}}"><br> Aulas
+        <img class="icon" width="58px" src="{{asset('img/iconoAula.svg')}}"><br> Aulas
       </a>
       <a id="alumnos" class="opcionBoton simulacionSeparacion  btn btn-primary btn-lg " role="button" aria-pressed="true">
         <img class="d-inline-block icon" width="48px" src="{{asset('img/iconoAlumno.png')}}"><br> Alumnos
       </a>
-      <!--
-      <label for="filtro">Seleccione :</label><br>
-      <select id="filtro" name="filtro">
-        <option value="" selected>Elige...</option>
-        <option value="profesores">Profesores</option>
-        <option value="aulas">Aulas</option>
-        <option value="alumnos">Alumnos</option>
-      </select>
--->
     </div>
 
     <div style="display:none "class="contenedorCampos col-12 col-md-4 ">
@@ -145,40 +154,30 @@ table a{
 
 <script>
   let directorioBase = '{{url('/')}}';
-  let directorioImagenes = "{{url('/').'/storage/'/*url('../').'/storage/app/public/'*/}}";
+  let directorioImagenes = "{{url('/').'/storage/'}}";
   let elementoSeleccionado;
 
-  //document.getElementById('filtro').addEventListener('change', cargar);
   document.getElementById('profesores').addEventListener('click', cargar);
   document.getElementById('aulas').addEventListener('click', cargar);
   document.getElementById('alumnos').addEventListener('click', cargar);
 
 
-  /*$('#campos').select2({
-    placeholder: "Selecciona"
-  });*/
-
   function formato(item) {
-    /*alert(item);*/
     return item.nombre;
   };
 
   function cargar() {
-    $('#campos').empty();
-    elementoSeleccionado=this.id;
-    $('.contenedorCampos').show();
+    $('#campos').empty();//vaciamos los options de la vez anterior
+    elementoSeleccionado=this.id;//guardamos que hemos seleccionado, o profes o alums o aulas
+    $('.contenedorCampos').show();//la primera vez, lo mostramos porque esta oculto
+    //para que cuando pulses en una de las 3 opciones aparezca pulsada
     $('#profesores').removeClass('activo');
     $('#aulas').removeClass('activo');
     $('#alumnos').removeClass('activo');
     $('#'+elementoSeleccionado).addClass('activo')
-    // alert(this.selectedIndex);
-    /*if (this.selectedIndex == 0) {
-      document.getElementById('campos').disabled = true;
-    }*/
-    //alert(this.id);
-    //alert(1);
+    
     document.getElementById('campos').selectedIndex = 0;
-    $("#tabla").html(' ');
+    $("#tabla").html(' ');//reseteamos la tabla
 
     let url = directorioBase + '/api/get' + elementoSeleccionado;
     document.getElementById('campos').disabled = false;
@@ -217,7 +216,7 @@ table a{
             } else if (elementoSeleccionado == 'aulas'  && result.id != 'no') {
               let reservable= result.reservable == 1 ? "Reservable" : "No Reservable"
               final =`<div class="resulDiv"><div class="imagen"><p class="imagenResul">${result.numero}</p></div><h2 class="nombreResul"> ${result.nombre}</h2><br>
-                                    <h3 class="segundaLineaResul">  (${reservable}) </h3>
+                                    <h3 class="segundaLineaResul">  ${reservable} </h3>
                                     </div>`;
 
             }else if (elementoSeleccionado == 'alumnos' && result.id != 'no') {
@@ -244,7 +243,7 @@ table a{
             } else if (elementoSeleccionado == 'aulas' && result.id != 'no') {
               let reservable= result.reservable == 1 ? "Reservable" : "No Reservable"
               final =`<div class="resulDiv"><div class="imagen"><p class="imagenResul">${result.numero}</p></div><h2 class="nombreResul"> ${result.nombre}</h2><br>
-                                    <h3 class="segundaLineaResul">  (${reservable}) </h3>
+                                    <h3 class="segundaLineaResul"> ${reservable} </h3>
                                     </div>`;
 
             } else if (elementoSeleccionado == 'alumnos' && result.id != 'no') {

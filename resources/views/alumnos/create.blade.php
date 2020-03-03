@@ -5,7 +5,7 @@ Crear un nuevo alumno
 @endsection
 
 @section('scriptsHead')
-<style>
+<style>/*
   .imagen {
     display: inline;
   }
@@ -37,15 +37,14 @@ Crear un nuevo alumno
     margin: 0px;
     padding: 0px;
   }
-
-  .select2-selection {
-    height: 40px !important;
-    font-size: 18px;
-  }
+*/
+  
   .error{
     border: red 3px solid;
   }
 </style>
+<!--Para el desplegable select2-->
+<link rel="stylesheet" href="{{asset('css/menuSelect2.css')}}">
 <!-- Para el select personalizado -->
 <link href="{{asset('css/select2-4.0.13.min.css')}}" rel="stylesheet" />
 <script src="{{asset('js/select2-4.0.13.min.js')}}"></script>
@@ -207,7 +206,9 @@ Crear un nuevo alumno
         //para cuando se seleccione uno, que se muestra en el select cerrado
         templateSelection: function(result) {
           if (result.id != 'no') {
-            return result.nombre + ' ' + result.curso;
+            return `<div class="resulDiv"><h2 class="nombreResul"> ${result.nombre} | Curso: ${result.curso}</h2><br>
+                                    <h3 class="segundaLineaResul"> Tutor: ${result.nombreTutor} </h3>
+                                    </div>`;
           }
         },
         //Para que decidamos como se ve en el menu desplegable
@@ -215,8 +216,8 @@ Crear un nuevo alumno
           if (result.id == 'no' || typeof result.id == 'undefined') { //para que no haga nada cuando es el 1º resultado
             return '';
           }
-          var final = `<div class="resulDiv"><h2 class="nombreResul"> Nombre: ${result.nombre}  Curso: ${result.curso}    (ID: ${result.id}) </h2><br>
-                                    <h3 class="segundaLineaResul"> Desc: ${result.nombreTutor} </h3>
+          var final = `<div class="resulDiv"><h2 class="nombreResul"> ${result.nombre} | Curso: ${result.curso}</h2><br>
+                                    <h3 class="segundaLineaResul"> Tutor: ${result.nombreTutor} </h3>
                                     </div>`;
 
 

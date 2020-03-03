@@ -6,7 +6,7 @@ Reservar Aula
 
 @section('scriptsHead')
 <style>
-  
+  /*
 
   .imagenResul {
     width: 40px;
@@ -36,7 +36,7 @@ Reservar Aula
   }
   #filtro{
     font-size: 18px;
-  }
+  }*/
   .botonReservar{
     text-decoration: none;
     padding: 2px;
@@ -54,14 +54,16 @@ Reservar Aula
   .botonReservar:hover{
     opacity: 0.6;
     text-decoration: none;
-  }
+  }/*
   .select2-selection {
     height: 40px !important;
     font-size: 18px;
-  }
+  }*/
   
 
 </style>
+<!--Para el desplegable select2-->
+<link rel="stylesheet" href="{{asset('css/menuSelect2.css')}}">
 <!-- Para que se vea 'bonita' la tabla de los horarios -->
 <link rel="stylesheet" href="{{asset('css/tablaHorarios.css')}}">
 <!-- Para el select personalizado -->
