@@ -19,7 +19,7 @@ Listado de grupos
     <form class="form-inline my-2 my-lg-0" action="{{url('/grupo')}}" role="search" method="get">
       <!--csrf_field()-->
       <input class="form-control mr-sm-2" type="text" name="busqueda" placeholder="Buscar" aria-label="Search">
-      <button class="btn btn-success my-2 my-sm-0" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+      <button title="Buscar" class="btn btn-success my-2 my-sm-0" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
     </form>
 
     @if (Auth::check())
@@ -34,14 +34,14 @@ Listado de grupos
           <button type="button" class="btn text-white bg-dark dropdown-item" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-file-code-o fa-lg" aria-hidden="true"></i></button>
         </div>
       </div>
-      <a role="button" class="btn btn-info" href="{{url('grupo/').'/create'}}" role='button'><i class="fa fa-plus" aria-hidden="true"></i></a>
+      <a role="button" title="Añadir manualmente" class="btn btn-info" href="{{url('grupo/').'/create'}}" role='button'><i class="fa fa-plus" aria-hidden="true"></i></a>
     </div>
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Importar Grupos</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button title="Añadir por fichero" type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -78,13 +78,13 @@ Listado de grupos
         <div style="height: 55px;" class="border overflow-auto">
           <p class="card-text">{{$grupo->descripcion}}</p>
         </div><br>-->
-        <a class='btn btn-warning' href='{{url('/horario/grupo/').'/'.$grupo->id}}' role='button'><i class="fa fa-table fa-lg" aria-hidden="true"></i></a>
-        <a class='btn btn-success' href='grupo/{{$grupo->id}}' role='button'><i class="fa fa-eye fa-lg" aria-hidden="true"></i></a>
+        <a class='btn btn-warning' title="Horario" href='{{url('/horario/grupo/').'/'.$grupo->id}}' role='button'><i class="fa fa-table fa-lg" aria-hidden="true"></i></a>
+        <a class='btn btn-success' title="Ver" href='grupo/{{$grupo->id}}' role='button'><i class="fa fa-eye fa-lg" aria-hidden="true"></i></a>
         @if (Auth::check())
-        <a class='btn btn-primary' href='grupo/{{$grupo->id}}/edit' role='button'><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
+        <a class='btn btn-primary' title="Editar" href='grupo/{{$grupo->id}}/edit' role='button'><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
         <div class="d-inline">
           <!-- Button trigger modal -->
-          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal-{{$grupo->id}}">
+          <button type="button" title="Eliminar" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal-{{$grupo->id}}">
             <i class="fa fa-trash fa-lg" aria-hidden="true"></i>
           </button>
           <!-- Modal -->

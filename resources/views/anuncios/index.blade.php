@@ -26,10 +26,10 @@ Listado de Anuncios
   <form class="form-inline my-2 my-lg-0" action="{{url('/anuncios')}}" role="search" method="get">
     <!--csrf_field()-->
       <input class="form-control mr-sm-1" type="text" name="busqueda" placeholder="Buscar" aria-label="Search">
-      <button class="btn btn-success my-2 my-sm-0" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+      <button title="Buscar" class="btn btn-success my-2 my-sm-0" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
     </form>
     @if (Auth::check())
-    <a class='col-3 col-sm-2 col-md-2  btn btn-success mb-1 mr-2' href="{{url('anuncios/').'/create'}}" role='button'><i class="fa fa-plus fa-lg" aria-hidden="true"></i></a>
+    <a title="Añadir un nuevo anuncio" class='col-3 col-sm-2 col-md-2  btn btn-success mb-1 mr-2' href="{{url('anuncios/').'/create'}}" role='button'><i class="fa fa-plus fa-lg" aria-hidden="true"></i></a>
     @endif
   </div>
   <div class="row pt-2 justify-content-center">
@@ -119,10 +119,10 @@ Listado de Anuncios
 
           @if (Auth::check())
           <!--<a class='btn btn-primary' href='aulas/{{$anuncio->id}}' role='button'>Visualizar</a>-->
-          <a class='btn btn-primary' href='anuncios/{{$anuncio->id}}/edit' role='button'><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
+          <a title="Editar" class='btn btn-primary' href='anuncios/{{$anuncio->id}}/edit' role='button'><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
           <div class="d-inline">
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal-{{$anuncio->id}}">
+            <button title="Eliminar" type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal-{{$anuncio->id}}">
             <i class="fa fa-trash fa-lg" aria-hidden="true"></i>
             </button>
             <!-- Modal -->

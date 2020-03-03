@@ -82,7 +82,7 @@ class ReservasController extends Controller
                 $reserva->hora=$hora;
                 $reserva->observaciones=$observaciones;
                 $reserva->save();
-                return redirect()->action('ReservasController@index')->with('notice', 'La Reserva del aula ID: ' . $aula_id.' para el dia '.$dia.' a la hora '.$hora.' con el profesor: '.$id_profesor . ', guardada correctamente.');
+                return redirect()->action('ReservasController@listado')->with('notice', 'La Reserva del aula ID: ' . $aula_id.' para el dia '.$dia.' a la hora '.$hora.' con el profesor: '.$id_profesor . ', guardada correctamente.');
             }
         }catch(\Exception  $e){ 
             return redirect()->action('ReservasController@index')->with('error', 'La reserva no se ha podido realizar. Error: '.$e->getMessage());

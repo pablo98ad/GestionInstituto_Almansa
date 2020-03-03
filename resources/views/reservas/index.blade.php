@@ -83,8 +83,8 @@ Reservar Aula
 Reservar Aula
 @endsection
   <div class="row justify-content-between">
-  <a  class='col-4 col-sm-2 col-md-2  h-50 w-25  btn btn-success mb-1 mr-2' href="{{url('/').'/reservas/listado'}}" role='button'>Listado</a>
-  <a  class='col-5 col-sm-2 col-md-2  btn btn-danger mb-1 mr-2' href="{{url('/').'/reservarManualmente'}}" role='button'>Añadir Manualmente (no recomendado)</a>
+  <a  title="Listado" class='col-4 col-sm-2 col-md-2  h-50 w-25  btn btn-success mb-1 mr-2' href="{{url('/').'/reservas/listado'}}" role='button'><i class=" pt-1 fa fa-list-alt fa-2x" aria-hidden="true"></i></a>
+  <a  title="Reservar Manualmente (no recomendado)" class='col-5 col-sm-2 col-md-2  btn btn-danger mb-1 mr-2' href="{{url('/').'/reservarManualmente'}}" role='button'><i class="fa pt-1 fa-plus fa-2x" aria-hidden="true"></i><i class="fa pt-1 fa-exclamation-triangle fa-1x" aria-hidden="true"></i>  </a>
   </div>
   <div class="row d-flex justify-content-center">
 
