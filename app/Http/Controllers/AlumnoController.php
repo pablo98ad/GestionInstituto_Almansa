@@ -96,8 +96,8 @@ class AlumnoController extends Controller
             if (!isset($alumno->nombre)) { //si no lo ha encontrado
                 throw new Exception();
             }
-            //compañeros de grupo
-            $companeros=Alumno::where('Grupo_id',$alumno->Grupo_id)->distinct()->get();
+            //compañeros de grupo, wherenotin para que no se coja a si mismo
+            $companeros=Alumno::where('Grupo_id',$alumno->Grupo_id)->whereNotIn('id',[$id])->distinct()->get();
             //profesores que le dan clase
             $profes=Horario::select('profesor_id')->where('Grupo_id',$alumno->Grupo_id)->distinct()->get();
         

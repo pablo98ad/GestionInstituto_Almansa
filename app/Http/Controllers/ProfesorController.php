@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Horario;
 use Illuminate\Http\Request;
 use App\Profesor;
 use Illuminate\Support\Facades\Storage;
@@ -106,8 +107,10 @@ class ProfesorController extends Controller
             if (!isset($profesor->nombre)) { //si no lo ha encontrado
                 throw new Exception();
             }
+            $gruposQueDaClase=Horario::select('grupo_id')->where('profesor_id',$id)->distinct()->get();
+            $materiasQueImparte=Horario::select('materia_id')->where('profesor_id',$id)->distinct()->get();
             //$profesor->nombre=ucfirst($profesor->nombre); //Para que salga la primera letra del nombre siempre en mayusculas
-            return view('profesores.show', ['profesor' => $profesor]);
+            return view('profesores.show', ['profesor' => $profesor,'gruposQueDaClase' => $gruposQueDaClase,'materiasQueImparte' => $materiasQueImparte]);
         } catch (\Exception  $e) {
             return redirect()->action('ProfesorController@index')->with('error', 'Error, no se ha encontrado el profesor con el ID: ' . $id);
         }

@@ -119,7 +119,7 @@ table a{
 
 @section('content')
 
-<div class="container-md text-center">
+<div class="container-XL text-center pl-4 pr-4">
   @section('tituloCabezera')
   Horarios y reservas de <b>esta semana</b>
   @endsection

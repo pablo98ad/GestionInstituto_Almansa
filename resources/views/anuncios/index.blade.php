@@ -28,7 +28,9 @@ Listado de Anuncios
       <input class="form-control mr-sm-1" type="text" name="busqueda" placeholder="Buscar" aria-label="Search">
       <button class="btn btn-success my-2 my-sm-0" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
     </form>
+    @if (Auth::check())
     <a class='col-3 col-sm-2 col-md-2  btn btn-success mb-1 mr-2' href="{{url('anuncios/').'/create'}}" role='button'><i class="fa fa-plus fa-lg" aria-hidden="true"></i></a>
+    @endif
   </div>
   <div class="row pt-2 justify-content-center">
     <?php foreach ($anuncios as $anuncio) { ?>
@@ -115,7 +117,7 @@ Listado de Anuncios
           </script>
           <br>
 
-
+          @if (Auth::check())
           <!--<a class='btn btn-primary' href='aulas/{{$anuncio->id}}' role='button'>Visualizar</a>-->
           <a class='btn btn-primary' href='anuncios/{{$anuncio->id}}/edit' role='button'><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
           <div class="d-inline">
@@ -148,6 +150,7 @@ Listado de Anuncios
               </div>
             </div>
           </div>
+          @endif
         </div>
       </div>
 

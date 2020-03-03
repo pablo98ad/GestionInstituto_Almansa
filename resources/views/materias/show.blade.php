@@ -50,10 +50,10 @@ Ver materia {{$materia->nombre}}
   </div>
 
   <div class="form-row text-center ">
-    <div class="form-group col-md-12 ">
-      <h5 class="card-title mt-3 text-center">Profesores que dan esta materia</h5>
+    <div class="form-group col-md-6  col-12">
+      <h5 class="card-title mt-3 text-center">Profesores que imparten esta materia</h5>
       @if(sizeOf($profesoresQueLaDan)>0)
-      <div class="tablaProfesoresMateria rounded mx-auto w-50 text-center bg-warning">
+      <div class="tablaProfesoresMateria rounded mx-auto w-100 text-center bg-warning">
         @foreach ($profesoresQueLaDan as $profe)
         <a href="{{url('/profesores/'.$profe->profesor->id)}}">{{$profe->profesor->nombre}} {{$profe->profesor->apellidos}}</a><br>
         @endforeach
@@ -62,13 +62,11 @@ Ver materia {{$materia->nombre}}
       <p class="alert-danger">Esta materia no esta en los horarios</p>
       @endif
     </div>
-  </div>
 
-  <div class="form-row text-center ">
-    <div class="form-group col-md-12 ">
-      <h5 class="card-title mt-3 text-center">Grupos que dan esta materia</h5>
+    <div class="form-group col-md-6 col-12">
+      <h5 class="card-title mt-3 text-center">Grupos que cursan esta materia</h5>
       @if(sizeOf($gruposQueLaDan)>0)
-      <div class="tablaProfesoresMateria rounded mx-auto w-50 text-center bg-warning">
+      <div class="tablaProfesoresMateria rounded mx-auto w-100 text-center bg-warning">
         @foreach ($gruposQueLaDan as $grupo)
         <a href="{{url('/grupo/'.$grupo->grupo->id)}}">{{$grupo->grupo->nombre}} - {{$grupo->grupo->curso}}</a><br>
         @endforeach
@@ -78,6 +76,7 @@ Ver materia {{$materia->nombre}}
       @endif
     </div>
   </div>
+  <hr>
   @if (Auth::check())
         <a class='btn btn-primary' href='{{url('materia/'.$materia->id.'/edit')}}' role='button'><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
         <div class="d-inline">

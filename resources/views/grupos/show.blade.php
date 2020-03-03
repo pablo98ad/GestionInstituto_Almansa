@@ -54,10 +54,10 @@ Ver grupo {{$grupo->nombre}}
   </div>
 
   <div class="form-row text-center ">
-    <div class="form-group col-md-12 ">
-      <h5 class="card-title mt-3 text-center">Profesores que dan a este grupo</h5>
+    <div class="form-group col-md-6 col-12">
+      <h5 class="card-title mt-3 text-center">Profesores que dan clase a este grupo</h5>
       @if(sizeOf($profesoresQueLeDan)>0)
-      <div class="tablaProfesoresMateria rounded mx-auto w-50 text-center bg-warning">
+      <div class="tablaProfesoresMateria rounded mx-auto w-100 text-center bg-warning">
         @foreach ($profesoresQueLeDan as $profe)
         <a href="{{url('/profesores/'.$profe->profesor->id)}}">{{$profe->profesor->nombre}} {{$profe->profesor->apellidos}}</a><br>
         @endforeach
@@ -66,13 +66,11 @@ Ver grupo {{$grupo->nombre}}
       <p class="alert-danger">Este grupo no esta en los horarios</p>
       @endif
     </div>
-  </div>
-
-  <div class="form-row text-center ">
-    <div class="form-group col-md-12 ">
-      <h5 class="card-title mt-3 text-center">Materias del grupo</h5>
+  
+    <div class="form-group col-md-6 col-12">
+      <h5 class="card-title mt-3 text-center">Materias de este grupo</h5>
       @if(sizeOf($materiasQueDan)>0)
-      <div class="tablaProfesoresMateria rounded mx-auto w-50 text-center bg-warning">
+      <div class="tablaProfesoresMateria rounded mx-auto w-100 text-center bg-warning">
         @foreach ($materiasQueDan as $materia)
         <a href="{{url('/materia/'.$materia->materia->id)}}">{{$materia->materia->nombre}} - {{$materia->materia->departamento}}</a><br>
         @endforeach
@@ -93,10 +91,11 @@ Ver grupo {{$grupo->nombre}}
         @endforeach
       </div>
       @else
-      <p class="alert-danger">Este Grupo no esta en los horarios</p>
+      <p class="alert-danger">Este grupo no tiene alumnos</p>
       @endif
     </div>
   </div>
+  <hr>
   <a class='btn btn-warning' href='{{url('/horario/grupo/').'/'.$grupo->id}}' role='button'><i class="fa fa-table fa-lg" aria-hidden="true"></i></a>
   @if (Auth::check())
         <a class='btn btn-primary' href='{{url('grupo/'.$grupo->id.'/edit')}}' role='button'><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>

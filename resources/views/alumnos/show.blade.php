@@ -36,7 +36,8 @@ Mostrar Alumno {{$alumno->nombre}}
       <div class="row d-flex justify-content-center ">
         <div id="divSelectGrupos" class="col-12">
           <label for="grudpos">Grupo</label><br>
-          <input disabled type="text" class="form-control" name="grupos" id="grudpos" value="{{$alumno->grupo->nombre}} - {{$alumno->grupo->curso}}">
+             <a href="{{url('/grupo/').'/'.$alumno->grupo->id}}"><input disabled type="text" class="form-control" name="grupos" id="grudpos" value="{{$alumno->grupo->nombre}} - {{$alumno->grupo->curso}}">
+         </a>
 
         </div>
       </div>
@@ -126,32 +127,28 @@ Mostrar Alumno {{$alumno->nombre}}
     </div>
   </div>
     <div class="form-row text-center ">
-      <div class="form-group col-md-12 ">
+      <div class="form-group col-md-6 ">
         <h5 class="card-title mt-3 text-center">Compañeros de Grupo</h5>
         @if(sizeOf($companeros)>0)
-        <div class="tablaProfesoresMateria rounded mx-auto w-50 text-center bg-warning">
+        <div class="tablaProfesoresMateria rounded mx-auto w-100 text-center bg-warning">
           @foreach ($companeros as $compa)
           <a href="{{url('/alumno/').'/'.$compa->id}}">{{$compa->nombre}} {{$compa->apellidos}}</a><br>
           @endforeach
         </div>
         @else
-        <p class="alert-danger">Este grupo donde esta el alumno no esta en los horarios</p>
+        <p class="alert-danger">El grupo donde esta el alumno no esta en los horarios</p>
         @endif
       </div>
-    </div>
-
-    <div class="form-row text-center ">
-      <div class="form-group col-md-12 ">
+      <div class="form-group col-md-6 ">
         <h5 class="card-title mt-3 text-center">Profesores que le dan clase</h5>
         @if(sizeOf($profes)>0)
-        <div class="tablaProfesoresMateria rounded mx-auto w-50 text-center bg-warning">
+        <div class="tablaProfesoresMateria rounded mx-auto w-100 text-center bg-warning">
           @foreach ($profes as $profe)
-          
           <a href="{{url('/profesores/').'/'.$profe->profesor->id}}">{{$profe->profesor->nombre}} - {{$profe->profesor->apellidos}}</a><br>
           @endforeach
         </div>
         @else
-        <p class="alert-danger">Este grupo donde esta el alumno no esta en los horarios</p>
+        <p class="alert-danger">El grupo donde esta el alumno no esta en los horarios</p>
         @endif
       </div>
     </div>

@@ -13,9 +13,9 @@ class AulaController extends Controller
 {
 
     public function __construct()
-    {   
-    
-        $this->middleware('auth')->except('index','getTodasAulasJSON','show');
+    {
+
+        $this->middleware('auth')->except('index', 'getTodasAulasJSON', 'show');
     }
     /**
      * Display a listing of the resource.
@@ -25,10 +25,10 @@ class AulaController extends Controller
     public function index(Request $req)
     {
 
-        if($req->busqueda == ""){
+        if ($req->busqueda == "") {
             $aulas = Aula::paginate(12);
-        }else{
-            $aulas = Aula::where('nombre','LIKE','%'.$req->busqueda.'%')->orWhere('numero','LIKE','%'.$req->busqueda.'%' )->paginate(12);
+        } else {
+            $aulas = Aula::where('nombre', 'LIKE', '%' . $req->busqueda . '%')->orWhere('numero', 'LIKE', '%' . $req->busqueda . '%')->paginate(12);
             $aulas->appends($req->only('busqueda'));
         }
         return view('aulas.index', ['aulas' => $aulas]);
@@ -54,25 +54,28 @@ class AulaController extends Controller
     public function store(Request $request)
     {
         //
-         //guardar los datos que se envian en la base de datos 
-         $aula = new Aula();
-         $aula->nombre = $request->input('nombre');
-         $aula->descripcion = $request->input('descripcion');
-         $aula->numero = $request->input('numero');
-         
-         if($request->input('reservable')!=null){
-            $aula->reservable = true;
-         }else{
-            $aula->reservable = false;
-         }
+        //guardar los datos que se envian en la base de datos 
+        $aula = new Aula();
+        $nombre = $request->input('nombre');
+        if (stristr($nombre, 'aula') == FALSE) { //si no contiene la palabra aula se la añadimos
+            $nombre = 'Aula ' . $nombre;
+        }
+        $aula->nombre = $nombre;
+        $aula->descripcion = $request->input('descripcion');
+        $aula->numero = $request->input('numero');
 
-         try{
-         $aula->save();
-         }catch(\Exception  $e){
-             return redirect()->action('AulaController@index')->with('error', 'Error, no se ha podido guardar');
-         }
-         return redirect()->action('AulaController@index')->with('notice', 'Aula '.$aula->nombre.', guardada correctamente.');
-         
+        if ($request->input('reservable') != null) {
+            $aula->reservable = true;
+        } else {
+            $aula->reservable = false;
+        }
+
+        try {
+            $aula->save();
+        } catch (\Exception  $e) {
+            return redirect()->action('AulaController@index')->with('error', 'Error, no se ha podido guardar');
+        }
+        return redirect()->action('AulaController@index')->with('notice', 'Aula ' . $aula->nombre . ', guardada correctamente.');
     }
 
     /**
@@ -83,10 +86,16 @@ class AulaController extends Controller
      */
     public function show($id)
     {
-        //
-        //Aqui tengo que mostrar el registro seleccionado 
-        $aula = Aula::find($id);
-        return view('aulas.show', ['aula' => $aula]);
+        try {
+            //Aqui tengo que mostrar el registro seleccionado 
+            $aula = Aula::find($id);
+            if (!isset($aula->nombre)) { //si no lo ha encontrado
+                throw new Exception('Aula no encontrada');
+            }
+            return view('aulas.show', ['aula' => $aula]);
+        } catch (\Exception  $e) {
+            return redirect()->action('AulaController@index')->with('error', 'Error, no se ha encontrado la Aula con el ID: ' . $id . ' - ' . $e->getMessage());
+        }
     }
 
     /**
@@ -97,10 +106,16 @@ class AulaController extends Controller
      */
     public function edit($id)
     {
-        //
-        //recupera el id ylo manda a la vista
-        $aula = Aula::find($id);
-        return view('aulas.update', ['aula' => $aula]);
+        try {
+            //recupera el id ylo manda a la vista
+            $aula = Aula::find($id);
+            if (!isset($aula->nombre)) { //si no lo ha encontrado
+                throw new Exception('Aula no encontrada');
+            }
+            return view('aulas.update', ['aula' => $aula]);
+        } catch (\Exception  $e) {
+            return redirect()->action('AulaController@index')->with('error', 'Error, no se ha encontrado la Aula con el ID: ' . $id . ' - ' . $e->getMessage());
+        }
     }
 
     /**
@@ -113,24 +128,33 @@ class AulaController extends Controller
     public function update(Request $request, $id)
     {
         //
-         //
-         $aula = Aula::find($id);
+        try {
+            $aula = Aula::find($id);
+            if (!isset($aula->nombre)) { //si no lo ha encontrado
+                throw new Exception('Aula no encontrada');
+            }
+            $nombre = $request->input('nombre');
+            if (stristr($nombre, 'aula') == FALSE) { //si no contiene la palabra aula se la añadimos
+                $nombre = 'Aula ' . $nombre;
+            }
+            $aula->nombre = $nombre;
+            $aula->numero = $request->input('numero');
 
-         $aula->nombre = $request->input('nombre');
-         $aula->numero = $request->input('numero');
 
-         
-         if($request->input('reservable')!=null){
-            $aula->reservable = true;
-         }else{
-            $aula->reservable = false;
-         }
-         
-         $aula->descripcion = $request->input('descripcion');
- 
-         $aula->save();
- 
-         return redirect()->action('AulaController@index')->with('notice', 'La aula ' . $aula->nombre . ' modificada correctamente.');
+            if ($request->input('reservable') != null) {
+                $aula->reservable = true;
+            } else {
+                $aula->reservable = false;
+            }
+
+            $aula->descripcion = $request->input('descripcion');
+
+            $aula->save();
+
+            return redirect()->action('AulaController@index')->with('notice', 'La aula ' . $aula->nombre . ' modificada correctamente.');
+        } catch (\Exception  $e) {
+            return redirect()->action('AulaController@index')->with('error', 'Error, no se ha encontrado la Aula con el ID: ' . $id . ' - ' . $e->getMessage());
+        }
     }
 
     /**
@@ -143,19 +167,20 @@ class AulaController extends Controller
     {
         //
         $aula = Aula::find($id);
-        try{
-             $aula->delete();
-        }catch(\Exception $e){
-            return redirect()->action('AulaController@index')->with('error', 'Error: La aula ' .$aula->nombre.', no se ha podido eliminar');
+        try {
+            $aula->delete();
+        } catch (\Exception $e) {
+            return redirect()->action('AulaController@index')->with('error', 'Error: La aula ' . $aula->nombre . ', no se ha podido eliminar');
         }
         return redirect()->action('AulaController@index')->with('notice', 'La aula ' . $aula->nombre . ' eliminado correctamente.');
     }
+
 
     public function importar(Request $request) //metodo del controlador que recibe un archivo xml para importar las aulas de la aplicacion
     {
         //guardar los datos que se envian en la base de datos 
         $archivo = $request->file('ficheroAulas');
-        $nombre = 'ArchivoIMPAulas'.$archivo->getClientOriginalName();
+        $nombre = 'ArchivoIMPAulas' . $archivo->getClientOriginalName();
 
         try { //no se haria asi...
             Storage::disk('local')->put($nombre, File::get($archivo));
@@ -171,9 +196,6 @@ class AulaController extends Controller
     public function getTodasAulasJSON()
     {
         $aulas = Aula::all();
-        echo $aulas; 
+        echo $aulas;
     }
-
-
-    }
-
+}
