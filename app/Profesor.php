@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Profesor extends Model
 {
     protected $table = 'profesor';
-    //
+    //para poder importar con ficheros:
     protected $fillable = ['id','nombre', 'apellidos','departamento','especialidad','cargo','observaciones','codigo','rutaImagen'];
 
 

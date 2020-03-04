@@ -46,17 +46,22 @@ Route::post('/materia/importar', 'MateriaController@importar')->name('materiaImp
 Route::get('/horario/profesor/{id}','HorarioController@horarioProfesor')->name('verHorarioProfesor');
 Route::get('/horario/aula/{id}','HorarioController@horarioAula')->name('verHorarioAula');
 Route::get('/horario/grupo/{id}','HorarioController@horarioGrupo')->name('verHorarioGrupo');
-
 Route::get('/horarios', 'HorarioController@index');
 Route::get('/horario/tabla/{por}/{quien}', 'HorarioController@getSoloTabla');
+
 //reservas de aulas
 Route::get('/reservar', 'ReservasController@index');
 Route::get('/reservar/aula/{id}', 'ReservasController@horariosDisponiblesAula');
 Route::get('/reservar/aula/{id}/{dia}/{hora}', 'ReservasController@ultimoPasoReservar');
-Route::get('/reservarManualmente', 'ReservasController@reservarManualmente');
+Route::get('/reservar/manualmente', 'ReservasController@reservarManualmente');
 Route::post('/reservar', 'ReservasController@reservarAula')->name('hacerReserva');
-Route::get('/reservas/listado', 'ReservasController@listado');
+Route::get('/reservar/listado', 'ReservasController@listado');
 Route::delete('/reservas/{id}', 'ReservasController@destroy');
+
+//modulo ausencias/guardias
+Route::get('/guardias', 'AusenciasController@index');
+Route::get('/guardias/listado', 'AusenciasController@listado');
+
 
 //API para ajax en cliente!!
 Route::get('/api/getprofesores', 'ProfesorController@getTodosProfesoresJSON');
@@ -64,6 +69,8 @@ Route::get('/api/getalumnos', 'AlumnoController@getTodosAlumnosJSON');
 Route::get('/api/getaulas', 'AulaController@getTodasAulasJSON');
 Route::get('/api/getAulasDisponibles', 'ReservasController@getTodasAulasDisponiblesJSON');
 Route::get('/api/getgrupos', 'GrupoController@getTodosGruposJSON');
+Route::get('/api/getProfesoresAusencias/{fecha}', 'ProfesorController@getProfesoresAusencias');
+
 
 
 Route::get('verAnuncios', 'AnunciosController@verAnuncios');

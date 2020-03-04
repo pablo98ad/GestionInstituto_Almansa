@@ -37,7 +37,7 @@ Reservar Aula
   #filtro{
     font-size: 18px;
   }*/
-  .botonReservar{
+  .botonReservar {
     text-decoration: none;
     padding: 2px;
     padding-left: 3px;
@@ -51,16 +51,17 @@ Reservar Aula
     border-radius: 2px;
     border: 3px double #006505;
   }
-  .botonReservar:hover{
+
+  .botonReservar:hover {
     opacity: 0.6;
     text-decoration: none;
-  }/*
+  }
+
+  /*
   .select2-selection {
     height: 40px !important;
     font-size: 18px;
   }*/
-  
-
 </style>
 <!--Para el desplegable select2-->
 <link rel="stylesheet" href="{{asset('css/menuSelect2.css')}}">
@@ -79,12 +80,12 @@ Reservar Aula
 @section('content')
 
 <div class="container-md text-center">
-@section('tituloCabezera') 
-Reservar Aula
-@endsection
+  @section('tituloCabezera')
+  Reservar Aula
+  @endsection
   <div class="row justify-content-between">
-  <a  title="Listado" class='col-4 col-sm-2 col-md-2  h-50 w-25  btn btn-success mb-1 mr-2' href="{{url('/').'/reservas/listado'}}" role='button'><i class=" pt-1 fa fa-list-alt fa-2x" aria-hidden="true"></i></a>
-  <a  title="Reservar Manualmente (no recomendado)" class='col-5 col-sm-2 col-md-2  btn btn-danger mb-1 mr-2' href="{{url('/').'/reservarManualmente'}}" role='button'><i class="fa pt-1 fa-plus fa-2x" aria-hidden="true"></i><i class="fa pt-1 fa-exclamation-triangle fa-1x" aria-hidden="true"></i>  </a>
+    <a title="Listado" class='col-4 col-sm-2 col-md-2  h-50 w-25  btn btn-success mb-1 mr-2' href="{{url('/').'/reservar/listado'}}" role='button'><i class=" pt-1 fa fa-list-alt fa-2x" aria-hidden="true"></i></a>
+    <a title="Reservar Manualmente (no recomendado)" class='col-5 col-sm-2 col-md-2  btn btn-danger mb-1 mr-2' href="{{url('/').'/reservar/manualmente'}}" role='button'><i class="fa pt-1 fa-plus fa-2x" aria-hidden="true"></i><i class="fa pt-1 fa-exclamation-triangle fa-1x" aria-hidden="true"></i> </a>
   </div>
   <div class="row d-flex justify-content-center">
 
@@ -102,8 +103,8 @@ Reservar Aula
 </div>
 
 <script>
-  let directorioBase='{{url('/')}}';
-  let url = directorioBase+'/api/getAulasDisponibles';
+  let directorioBase = '{{url('/')}}';
+  let url = directorioBase + '/api/getAulasDisponibles';
 
   $('#aulasDis').select2({
     placeholder: "Cargando..."
@@ -141,7 +142,7 @@ Reservar Aula
         templateResult: function(result) {
           if (result.id == 'no' || typeof result.id == 'undefined') { //para que no haga nada cuando es el 1º resultado
             return '';
-          } else{
+          } else {
             var final = `<div class="resulDiv"><div class="imagen"><p class="imagenResul">${result.numero}</p></div><h2 class="nombreResul"> ${result.nombre}</h2><br>
                                     <h3 class="segundaLineaResul"> </h3>
                                     </div>`;
@@ -162,12 +163,15 @@ Reservar Aula
           }
         }
       });
+
+      $('#aulasDis').select2("open"); //lo abro para que elija el que quiera
     });
 
-    function formato(item) {
+  function formato(item) {
     alert(item);
     return item.nombre;
-    };
+  };
+
 
 
   $('#aulasDis').on('select2:select', function(e) { //Para que cuando seleccionemos un option del select, se carge la horas disponibles del aula correspondientes
@@ -178,12 +182,13 @@ Reservar Aula
 
 
 
+
   //Para que cuando seleccionemos un option del select, se carge la horas disponibles del aula correspondiente
   function cargarTabla(e) {
     //alert(this.value);
     if (document.getElementById('aulasDis').value != 'no') {
       let aula = document.getElementById('aulasDis').value;
-      let url = directorioBase + '/reservar/aula/'+aula;
+      let url = directorioBase + '/reservar/aula/' + aula;
       //alert(url);
       $("#tabla").load(url);
     } else {

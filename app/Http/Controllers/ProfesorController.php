@@ -136,13 +136,6 @@ class ProfesorController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
@@ -187,12 +180,6 @@ class ProfesorController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //
@@ -255,5 +242,24 @@ class ProfesorController extends Controller
         //
         $profesor = Profesor::all();
         echo $profesor;
+    }
+
+    public function getProfesoresAusencias($fecha){
+        //obtenemos los profesores que tengan alguna hora lectiva en la fecha especificada
+
+        //pasamos la fecha a un dia de la semana
+        $dias=array('L','M','X','J','V');
+        $letraDia=$dias[((int)date('w ', strtotime($fecha))-1)];
+        //obtenemos todos los profesores que tienen clase ese dia
+        $profes=Horario::select('profesor_id')->where('dia',$letraDia)->distinct()->get();
+        //pasamos de los objetos tipo horarios a objetos tipo profesor
+        $idsProfes=[];
+        foreach ($profes as $profe){
+            $idsProfes[]=$profe->profesor_id;
+        }
+        $profesores = Profesor::whereIn('id', $idsProfes)->get();
+        echo $profesores;
+
+
     }
 }
