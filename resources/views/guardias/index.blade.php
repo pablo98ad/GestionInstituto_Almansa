@@ -150,7 +150,6 @@ Guardias
     document.getElementById('tabla').innerHTML='';
 
     $('#profes').empty();//vaciamos los options de la vez anterior
-
     $('.contenedorCampos').show();//la primera vez, lo mostramos porque esta oculto
 
       $('#profes').select2({
@@ -178,7 +177,6 @@ Guardias
         escapeMarkup: function(result) {
           return result;
         },
-
         //Para cambiar los textos al castellano
         language: {
           noResults: function() {
@@ -191,23 +189,36 @@ Guardias
       });
 
       $('#profes').select2("open");//lo abro para que elija el que quiera
-      cargarTabla();
+      //cargarTabla();//cargo el primer campo por defecto para mas dinamismo
 
   $('#profes').on('select2:select', function(e) { //Para que cuando seleccionemos un option del select, se carge la horas disponibles del aula correspondientes
     cargarTabla();
+    
+
   });
 }
 
   //Para que cuando seleccionemos un option del select, se carge la horas disponibles del aula correspondiente
   function cargarTabla() {
+    $("#tabla").text('');
+    $(".daterangerpicker").text('');
     //alert(document.getElementById('profes').value);
     let fecha=document.getElementById('datepicker').value;
     let profesor=document.getElementById('profes').value;
     let enlaceHorasProfe=directorioBase+'/api/getHorasQuePuedeFaltar/'+fecha+'/'+profesor;
     //alert(fecha+' - '+profesor);
-    $("#tabla").load(enlaceHorasProfe);
-    //document.getElementById('caption').innerText+=fecha;
-    
+  
+    $("#tabla").load(enlaceHorasProfe,'',function(){
+      //algo que hacer cuando se carge la tabla?
+    });
   }
 </script>
+@endsection
+
+
+
+@section('scriptsFooter')
+<!-- Para el switch (input tipo checkbox) de si una hora va a faltar no-->
+<link href="{{asset('css/bootstrap4-toggle-3.6.1.min.css')}}" rel="stylesheet">
+<script src="{{asset('js/bootstrap4-toggle-3.6.1.min.js')}}"></script>
 @endsection

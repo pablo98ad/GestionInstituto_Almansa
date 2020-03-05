@@ -199,28 +199,18 @@
 
       //SELECION DE MODULO EN EL MENU AUTOMATICO
       let enlace = window.location.href.split('?')[0];
-      //alert(urlBase.length);
-      //enlace=enlace.substring(0,enlace.lastIndexOf('/'));
-      //alert(enlace);
       enlace=enlace.substring(urlBase.length+1,enlace.length);
-      //alert(enlace);
       if(enlace.indexOf('/')!=-1){
         enlace=enlace=enlace.substring(0,enlace.indexOf('/'));
       }
-      //alert(enlace.indexOf('/'));
-      //alert(enlace);
 
       $(".elementoMenu").each(function() {
         //console.log(enlace+'   -----   '+$(this).parent().attr('href'));
         let enlaceA=$(this).attr('href');
-        //alert(typeof enlaceA);
         enlaceA=enlaceA.substring(enlaceA.lastIndexOf('/')+1,enlaceA.length);
-        //alert(enlaceA);
         if (enlace == enlaceA && !$(this).hasClass('botonesGrandesMenu')) {
-          
           $(this).parent().addClass(' active ');
           $(this).parent().addClass(' show ');
-          //$(this).parent().parent().prev().addClass(' dropdown-toggle ');
           $(this).parent().attr("aria-expanded", "true");
         }
       });
@@ -231,6 +221,10 @@
     if(document.querySelectorAll(".paginaFormulario").length>0 ){
       window.onbeforeunload = ()=>{return 'Es posible que los cambios no se guarden'};
     }
+    //para que cuando enviemos un formulario no nos salga la ventana emergente
+    $('form').submit(function() {
+      window.onbeforeunload = null;
+      });
     //}catch(e){}
 
     /*$(document).ready(function() {

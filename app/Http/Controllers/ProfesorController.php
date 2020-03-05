@@ -18,7 +18,7 @@ class ProfesorController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth')->except('index', 'getTodosProfesoresJSON','show');
+        $this->middleware('auth')->except('index', 'getTodosProfesoresJSON','show','getProfesoresAusencias');
     }
     /**
      * Display a listing of the resource.

@@ -24,9 +24,11 @@ class ReservasController extends Controller
 
     //DESDE RUTA /reservas/listado
     public function listado()
-    {   //recojemos las reservas que sean su fecha mayor a la de ahora
+    {   
+        //recojemos las reservas que sean su fecha mayor a la de ahora
         $diaActual = date("Y-m-d", strtotime("today"));
-        $reservasAulas = Reservas::where('fecha', '>=', $diaActual)->orderBy('fecha', 'asc')->orderBy('hora', 'asc')->get();
+        $reservasAulas = Reservas::where('fecha', '>=', $diaActual)->orderBy('fecha', 'asc')->orderBy('hora', 'asc')
+        ->with('profesor_sustituye')->with('profesor')->get();
            
         return view('reservas.listadoTabla', ['reservas' => $reservasAulas]);
     }

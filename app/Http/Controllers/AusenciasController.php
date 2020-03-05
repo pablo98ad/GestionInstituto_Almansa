@@ -58,20 +58,19 @@ class AusenciasController extends Controller
            $ausencia->fecha=$datos[1];
            $hora=Horario::find($datos[0]);
            $ausencia->hora=$hora->hora;
-           $ausencia->observaciones1=$request->comentarios[$index];//no funciona cuando es recreo 
+           $ausencia->observaciones1=$request->comentarios[$index];
            $ausencia->save();
         }
-
-
-
-        return redirect()->action('AusenciasController@index')->with('notice', 'horas: '.array_values($request->horas).' profe'.$request->profesor);
-         
-
-
+        return redirect()->action('AusenciasController@index')->with('notice', 'horas: '.print_r($request->horas).' profe'.$request->profesor);        
     }
 
 
-
+    public function listado(){
+        $hoy=date("Y-m-d", strtotime("today"));
+        $ausenciasSinAsignar= Ausencias::where('fecha','>=',$hoy)->whereNull('profesor_sustituye_id')
+        ->with('profesor')->get();
+        echo $ausenciasSinAsignar;
+    }
 
 
     public function destroy($id)
