@@ -4,84 +4,76 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Ausencias;
+use App\Horario;
 use App\Reservas;
 use DateTime;
 use Exception;
 
 class AusenciasController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    //Desde ruta get /guardias
     public function index()
     {   
 
         return view('guardias.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    //desde ruta /api/getHorasQuePuedeFaltar/{fecha}/{id_profe}
+    //dada una fecha y un id de un profesor, obtenemos todas las horas que trabaja ese dia
+    public function getHorasQuePuedeFaltar($fecha,$id_profe){
+        $idHoras=[];
+        //comprobamos que el profesor ese dia, tenga horas lectivas
+        $dias=array('L','M','X','J','V');
+        $letraDia=$dias[((int)date('w ', strtotime($fecha))-1)];
+        //obtenemos si tiene ese profesor clase ese dia
+        //$horarioProfe=Horario::where('dia',$letraDia)->where('profesor_id',$id_profe)->with('profesor')->with('aula')->with('grupo')->orderBy('hora')->get();
+        $horarioProfe=Horario::where('dia',$letraDia)->where('profesor_id',$id_profe)->get();
+        $ausenciasAnteriores=Ausencias::where('fecha',$fecha)->where('profesor_id',$id_profe)->get();
+        //comprobamos que en las horas de ese dia, este profesor no tenga ausencias esa hora ya
+        foreach($horarioProfe as $hora){
+            if(!$this->estaEsaHoraAusente($hora,$ausenciasAnteriores)){
+                $idHoras[]=$hora->id;
+            }
+
+        }
+        $horarioProfe=Horario::whereIn('id', $idHoras)->with('profesor')->with('aula')->with('grupo')->orderBy('hora')->get();
+     
+
+        return view('guardias.listadoHoras', ['horas' => $horarioProfe,'fecha'=>$fecha]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    
+    
+
+    public function guardarAusencias(Request $request){
+        
+        if(!isset($request->horas)){//si le ha dado a enviar y no ha marcado algun input tipo toggle 
+            return redirect()->action('AusenciasController@index')->with('error', 'No se ha guardado nada');
+        }
+        foreach ($request->horas as $index=>$hora){
+           $datos=explode('|',$hora);
+           $ausencia= new Ausencias();
+           $ausencia->profesor_id=$request->profesor;
+           $ausencia->fecha=$datos[1];
+           $hora=Horario::find($datos[0]);
+           $ausencia->hora=$hora->hora;
+           $ausencia->observaciones1=$request->comentarios[$index];//no funciona cuando es recreo 
+           $ausencia->save();
+        }
+
+
+
+        return redirect()->action('AusenciasController@index')->with('notice', 'horas: '.array_values($request->horas).' profe'.$request->profesor);
+         
+
+
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
         $ausencia = Ausencias::find($id);
@@ -97,4 +89,17 @@ class AusenciasController extends Controller
         return redirect()->action('AusenciasController@listado')->with('notice', 'La ausencia del dia ' . $ausencia->fecha . ' del profesor '.$ausencia->profesor. ' eliminado correctamente.');
    
     }
+
+    private function estaEsaHoraAusente($hora,$ausenciasDia){
+        $estaEsaHoraAusente=false;
+        foreach($ausenciasDia as $ausencia){
+            if($hora->hora==$ausencia->hora){
+                $estaEsaHoraAusente=true;
+            }
+        }
+        return $estaEsaHoraAusente;
+    }
+
+
+
 }

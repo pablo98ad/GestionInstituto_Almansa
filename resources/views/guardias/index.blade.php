@@ -191,7 +191,7 @@ Guardias
       });
 
       $('#profes').select2("open");//lo abro para que elija el que quiera
- 
+      cargarTabla();
 
   $('#profes').on('select2:select', function(e) { //Para que cuando seleccionemos un option del select, se carge la horas disponibles del aula correspondientes
     cargarTabla();
@@ -203,15 +203,11 @@ Guardias
     //alert(document.getElementById('profes').value);
     let fecha=document.getElementById('datepicker').value;
     let profesor=document.getElementById('profes').value;
-    alert(fecha+' - '+profesor);
-    /*if (document.getElementById('aulasDis').value != 'no') {
-      let aula = document.getElementById('aulasDis').value;
-      let url = directorioBase + '/reservar/aula/' + aula;
-      //alert(url);
-      $("#tabla").load(url);
-    } else {
-      $("#tabla").html(' ');
-    }*/
+    let enlaceHorasProfe=directorioBase+'/api/getHorasQuePuedeFaltar/'+fecha+'/'+profesor;
+    //alert(fecha+' - '+profesor);
+    $("#tabla").load(enlaceHorasProfe);
+    //document.getElementById('caption').innerText+=fecha;
+    
   }
 </script>
 @endsection

@@ -61,6 +61,8 @@ Route::delete('/reservas/{id}', 'ReservasController@destroy');
 //modulo ausencias/guardias
 Route::get('/guardias', 'AusenciasController@index');
 Route::get('/guardias/listado', 'AusenciasController@listado');
+Route::post('/guardias', 'AusenciasController@guardarAusencias');
+
 
 
 //API para ajax en cliente!!
@@ -70,6 +72,7 @@ Route::get('/api/getaulas', 'AulaController@getTodasAulasJSON');
 Route::get('/api/getAulasDisponibles', 'ReservasController@getTodasAulasDisponiblesJSON');
 Route::get('/api/getgrupos', 'GrupoController@getTodosGruposJSON');
 Route::get('/api/getProfesoresAusencias/{fecha}', 'ProfesorController@getProfesoresAusencias');
+Route::get('/api/getHorasQuePuedeFaltar/{fecha}/{id_profe}', 'AusenciasController@getHorasQuePuedeFaltar');
 
 
 

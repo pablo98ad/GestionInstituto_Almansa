@@ -23,7 +23,7 @@ class CreateAusenciasTable extends Migration
             $table->unsignedInteger('profesor_id');
             $table->foreign('profesor_id')->references('id')->on('profesor');
 
-            $table->unsignedInteger('profesor_sustituye_id');
+            $table->unsignedInteger('profesor_sustituye_id')->nullable();
             $table->foreign('profesor_sustituye_id')->references('id')->on('profesor');
 
             $table->timestamps();
