@@ -189,7 +189,11 @@ Guardias
       });
 
       $('#profes').select2("open");//lo abro para que elija el que quiera
-      //cargarTabla();//cargo el primer campo por defecto para mas dinamismo
+      
+      //si solo hay un profesor, o cargo automaticamente
+      if(document.querySelectorAll('#profes option').length==1){
+        cargarTabla();//cargo el primer campo por defecto para mas dinamismo
+      }
 
   $('#profes').on('select2:select', function(e) { //Para que cuando seleccionemos un option del select, se carge la horas disponibles del aula correspondientes
     cargarTabla();

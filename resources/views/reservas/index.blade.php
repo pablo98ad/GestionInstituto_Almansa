@@ -79,7 +79,7 @@ Reservar Aula
 
 @section('content')
 
-<div class="container-md text-center">
+<div class="container-XL pl-4 pr-4 text-center">
   @section('tituloCabezera')
   Reservar Aula
   @endsection

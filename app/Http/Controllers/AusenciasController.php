@@ -8,6 +8,7 @@ use App\Horario;
 use App\Reservas;
 use DateTime;
 use Exception;
+use PhpParser\Node\Stmt\Switch_;
 
 class AusenciasController extends Controller
 {
@@ -35,17 +36,15 @@ class AusenciasController extends Controller
             if(!$this->estaEsaHoraAusente($hora,$ausenciasAnteriores)){
                 $idHoras[]=$hora->id;
             }
-
         }
         $horarioProfe=Horario::whereIn('id', $idHoras)->with('profesor')->with('aula')->with('grupo')->orderBy('hora')->get();
      
-
         return view('guardias.listadoHoras', ['horas' => $horarioProfe,'fecha'=>$fecha]);
     }
 
     
     
-
+    //guarda las ausencias de un profesor de un dia
     public function guardarAusencias(Request $request){
         
         if(!isset($request->horas)){//si le ha dado a enviar y no ha marcado algun input tipo toggle 
@@ -65,11 +64,31 @@ class AusenciasController extends Controller
     }
 
 
-    public function listado(){
-        $hoy=date("Y-m-d", strtotime("today"));
-        $ausenciasSinAsignar= Ausencias::where('fecha','>=',$hoy)->whereNull('profesor_sustituye_id')
+    public function listado(Request $req){
+
+        if ($req->fecha == "") {
+            $fecha=date("Y-m-d", strtotime("today"));
+        }else{
+            $fecha=date("Y-m-d", strtotime($req->fecha));
+        }
+
+        $ausenciasSinAsignar= Ausencias::where('fecha','=',$fecha)/*->whereNull('profesor_sustituye_id')*/
         ->with('profesor')->get();
-        echo $ausenciasSinAsignar;
+
+        $horariosDeLasAusencias=[];
+        foreach($ausenciasSinAsignar as $ausencia){
+            //recuperamos la hora que se va a ausentar cada profesor
+            $horariosDeLasAusencias[]=Horario::where('profesor_id',$ausencia->profesor_id)->where('hora',$ausencia->hora)
+            ->where('dia',$this->deFechaADiaSemana($ausencia->fecha))
+            ->with('aula')->with('profesor')->with('grupo')->with('materia')->first();
+            //echo $this->deFechaADiaSemana($ausencia->fecha).'---'.$ausencia->fecha.'<br>';
+        }
+
+    //  echo $ausenciasSinAsignar .'<br><br><br>';
+      //echo print_r($horariosDeLasAusencias);
+      //echo $horariosDeLasAusencias[0];
+        return view('guardias.listadoCadaDia', ['horasAusencias' => $ausenciasSinAsignar,
+                    'horasHorarios'=>$horariosDeLasAusencias,'fecha'=>$fecha]);
     }
 
 
@@ -77,7 +96,7 @@ class AusenciasController extends Controller
     {
         $ausencia = Ausencias::find($id);
         try {
-            if (!isset($ausencia->nombre)) { //si no lo ha encontrado
+            if (!isset($ausencia->hora)) { //si no lo ha encontrado
                 throw new Exception();
             }
             $ausencia->delete();
@@ -89,6 +108,9 @@ class AusenciasController extends Controller
    
     }
 
+
+
+
     private function estaEsaHoraAusente($hora,$ausenciasDia){
         $estaEsaHoraAusente=false;
         foreach($ausenciasDia as $ausencia){
@@ -97,6 +119,32 @@ class AusenciasController extends Controller
             }
         }
         return $estaEsaHoraAusente;
+    }
+
+    private function deFechaADiaSemana($fecha){
+        $numeroDiaSemana=date("w", strtotime($fecha));
+        $letraDiaSemana='';
+
+        switch ($numeroDiaSemana) {
+            case 1:
+                $letraDiaSemana='L';
+                break;
+            case 2:
+                $letraDiaSemana='M';
+                break; 
+            case 3:
+                $letraDiaSemana='X';
+                break; 
+            case 4:
+                $letraDiaSemana='J';
+                break; 
+            case 5:
+                $letraDiaSemana='V';
+                break;
+           
+        }
+
+        return $letraDiaSemana;
     }
 
 

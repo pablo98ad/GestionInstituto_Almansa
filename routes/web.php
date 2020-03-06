@@ -62,7 +62,7 @@ Route::delete('/reservas/{id}', 'ReservasController@destroy');
 Route::get('/guardias', 'AusenciasController@index');
 Route::get('/guardias/listado', 'AusenciasController@listado');
 Route::post('/guardias', 'AusenciasController@guardarAusencias');
-
+Route::delete('/guardias/{id}', 'AusenciasController@destroy');
 
 
 //API para ajax en cliente!!

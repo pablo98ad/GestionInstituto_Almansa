@@ -13,20 +13,14 @@ use Exception;
 
 
 
-class ProfesorController extends Controller
-{
+class ProfesorController extends Controller{
 
-    public function __construct()
-    {
+    public function __construct(){
         $this->middleware('auth')->except('index', 'getTodosProfesoresJSON','show','getProfesoresAusencias');
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $req)
-    {
+
+    
+    public function index(Request $req){
         if ($req->busqueda == "") {
             $profesores = Profesor::paginate(12);
         } else {
@@ -37,25 +31,16 @@ class ProfesorController extends Controller
         return view('profesores.index', ['profesores' => $profesores]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
+
+    
+    public function create(){
         //
         return view('profesores.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
+
+    
+    public function store(Request $request){
         // echo "estoy aqui";
         //guardar los datos que se envian en la base de datos 
         $profesor = new Profesor();
@@ -93,14 +78,8 @@ class ProfesorController extends Controller
 
     
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
+ 
+    public function show($id){
         try {
             //Aqui tengo que mostrar el registro seleccionado 
             $profesor = Profesor::find($id);
@@ -116,14 +95,9 @@ class ProfesorController extends Controller
         }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
+
+
+    public function edit($id){
         try {
             //recupera el id ylo manda a la vista
             $profesor = Profesor::find($id);
@@ -136,9 +110,7 @@ class ProfesorController extends Controller
         }
     }
 
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(Request $request, $id){
         try {
             $profesor = Profesor::find($id);
             if (!isset($profesor->nombre)) { //si no lo ha encontrado
@@ -180,9 +152,8 @@ class ProfesorController extends Controller
         }
     }
 
-    public function destroy($id)
-    {
-        //
+    public function destroy($id){
+
         $profesor = Profesor::find($id);
         try {
             if (!isset($profesor->nombre)) { //si no lo ha encontrado
@@ -237,9 +208,7 @@ class ProfesorController extends Controller
         return redirect()->action('ProfesorController@index')->with('notice', 'El fichero ' . $nombre . ', importado correctamente.' );
     }
 
-    public function getTodosProfesoresJSON()
-    {
-        //
+    public function getTodosProfesoresJSON(){
         $profesor = Profesor::all();
         echo $profesor;
     }
@@ -259,7 +228,5 @@ class ProfesorController extends Controller
         }
         $profesores = Profesor::whereIn('id', $idsProfes)->get();
         echo $profesores;
-
-
     }
 }
