@@ -51,8 +51,8 @@ Listado Guardias
 </div>
 <hr>
 
-<div class="row text-center d-flex justify-content-center" id="tabla">
-  <table class="table-responsive table table-hover table-borderless table-bordered table-striped rounder w-auto">
+<div class="row text-center d-flex justify-content-center " id="tabla">
+  <table id="tabla"class="table-responsive table table-hover rounder w-auto">
     <tr>
       <th>Hora</th>
       <th>Profesor Falta</th>
@@ -62,53 +62,94 @@ Listado Guardias
       <th>Profesor Sustituye</th>
       <th>Eliminar</th>
     </tr>
-    @php
-    $horas=['1','2','3','R','4','5','6','7']
-    @endphp
-    @foreach ($horasAusencias as $index=>$ausencia)
+    {{--$ausYHoras[$hora]['aus'][$index]--}}
+    {{--$ausYHoras[$hora]['hor'][$index]--}}
+    <?php
+    $horas=['1','2','3','R','4','5','6','7'];
+    ?>
+
+
+
+    @foreach($horas as  $hora)
+
+    @if(sizeof($ausYHoras[$hora]['aus'])!=0)
+     
+
+   
+    @foreach($ausYHoras[$hora]['aus'] as $index => $au)
+
     <tr>
-      <td>{{$ausencia->hora}}</td>
-      <td>{{$horasHorarios[$index]->profesor->nombre}} {{$horasHorarios[$index]->profesor->apellidos}}</td>
-      <td>{{$horasHorarios[$index]->grupo->nombre}}</td>
-      <td>{{$horasHorarios[$index]->aula->nombre}}</td>
-      <td>{{$ausencia->observaciones1}}</td>
+      <th scope="row">{{$hora}}</th>
+
+    
+
+    
+      <td>{{$ausYHoras[$hora]['hor'][$index]->profesor->nombre}} {{$ausYHoras[$hora]['hor'][$index]->profesor->apellidos}}</td>
+      <td>{{$ausYHoras[$hora]['hor'][$index]->grupo->nombre}}</td>
+      <td>{{$ausYHoras[$hora]['hor'][$index]->aula->nombre}}</td>
+      <td>{{$ausYHoras[$hora]['aus'][$index]->observaciones1}}</td>
       <td>
-        @if($ausencia->profes)
-        @endif
+      @if($ausYHoras[$hora]['aus'][$index]->profesor_sustituye_id!=null)
+        {{$ausYHoras[$hora]['aus'][$index]->profesor_sustituye->nombre}} {{$ausYHoras[$hora]['aus'][$index]->profesor_sustituye->apellidos}}
+      @else
+      aun na
+      @endif
       </td>
 
+
+
       <td>
-      <div class="d-inline">
-              <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal-{{$ausencia->id}}">
-              <i class="fa fa-trash" aria-hidden="true"></i>
-              </button>
-              <div class="modal fade " id="exampleModal-{{$ausencia->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog " role="document">
-                  <div class="modal-content ">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">AVISO</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      <h5 class="modal-title" id="exampleModalLabel">¿Esta seguro que quiere eliminar la ausencia seleccionado?</h5>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                      <form class="d-inline" method="POST" action="{{url('guardias/').'/'.$ausencia->id}}">
-                        {{ csrf_field() }}
-                        {{ method_field('DELETE') }}
-                        <input type="submit" name="eliminar" class="btn btn-danger" value="Eliminar">
-                      </form>
-                    </div>
-                  </div>
+        <div class="d-inline">
+          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal-{{$ausYHoras[$hora]['aus'][$index]->id}}">
+            <i class="fa fa-trash" aria-hidden="true"></i>
+          </button>
+          <div class="modal fade " id="exampleModal-{{$ausYHoras[$hora]['aus'][$index]->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog " role="document">
+              <div class="modal-content ">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">AVISO</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <h5 class="modal-title" id="exampleModalLabel">¿Esta seguro que quiere eliminar la ausencia seleccionado?</h5>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                  <form class="d-inline" method="POST" action="{{url('guardias/').'/'.$ausYHoras[$hora]['aus'][$index]->id}}">
+                    {{ csrf_field() }}
+                    {{ method_field('DELETE') }}
+                    <input type="submit" name="eliminar" class="btn btn-danger" value="Eliminar">
+                  </form>
                 </div>
               </div>
             </div>
+          </div>
+        </div>
       </td>
     </tr>
-  @endforeach
+ </tr>
+
+    @endforeach
+
+
+    @endif
+   
+   
+
+    @endforeach
+
+
+
+
+      <!---->
+    
+     
+   
+   
+     
+   
 
 
 
@@ -122,7 +163,30 @@ Listado Guardias
 </div>
 
 </div>
+<script>
 
+  //para que cuando hay varias horas, estas se agrupen (rowspan de hora)
+    $(document).ready(function() {
+       var span = 1;
+       var prevTD = "";
+       var prevTDVal = "";
+       $("#tabla tr th:first-child").each(function() { //for each first td in every tr
+          var $this = $(this);
+          if ($this.text() == prevTDVal) { // check value of previous td text
+             span++;
+             if (prevTD != "") {
+                prevTD.attr("rowspan", span); // add attribute to previous td
+                prevTD.css('vertical-align','middle');
+                $this.remove(); // remove current td
+             }
+          } else {
+             prevTD     = $this; // store current td 
+             prevTDVal  = $this.text();
+             span       = 1;
+          }
+       });
+    });
+</script>
 <script>
   //el dateranger picker
   $('#datepicker').daterangepicker({

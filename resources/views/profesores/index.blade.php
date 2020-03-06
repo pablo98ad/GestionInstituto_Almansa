@@ -67,8 +67,7 @@ Listado de profesores
 
     <div class="card col-md-3 col-sm-6 col-12 mt-1 ">
       <div class="card-body m-0 p-0 mt-2 mb-2">
-        <h3 class="card-title d-inline">{{$profesor->nombre}} {{$profesor->apellidos}}</h3>
-        <BR>
+        <h3 style="height: 70px;"  class=" overflow-auto">{{$profesor->nombre}} {{$profesor->apellidos}}</h3>
         <!--card-img-top w-25 -->
         <img class=" border rounded d-inline mb-1" width="70px" height="70px" src="{{url('/').'/storage/'.$profesor->rutaImagen}}" alt="">
         <div class="table-responsive">

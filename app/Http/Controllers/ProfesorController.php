@@ -177,13 +177,13 @@ class ProfesorController extends Controller{
         //guardar los datos que se envian en la base de datos 
         $archivo = $request->file('ficheroProfesores');
         $nombre = 'ArchivoIMPProfesores'.$archivo->getClientOriginalName();
-        $indice=0;
+        global $indice;
         try { //no se haria asi...
             Storage::disk('local')->put($nombre, File::get($archivo));
             $rutaArchivo=Storage::disk('local')->path($nombre)/*Storage::disk('local')->get($nombre)*/;
-            
+            $indice=0;
             Excel::load($rutaArchivo, function($reader) {
-                $indice=0;
+                
                 foreach ($reader->get() as $profe) {
                     //echo $profe;
                     Profesor::create([
@@ -197,7 +197,8 @@ class ProfesorController extends Controller{
                         'codigo' =>$profe->abreviatura,
                         'rutaImagen' => 'imagenes/profesores/default.png'
                     ]);
-                    $indice=$indice+1;
+                    //$indice=$indice+1;
+                    $GLOBALS['indice']++;
                  }
                  //return $indice;
            });
@@ -205,7 +206,7 @@ class ProfesorController extends Controller{
         } catch (\Exception  $e) {
             return redirect()->action('ProfesorController@index')->with('error', $rutaArchivo.'Error, no se ha podido guardar el fichero'.$e->getMessage());
         }
-        return redirect()->action('ProfesorController@index')->with('notice', 'El fichero ' . $nombre . ', importado correctamente.' );
+        return redirect()->action('ProfesorController@index')->with('notice', 'El fichero ' . $nombre . ', importado correctamente. Con '.$GLOBALS['indice'].' importados' );
     }
 
     public function getTodosProfesoresJSON(){

@@ -66,9 +66,10 @@ Listado de alumnos
     @foreach ($alumnos as $alumno)
 
     <div class="card col-md-3 col-sm-6 col-12 mt-1 ">
-      <div class="card-body m-0 p-0 mt-2 mb-2">
-        <h3 class="card-title d-inline">{{$alumno->nombre }} {{$alumno->apellidos}}</h3>
-        <br>
+      <div class="card-body m-0 p-0 mt-2 mb-2 ">
+        <!--card-title d-inline-->
+        <h3 style="height: 70px;"  class=" overflow-auto">{{$alumno->nombre }} {{$alumno->apellidos}}</h3>
+        
         <!--card-img-top  w-25-->
         <img draggable="false" class="border rounded d-inline mb-1" width="70px" height="70px" src="{{url('/').'/storage/'.$alumno->rutaImagen}}" alt="">
         <div class="table-responsive">
@@ -95,6 +96,7 @@ Listado de alumnos
         <div style="height: 80px;" class="border overflow-auto">
           <p class="card-text">{{$alumno->observaciones}}</p>
         </div><br>-->
+
         <a title="Horario" class='btn btn-warning' href='{{url('/horario/grupo/').'/'.$alumno->Grupo_id}}' role='button'><i class="fa fa-table fa-lg" aria-hidden="true"></i></a>
         <a title="Ver" class='btn btn-success' href='alumno/{{$alumno->id}}' role='button'><i class="fa fa-eye fa-lg" aria-hidden="true"></i></a>
         <!--<a class='btn btn-warning' href='horario/alumno/{{$alumno->id}}' role='button'>Horario</a>-->
