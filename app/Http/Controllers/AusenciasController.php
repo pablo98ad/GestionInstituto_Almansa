@@ -118,6 +118,8 @@ class AusenciasController extends Controller
                 throw new Exception();
             }
             $ausencia->profesor_sustituye_id=$req->input('profesorSustituye');
+            $ausencia->observaciones2=$req->input('observaciones2');
+            $ausencia->save();
         } catch (\Exception $e) {
 
             return redirect()->back()->with('error', 'Error: ' . $e->getMessage());

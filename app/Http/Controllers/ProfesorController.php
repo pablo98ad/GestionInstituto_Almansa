@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Ausencias;
 use App\Horario;
+use App\Materia;
 use Illuminate\Http\Request;
 use App\Profesor;
 use Illuminate\Support\Facades\Storage;
@@ -16,7 +18,7 @@ use Exception;
 class ProfesorController extends Controller{
 
     public function __construct(){
-        $this->middleware('auth')->except('index', 'getTodosProfesoresJSON','show','getProfesoresAusencias');
+        $this->middleware('auth')->except('index', 'getTodosProfesoresJSON','show','getProfesoresAusencias','getProfesoresConHoraDeGuardia');
     }
 
     
@@ -204,7 +206,7 @@ class ProfesorController extends Controller{
            });
 
         } catch (\Exception  $e) {
-            return redirect()->action('ProfesorController@index')->with('error', $rutaArchivo.'Error, no se ha podido guardar el fichero'.$e->getMessage());
+            return redirect()->action('ProfesorController@index')->with('error', $rutaArchivo.'Error, no se ha podido guardar el fichero'.$e->getMessage().' me he quedado por la linea '.$indice);
         }
         return redirect()->action('ProfesorController@index')->with('notice', 'El fichero ' . $nombre . ', importado correctamente. Con '.$GLOBALS['indice'].' importados' );
     }
@@ -229,5 +231,71 @@ class ProfesorController extends Controller{
         }
         $profesores = Profesor::whereIn('id', $idsProfes)->get();
         echo $profesores;
+    }
+
+
+    public function getProfesoresConHoraDeGuardia($fecha, $hora){
+        $materiaQueEsGuardia='guardia';
+
+        //obtengo el id de la materia que indican que estan de guardia
+        $materiaID= Materia::where('nombre',$materiaQueEsGuardia)->first()->id;
+        
+        //seleccionamos los profesores que tengan la hora libre, ese dia, esa hora y con esa materia
+        $profes=Horario::select('profesor_id')->where('materia_id',$materiaID)->where('hora',$hora)
+        ->where('dia',$this->deFechaADiaSemana($fecha))->get();
+
+        //seleccionamos tambien los profesores que ya esten asignados a una ausencia ese dia, a esa hora
+        $profesAsignados=Ausencias::where('hora',$hora)->where('fecha',$fecha)->get();
+
+        //ahora teniendo los profesores con  esa materia ese dia, esa hora y los que ya estan asignados, eliminamos
+        //los id de el 1º array que esten en el 2º array
+        $idsProfes=[];
+        foreach ($profes as $profe){
+            if(!$this->estaEsteIDEnEsteArray($profe->profesor_id,$profesAsignados)){
+                $idsProfes[]=$profe->profesor_id;
+            }
+        }
+        //una vez los tenemos, los devolvemos en json para el select2 
+        $profesores = Profesor::whereIn('id', $idsProfes)->get();
+        echo $profesores;
+    }
+
+    //function que nos dice si un id de un profesor esta en un array de objetos ausencias donde este ese id de profesor
+    //en un campo profesor_id o profesor_sustituye_id
+    private function estaEsteIDEnEsteArray($id,$array){
+        $esta=false;
+        foreach ($array as $ausencia){
+            if($id==$ausencia->profesor_sustituye_id || $id==$ausencia->profesor_id){
+                $esta=true;
+                break;//salimos del bucle si lo ha encontrado
+            }
+        }
+        return $esta;
+    }
+
+
+    //function que desde una fecha dada, devuelve el dia de la semana en formato una letra.
+    private function deFechaADiaSemana($fecha){
+        $numeroDiaSemana = date("w", strtotime($fecha));
+        $letraDiaSemana = '';
+
+        switch ($numeroDiaSemana) {
+            case 1:
+                $letraDiaSemana = 'L';
+                break;
+            case 2:
+                $letraDiaSemana = 'M';
+                break;
+            case 3:
+                $letraDiaSemana = 'X';
+                break;
+            case 4:
+                $letraDiaSemana = 'J';
+                break;
+            case 5:
+                $letraDiaSemana = 'V';
+                break;
+        }
+        return $letraDiaSemana;
     }
 }

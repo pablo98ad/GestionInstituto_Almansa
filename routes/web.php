@@ -62,6 +62,7 @@ Route::delete('/reservas/{id}', 'ReservasController@destroy');
 Route::get('/guardias', 'AusenciasController@index');
 Route::get('/guardias/listado', 'AusenciasController@listado');
 Route::post('/guardias', 'AusenciasController@guardarAusencias');
+Route::post('/guardias/listado', 'AusenciasController@asignarProfesorAAusencia');
 Route::delete('/guardias/{id}', 'AusenciasController@destroy');
 
 
@@ -73,6 +74,8 @@ Route::get('/api/getAulasDisponibles', 'ReservasController@getTodasAulasDisponib
 Route::get('/api/getgrupos', 'GrupoController@getTodosGruposJSON');
 Route::get('/api/getProfesoresAusencias/{fecha}', 'ProfesorController@getProfesoresAusencias');
 Route::get('/api/getHorasQuePuedeFaltar/{fecha}/{id_profe}', 'AusenciasController@getHorasQuePuedeFaltar');
+Route::get('/api/getProfesoresConHoraDeGuardia/{fecha}/{hora}', 'ProfesorController@getProfesoresConHoraDeGuardia');
+
 
 
 
