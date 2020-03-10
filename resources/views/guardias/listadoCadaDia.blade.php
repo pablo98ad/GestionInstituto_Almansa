@@ -9,8 +9,24 @@ Listado Guardias
 .falta{
   border: red 3px solid;
 }
+th{
+  font-size: 1.3em;
+}
+th,td{
+  
+  vertical-align: middle !important;
+}
+table tr{
+  border-top: 2px solid white !important;
+}
 
+td > a > div{
+  text-transform: none;
+  color: black;
+  text-decoration:none !important;
+}
 </style>
+
 <!--Para el desplegable select2-->
 <link rel="stylesheet" href="{{asset('css/menuSelect2.css')}}">
 <!-- Para el select personalizado -->
@@ -31,9 +47,11 @@ Listado Guardias
         //para cuando se seleccione uno, que se muestra en el select cerrado
         templateSelection: function(result) {
           if (result.id != 'no') {
-            return `<div class="resulDiv"><div class="imagen"><img class="imagenResul" src="${directorioImagenes}${result.rutaImagen}"/></div><h2 class="nombreResul"> ${result.nombre} ${result.apellidos}</h2><br>
-                                    <h3 class="segundaLineaResul"> ${result.departamento}   (${result.especialidad}) </h3>
-                                    </div>`;
+            return `<div class="resulDiv">
+                      <div class="imagen"><img class="imagenResul" src="${directorioImagenes}${result.rutaImagen}"/></div>
+                      <h2 class="nombreResul"> ${result.nombre} ${result.apellidos}</h2><br>
+                      <h3 class="segundaLineaResul"> ${result.departamento}   (${result.especialidad}) </h3>
+                    </div>`;
           }
         },
         //Para que decidamos como se ve en el menu desplegable
@@ -41,9 +59,11 @@ Listado Guardias
           if (result.id == 'no' || typeof result.id == 'undefined') { //para que no haga nada cuando es el 1º resultado
             return '';
           } else {
-            var final = `<div class="resulDiv"><div class="imagen"><img class="imagenResul" src="${directorioImagenes}${result.rutaImagen}"/></div><h2 class="nombreResul"> ${result.nombre} ${result.apellidos}</h2><br>
-                                    <h3 class="segundaLineaResul"> ${result.departamento}   (${result.especialidad}) </h3>
-                                    </div>`;
+            var final = `<div class="resulDiv">
+                          <div class="imagen"><img class="imagenResul" src="${directorioImagenes}${result.rutaImagen}"/></div>
+                          <h2 class="nombreResul"> ${result.nombre} ${result.apellidos}</h2><br>
+                          <h3 class="segundaLineaResul"> ${result.departamento}   (${result.especialidad}) </h3>
+                        </div>`;
           }
           return final;
         },
@@ -60,12 +80,6 @@ Listado Guardias
           }
         }
       });
-
-     /* $('#'+idSelect).on('select2:select', function(e) { //Para que cuando seleccionemos un option del select, se carge la horas disponibles del aula correspondientes
-        //alert(this.value);
-        //cargarTabla();
-      });
-    */
   }
     function enviar(e){
       this.className="";
@@ -74,17 +88,12 @@ Listado Guardias
         this.className="falta";
       }
     }
-
-  
-
-
 </script>
 @endsection
 
 @section('breadcrumb')
 <li class="breadcrumb-item d-inline"><a href="{{url('/')}}">Instituto</a></li>
-<li class="breadcrumb-item d-inline"><a href="{{url('/guardias')}}">Guardias</a></li>
-<li class="breadcrumb-item active d-inline" aria-current="page">ListadoGuardias</li>
+<li class="breadcrumb-item active d-inline" aria-current="page">Guardias</li>
 @endsection
 
 @section('content')
@@ -94,21 +103,17 @@ Listado Guardias
   Listado Guardias
   @endsection
   <div class="row justify-content-between">
-    <a title="Listado" class='col-4 col-sm-2 col-md-2  h-50 w-25  btn btn-success mb-1 mr-2' href="{{url('/').'/guardias'}}" role='button'><i class=" pt-1 fa fa-plus fa-2x" aria-hidden="true"></i></a>
+    <a title="Dar de Alta una guardia" class='col-4 col-sm-2 col-md-2  h-50 w-25  btn btn-success mb-1 mr-2' href="{{url('/').'/guardias/realizar'}}" role='button'><i class=" pt-1 fa fa-plus fa-2x" aria-hidden="true"></i></a>
     <a title="Imprimir guardias de hoy" class='col-4 col-sm-2 col-md-2  h-50 w-25  btn btn-info mb-1 mr-2' href="{{url('/').'/guardias/imprimirHoy'}}" role='button'><i class=" pt-1 fa fa-print fa-2x" aria-hidden="true"></i></a>
-
   </div>
   <div class="row d-flex justify-content-center">
-
     <div class="col-12 col-md-4">
-      <form id="formFecha" method="get" action="{{url('/guardias/listado')}}">
+      <form id="formFecha" method="get" action="{{url('/guardias')}}">
         <label for="calendario">Dia del listado:</label><br>
         <input required type="text" class="form-control" name="fecha" value='{{$fecha}}' id="datepicker">
       </form>
     </div>
-
   </div>
-
 </div>
 <hr>
 
@@ -121,48 +126,53 @@ Listado Guardias
       <th>Aula</th>
       <th>Comentario 1</th>
       <th>Profesor Sustituye</th>
+      <th>Comentario 2</th>
       <th>Eliminar</th>
     </tr>
-    <?php
+    @php
     $horas = ['1', '2', '3', 'R', '4', '5', '6', '7'];
-    ?>
-
-
+    @endphp
 
     @foreach($horas as $hora)
 
-    @if(sizeof($ausYHoras[$hora]['aus'])!=0)
-
-
+    @if(sizeof($ausYHoras[$hora]['aus'])!=0)<!--Si en esa hora no hay ausencias, se motrara con los td vacios-->
 
     @foreach($ausYHoras[$hora]['aus'] as $index => $au)
 
     <tr>
       <th scope="row">{{$hora}}</th>
-
-
-
-
-      <td> <div class="resulDiv m-0 p-0 border rounded">
+      <td> 
+      <a  href="{{url('/profesores').'/'.$ausYHoras[$hora]['hor'][$index]->profesor->id}}">
+        <div class="resulDiv m-0 p-0 border rounded">
           <div class="imagen"><img class="imagenResul" src="{{url('/').'/storage/'.$ausYHoras[$hora]['hor'][$index]->profesor->rutaImagen}}" /></div>
           <h2 class="nombreResul"> {{$ausYHoras[$hora]['hor'][$index]->profesor->nombre}} {{$ausYHoras[$hora]['hor'][$index]->profesor->apellidos}}</h2><br>
           <h3 class="segundaLineaResul">{{$ausYHoras[$hora]['hor'][$index]->profesor->departamento}} ({{$ausYHoras[$hora]['hor'][$index]->profesor->especialidad}}) </h3>
-        </div></td>
-      <td>{{$ausYHoras[$hora]['hor'][$index]->grupo->nombre}}</td>
-      <td>{{$ausYHoras[$hora]['hor'][$index]->aula->nombre}}</td>
+        </div>
+      </a>
+      </td>
+      <td><a href="{{url('/grupo').'/'.$ausYHoras[$hora]['hor'][$index]->grupo->id}}">{{$ausYHoras[$hora]['hor'][$index]->grupo->nombre}}</a></td>
+      <td><a href="{{url('aulas').'/'.$ausYHoras[$hora]['hor'][$index]->aula->id}}">{{$ausYHoras[$hora]['hor'][$index]->aula->nombre}}</a></td>
       <td>{{$ausYHoras[$hora]['aus'][$index]->observaciones1}}</td>
-      <td>
+      
         @php
           $profeSusti=$ausYHoras[$hora]['aus'][$index]->profesor_sustituye;
         @endphp
+
         @if($ausYHoras[$hora]['aus'][$index]->profesor_sustituye_id!=null)
+        <td>
+        <a href="{{url('/profesores').'/'.$profeSusti->id}}">
             <div class="resulDiv m-0 p-0 border rounded">
               <div class="imagen"><img class="imagenResul" src="{{url('/').'/storage/'.$profeSusti->rutaImagen}}" /></div>
               <h2 class="nombreResul"> {{$profeSusti->nombre}} {{$profeSusti->apellidos}}</h2><br>
               <h3 class="segundaLineaResul">{{$profeSusti->departamento}} ({{$profeSusti->especialidad}}) </h3>
             </div>
+      </td>
+      <td>
+            <p>{{$profeSusti=$ausYHoras[$hora]['aus'][$index]->observaciones2}}</p>
+      </td>
 
         @else
+        <td>
           <form id="{{$ausYHoras[$hora]['aus'][$index]->id}}" method="POST" action="{{url('/guardias/listado')}}">
             {{ csrf_field()}}
             {{ method_field('POST') }}
@@ -170,12 +180,11 @@ Listado Guardias
           <select class="" style="width: 250px" id="profeSus{{$ausYHoras[$hora]['aus'][$index]->id}}" name="profesorSustituye">
             <option value="no" selected></option>
           </select><br>
-          <textarea class="mt-1" rows="1" style="width: 250px"  name="observaciones2" maxlength="50"></textarea><br>
+         
           <script>
             document.getElementById('{{$ausYHoras[$hora]['aus'][$index]->id}}').addEventListener('submit',enviar);
 
             let url{{$ausYHoras[$hora]['aus'][$index]->id}}=directorioBase+'/api/getProfesoresConHoraDeGuardia/'+'{{$ausYHoras[$hora]['aus'][$index]->fecha}}'+'/'+'{{$ausYHoras[$hora]['aus'][$index]->hora}}';
-            //alert(url{{$ausYHoras[$hora]['aus'][$index]->id}});
             fetch(url{{$ausYHoras[$hora]['aus'][$index]->id}}) 
               .then(response => {
                 if (!response.ok) {
@@ -195,14 +204,17 @@ Listado Guardias
               });
 
           </script>
-          <button type="submit" type="button" class="btn btn-dark"><i class="fa fa-floppy-o fa-lg" aria-hidden="true"></i></button>
-          </form>
-          
-        @endif
+           
       </td>
-
-
-
+      <td>
+        <div class=" h-100 w-100 d-flex align-items-center">
+        <textarea placeholder="Introduce una observación" class="mt-2 d-inline mr-1 " rows="2" style="width: 150px"  name="observaciones2" maxlength="50"></textarea>
+        <button type="submit" type="button" class="btn btn-dark d-inline"><i class=" fa fa-floppy-o fa-lg" aria-hidden="true"></i></button>
+        </div>
+    </form>
+      </td>
+      @endif
+      <!--Modal y boton de eliminar-->
       <td>
         <div class="d-inline">
           <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal-{{$ausYHoras[$hora]['aus'][$index]->id}}">
@@ -235,39 +247,25 @@ Listado Guardias
       </td>
     </tr>
     </tr>
-
     @endforeach
-
-
+    @else
+    <!-- Si no hay ausencias en esa hora, solo mostramos la hora vacia -->
+    <tr>
+      <th scope="row">{{$hora}}</th>
+      <td ></td>
+      <td ></td>
+      <td ></td>
+      <td ></td>
+      <td ></td>
+      <td ></td>
+      <td></td>
+    </tr>
     @endif
-
-
-
     @endforeach
-
-
-
-
-    <!---->
-
-
-
-
-
-
-
-
-
   </table>
-
-
-
-
-
-
+</div>
 </div>
 
-</div>
 <script>
   //para que cuando hay varias horas, estas se agrupen (rowspan de hora)
   $(document).ready(function() {
@@ -291,8 +289,9 @@ Listado Guardias
     });
   });
 </script>
+
 <script>
-  //el dateranger picker
+  //el datepicker para seleccionar el dia
   $('#datepicker').daterangepicker({
     "singleDatePicker": true,
     "minDate": "{{date('Y-m-d', time())}}",
@@ -306,29 +305,8 @@ Listado Guardias
       "toLabel": "a",
       "customRangeLabel": "Custom",
       "weekLabel": "W",
-      "daysOfWeek": [
-        "DOM",
-        "LUN",
-        "MAR",
-        "MIE",
-        "JUE",
-        "VIE",
-        "SAB"
-      ],
-      "monthNames": [
-        "Enero",
-        "Febrero",
-        "Marzo",
-        "Abril",
-        "Mayo",
-        "Junio",
-        "Julio",
-        "Agosto",
-        "Septiembre",
-        "Octubre",
-        "Noviembre",
-        "Diciembre"
-      ],
+      "daysOfWeek": [ "DOM","LUN","MAR","MIE","JUE","VIE","SAB"  ],
+      "monthNames": [ "Enero", "Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre", "Diciembre"],
       "firstDay": 1
     },
   });
@@ -337,7 +315,7 @@ Listado Guardias
     console.log('Dia semana seleccionado: ' + picker.startDate.day());
     let diaSemana = picker.startDate.day();
     if (diaSemana > 5 || diaSemana == 0) { //si es un fin de semana (en moment domingo es el dia 0) indicamos error
-      //document.getElementById('tabla').innerHTML = '<h3 class="text-center w-100 alert-danger">Has seleccionado un fin de semana</h3>';
+      document.getElementById('tabla').innerHTML = '<h3 class="text-center w-100 alert-danger">Has seleccionado un fin de semana</h3>';
     } else {
       // llamarSelectProfesores(picker.startDate.format('YYYY-MM-DD'));
       document.getElementById('formFecha').submit();
@@ -346,16 +324,7 @@ Listado Guardias
 
   //jQuery('#datepicker').trigger('click'); //para que al cargar la pagina se muestre el calendario
 </script>
-
-
-<script>
-  /*let directorioBase = '{{url(' / ')}}';
-  let url = directorioBase + '/api/getProfesoresAusencias'; //con el dia 
-  let directorioImagenes = "{{url('/').'/storage/'}}";*/
-</script>
 @endsection
-
-
 
 @section('scriptsFooter')
 <!-- Para el switch (input tipo checkbox) de si una hora va a faltar no-->

@@ -37,10 +37,10 @@ if(!isset($horario['error'])){
 
     <?php
     }else{
-      echo "<h1>Esta Aula no se puede reservar</h1>";
+      echo "<h1 class='text-center w-100 alert-danger'>Esta Aula no se puede reservar</h1>";
     }
   }else{
-      echo "<h1>".$horario['error'] ."</h1>";
+      echo "<h1 class='text-center w-100 alert-danger' >".$horario['error'] ."</h1>";
     }
     ?>
 

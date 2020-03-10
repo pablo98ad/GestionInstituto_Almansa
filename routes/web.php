@@ -59,9 +59,9 @@ Route::get('/reservar/listado', 'ReservasController@listado');
 Route::delete('/reservas/{id}', 'ReservasController@destroy');
 
 //modulo ausencias/guardias
-Route::get('/guardias', 'AusenciasController@index');
-Route::get('/guardias/listado', 'AusenciasController@listado');
-Route::post('/guardias', 'AusenciasController@guardarAusencias');
+Route::get('/guardias/realizar', 'AusenciasController@index');
+Route::get('/guardias', 'AusenciasController@listado');
+Route::post('/guardias/realizar', 'AusenciasController@guardarAusencias');
 Route::post('/guardias/listado', 'AusenciasController@asignarProfesorAAusencia');
 Route::delete('/guardias/{id}', 'AusenciasController@destroy');
 

@@ -19,7 +19,7 @@ Listado de aulas
     <form class="form-inline my-2 my-lg-0" action="{{url('/aulas')}}" role="search" method="get">
       <!--csrf_field()-->
       <input class="form-control mr-sm-1" type="text" name="busqueda" placeholder="Buscar" aria-label="Search">
-      <button title="Buscar" class="btn btn-success my-0 my-sm-0" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+      <button title="Buscar" class="btn btn-success my-2 my-sm-0" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
     </form>
     @if (Auth::check())
     <!--<a class='col-3 col-sm-2 col-md-2  btn btn-info mb-1 mr-2' href="{{url('aulas/').'/create'}}" role='button'><i class="fa fa-plus" aria-hidden="true"></i></a>-->

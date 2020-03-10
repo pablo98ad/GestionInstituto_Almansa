@@ -28,6 +28,7 @@ Listado de Anuncios
       <input class="form-control mr-sm-1" type="text" name="busqueda" placeholder="Buscar" aria-label="Search">
       <button title="Buscar" class="btn btn-success my-2 my-sm-0" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
     </form>
+  <a class="btn btn-dark" href="{{url('verAnuncios')}}" role='button'><i class="fa fa-magic fa-lg" aria-hidden="true"></i></a>
     @if (Auth::check())
     <a title="Añadir un nuevo anuncio" class='col-3 col-sm-2 col-md-2  btn btn-success mb-1 mr-2' href="{{url('anuncios/').'/create'}}" role='button'><i class="fa fa-plus fa-lg" aria-hidden="true"></i></a>
     @endif

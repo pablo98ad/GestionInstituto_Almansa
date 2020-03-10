@@ -18,7 +18,7 @@ Listado de materias
   <div class="row justify-content-between">
     <form class="form-inline my-2 my-lg-0" action="{{url('/materia')}}" role="search" method="get">
       <!--csrf_field()-->
-      <input class="form-control mr-sm-2" type="text" name="busqueda" placeholder="Buscar" aria-label="Search">
+      <input class="form-control mr-sm-1" type="text" name="busqueda" placeholder="Buscar" aria-label="Search">
       <button title="Buscar" class="btn btn-success my-2 my-sm-0" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
     </form>
 

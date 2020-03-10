@@ -13,11 +13,7 @@ use Exception;
 
 class HorarioController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+   
     public function index()
     {   
         return view('horario.index');
@@ -66,9 +62,8 @@ class HorarioController extends Controller
     public function horarioGrupo($id)
     {   
         try{
-           // $alum=Alumno::find($id);
            $grupo=Grupo::find($id);
-            $horariosGrupo = Horario::where('grupo_id', /*$alum->grupo->*/$id)->get();
+            $horariosGrupo = Horario::where('grupo_id', $id)->get();
             if(sizeof($horariosGrupo)>0){
                 $tablaHorario= $this->generarHorarioGrupo($horariosGrupo);
                 $tablaHorario['nombreGrupo']= $grupo->nombre;
@@ -94,7 +89,7 @@ class HorarioController extends Controller
                 $diaSemana = date('w', strtotime($reserva->fecha));
                 $diaSemana= $dias[$diaSemana-1];
                 $tablaHorario[$diaSemana][$reserva->hora]='Reservada por <br>
-                                                            <a href="'.url('/').'/profesores/'.$reserva->profesor_id.'">'.$reserva->profesor->nombre.' '.$reserva->profesor->apellidos.'</a>
+                                                            <a  href="'.url('/').'/profesores/'.$reserva->profesor_id.'">'.$reserva->profesor->nombre.' '.$reserva->profesor->apellidos.'</a>
                                                             <br> <p style="font-size:12px;font-style:oblique">'.$reserva->observaciones.'</p>';
 
             }
@@ -110,12 +105,12 @@ class HorarioController extends Controller
                 //pasamos la fecha a letra de la semana, l,m,x,j,v
                 $diaSemana = date('w', strtotime($reserva->fecha));
                 $diaSemana= $dias[$diaSemana-1];
-                if($tablaHorario[$diaSemana][$reserva->hora]=='GUARDIA'){//con esto conseguimos que pueda estar en 2 cosas a la vez (hecho por peticion de profesores)
+                if($tablaHorario[$diaSemana][$reserva->hora]=='  '){//guardia - con esto conseguimos que pueda estar en 2 cosas a la vez (hecho por peticion de profesores)
                     $tablaHorario[$diaSemana][$reserva->hora]='Ha reservado la aula 
-                                                            <a href="'.url('/').'/aulas/'.$reserva->aula_id.'">'.$reserva->aula->numero.'</a>';
+                                                            <a href="'.url('/').'/aulas/'.$reserva->aula_id.'">'.$reserva->aula->nombre.'</a>';
                 }else{
                     $tablaHorario[$diaSemana][$reserva->hora].='<hr>Ha reservado la aula 
-                                                            <a href="'.url('/').'/aulas/'.$reserva->aula_id.'">'.$reserva->aula->numero.'</a>';
+                                                            <a href="'.url('/').'/aulas/'.$reserva->aula_id.'">'.$reserva->aula->nombre.'</a>';
                 }
             }
         }
@@ -201,14 +196,14 @@ class HorarioController extends Controller
           
             if($horario[$i]->dia==$dia &&$horario[$i]->hora==$hora){
                 $encontrado=true;
-                $aux.= /*'Grupo: '.*/$horario[$i]->grupo->nombre.' </br> ';
-                $aux.= '<a href="'.url('/').'/aulas/'.$horario[$i]->aula->id.'">'.$horario[$i]->aula->nombre.'</a> </br> ';
-                $aux.= '<a href="'.url('/').'/materia/'.$horario[$i]->materia->id.'">'.$horario[$i]->materia->nombre.'</a> </br> ';
+                $aux.= '<a href="'.url('/').'/grupo/'.$horario[$i]->grupo->id.'">'.$horario[$i]->grupo->nombre.'</a></br> ';
+                $aux.= '<a href="'.url('/').'/aulas/'.$horario[$i]->aula->id.'">'.$horario[$i]->aula->nombre.'</a></br> ';
+                $aux.= '<a href="'.url('/').'/materia/'.$horario[$i]->materia->id.'">'.$horario[$i]->materia->nombre.'</a></br> ';
             }
         }
           
         if(!$encontrado){
-            $aux.= "GUARDIA";
+            $aux.= "  ";//guardia
         }
         return $aux;
     }
@@ -237,9 +232,9 @@ class HorarioController extends Controller
           
             if($horario[$i]->dia==$dia &&$horario[$i]->hora==$hora){
                 $encontrado=true;
-                $aux.= /*'Grupo: '.*/$horario[$i]->grupo->nombre.' </br> ';
-                $aux.= '<a href="'.url('/').'/profesores/'.$horario[$i]->profesor->id.'">'.$horario[$i]->profesor->nombre.' - '.$horario[$i]->profesor->codigo.'</a> </br> ';
-                $aux.= '<a href="'.url('/').'/materia/'.$horario[$i]->materia->id.'">'.$horario[$i]->materia->nombre.'</a> </br> ';
+                $aux.= '<a href="'.url('/').'/grupo/'.$horario[$i]->grupo->id.'">'.$horario[$i]->grupo->nombre.'</a></br>';
+                $aux.= '<a href="'.url('/').'/profesores/'.$horario[$i]->profesor->id.'">'.$horario[$i]->profesor->nombre.' - '.$horario[$i]->profesor->codigo.'</a></br>';
+                $aux.= '<a href="'.url('/').'/materia/'.$horario[$i]->materia->id.'">'.$horario[$i]->materia->nombre.'</a></br>';
             }
         }
           

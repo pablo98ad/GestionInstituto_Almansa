@@ -46,5 +46,27 @@ table.greenTable {
     font-size: 13px;
   }
 
+  table a{
+    text-decoration: none;
+    display: inline-block !important;
+    padding: 1px;
+    padding-left: 2px;
+    padding-right: 2px;
+    margin-top: 3px !important;
+    font-family: helvetica;
+    font-weight: 300;
+    font-size: 1em;
+    font-style: italic;
+    color: #002215;
+    background-color: #82b085;
+    border-radius: 2px;
+    border: 2px double #006505;
+  }
+ table a:hover{
+    opacity: 0.6;
+    text-decoration: none;
+    color:004430;
+  }
+
   
  

@@ -6,59 +6,6 @@ Horario Instituto
 
 @section('scriptsHead')
 <style>
- /* .imagen {
-    display: inline;
-
-  }
-
-  .imagenResul {
-    width: 50px;
-    height: 45px;
-    margin: 0px;
-    font-size: 35px;
-    padding: 0px;
-    padding-right: 5px;
-    float: left !important;
-  }
-
-  .resulDiv  {
-
-    height: 55px !important;
-    overflow: auto;
-    text-align: left !important;
-  }
-
-  .resulDiv > div > img{
-    margin-top:4px !important;
-  }
-
-
-  .resulDiv p{
-    margin-top: 6px;
-    width: 60px;
-  }*/
-
-  /*.nombreResul {*/
-    /*top: 0px;
-    left:0px;*/
-   /* display: inline;
-    font-size: 17px;
-    margin: 0px;
-    padding: 0px;
-  }*/
-
-  /*.segundaLineaResul {*/
-  /*  display: inline !important;*/
-    /*font-size: 13px !important;
-    margin: 0px !important;
-    padding: 0px !important;
-  }*/
-
-  /*#filtro {*/
-    /*width: 200px;
-    height: 40px;*/
-    /*font-size: 18px;
-  }*/
   .activo img{
     filter: invert(100%); 
   }
@@ -66,45 +13,15 @@ Horario Instituto
     background-color: grey !important;
     color:white !important;
   }
-  /*.select2-selection {
-    height: 60px !important;
-    font-size: 18px;
-  }
-
-  .select2-selection__rendered  p{
-    margin-top: 10px;
-  }*/
   hr{
   padding:0px;
   margin-top: 2px;
   margin-bottom: 2px;
 }
-/*
-table a{
-    text-decoration: none;
-    padding: 2px;
-    padding-left: 4px;
-    padding-right: 4px;
-    margin-top: 6px;
-    font-family: helvetica;
-    font-weight: 300;
-    font-size: 1em;
-    font-style: italic;
-    color: #002215;
-    background-color: #82b085;
-    border-radius: 2px;
-    border: 2px double #006505;
-  }
- table a:hover{
-    opacity: 0.6;
-    text-decoration: none;
-    color:004430;
-  }*/
-
 </style>
+
 <!--Para el desplegable select2-->
 <link rel="stylesheet" href="{{asset('css/menuSelect2.css')}}">
-
 <!-- Para que se vea 'bonita' la tabla de los horarios -->
 <link rel="stylesheet" href="{{asset('css/tablaHorarios.css')}}">
 <!-- Para el select personalizado -->

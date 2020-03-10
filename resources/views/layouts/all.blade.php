@@ -50,7 +50,7 @@
           <a href="{{url('/horarios')}}" aria-expanded="false" class="elementoMenu"><div><i class="fa fa-table fa-lg"></i></div><span> Horarios</span></a>
         </li>
         <li>
-          <a href="{{url('/guardias')}}" aria-expanded="false" class="elementoMenu"><div><i class="fa fa-address-book-o fa-lg"></i></div><span> Guardias</span></a>
+          <a href="{{url('/guardias/')}}" aria-expanded="false" class="elementoMenu"><div><i class="fa fa-address-book-o fa-lg"></i></div><span> Guardias</span></a>
         </li>
         <li>
           <a href="{{url('/reservar')}}"  aria-expanded="false" class="elementoMenu"><div> <i class="fa fa-book fa-lg"></i></div><span> Reservas</span></a>
@@ -221,10 +221,41 @@
     if(document.querySelectorAll(".paginaFormulario").length>0 ){
       window.onbeforeunload = ()=>{return 'Es posible que los cambios no se guarden'};
     }
+
     //para que cuando enviemos un formulario no nos salga la ventana emergente
     $('form').submit(function() {
       window.onbeforeunload = null;
       });
+
+
+    //para que los texarea aumenten de tamaño segun vallamos escribiendo
+    var tx = document.getElementsByTagName('textarea');
+    for (var i = 0; i < tx.length; i++) {
+        tx[i].setAttribute('style', 'height:' + (tx[i].scrollHeight) + 'px;overflow-y:hidden;');
+        tx[i].addEventListener("input", OnInput, false);
+    }
+    function OnInput() {
+        this.style.height = 'auto';
+        this.style.height = (this.scrollHeight) + 'px';
+    }
+
+    //Para cuando estas tiempo inactivo, se muestren los anuncios
+    document.body.addEventListener('mousemove', resetearTimeout);
+    document.body.addEventListener('click', resetearTimeout);
+    let timeout = activarTimeout();
+    function activarTimeout() {
+        return setTimeout(function() {
+            window.location.href = '{{url('/')}}' + '/verAnuncios';
+        }, 60000) //3 minutos
+    }
+    function resetearTimeout() {
+        clearTimeout(timeout);
+        timeout = activarTimeout();
+    }
+
+
+
+
     //}catch(e){}
 
     /*$(document).ready(function() {

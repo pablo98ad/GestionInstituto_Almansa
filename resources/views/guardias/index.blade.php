@@ -22,7 +22,8 @@ Guardias
 
 @section('breadcrumb')
 <li class="breadcrumb-item d-inline"><a href="{{url('/')}}">Instituto</a></li>
-<li class="breadcrumb-item active d-inline" aria-current="page">Guardias</li>
+<li class="breadcrumb-item d-inline"><a href="{{url('/guardias')}}">Guardias</a></li>
+<li class="breadcrumb-item active d-inline" aria-current="page">Realizar Guardia</li>
 @endsection
 
 @section('content')
@@ -32,7 +33,7 @@ Guardias
   Guardias
   @endsection
   <div class="row justify-content-between">
-    <a title="Listado" class='col-4 col-sm-2 col-md-2  h-50 w-25  btn btn-success mb-1 mr-2' href="{{url('/').'/guardias/listado'}}" role='button'><i class=" pt-1 fa fa-list-alt fa-2x" aria-hidden="true"></i></a>
+    <a title="Listado" class='col-4 col-sm-2 col-md-2  h-50 w-25  btn btn-success mb-1 mr-2' href="{{url('/').'/guardias'}}" role='button'><i class=" pt-1 fa fa-list-alt fa-2x" aria-hidden="true"></i></a>
     <a title="Imprimir guardias de hoy" class='col-4 col-sm-2 col-md-2  h-50 w-25  btn btn-info mb-1 mr-2' href="{{url('/').'/guardias/imprimirHoy'}}" role='button'><i class=" pt-1 fa fa-print fa-2x" aria-hidden="true"></i></a>
  
   </div>

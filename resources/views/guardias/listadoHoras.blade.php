@@ -1,5 +1,6 @@
 <div class="row text-center d-flex justify-content-center">
-    <form method="POST" action="{{url('/')}}/guardias">
+    @if(sizeof($horas)>0)
+    <form method="POST" action="{{url('/')}}/guardias/realizar">
         {{ csrf_field()}}
         {{ method_field('POST') }}
         <input type="hidden" value="{{$horas[0]->profesor_id}}" name="profesor">
@@ -29,7 +30,7 @@
                             });
                         </script>
                     </td>
-                    <td style="width:200px"><textarea id="coment-{{$hora->id}}" maxlength="50" name="comentarios[]" cols="18" rows="1"></textarea></td>
+                    <td style="width:200px"><textarea  placeholder="Introduce una observación" id="coment-{{$hora->id}}" maxlength="50" name="comentarios[]" cols="18" rows="1"></textarea></td>
 
                 </tr>
                 @endforeach
@@ -45,7 +46,10 @@
 
 </div>
 </form>
+@else
+<h2 class="text-center w-100 alert-danger ml-3">Este profesor ya tiene todas sus horas en el <a href="{{url('/guardias').'?fecha='.$fecha}}">listado</a></h2>
 
+@endif
 <script>
     document.getElementById('botonEnviar').addEventListener('click', enviarForm);
 
@@ -58,16 +62,7 @@
     }
 
 
-    //para que los texarea aumenten de tamaño segun vallamos escribiendo
-    var tx = document.getElementsByTagName('textarea');
-    for (var i = 0; i < tx.length; i++) {
-        tx[i].setAttribute('style', 'height:' + (tx[i].scrollHeight) + 'px;overflow-y:hidden;');
-        tx[i].addEventListener("input", OnInput, false);
-    }
-    function OnInput() {
-        this.style.height = 'auto';
-        this.style.height = (this.scrollHeight) + 'px';
-    }
+    
 </script>
 
 <?php

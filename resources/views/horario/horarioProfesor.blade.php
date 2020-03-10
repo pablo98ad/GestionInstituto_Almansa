@@ -28,10 +28,10 @@ Horario del profesor {{$horariosProfe['nombreProfesor']}}
 @section('tituloCabezera')  
 Horario profesor: {{$horariosProfe['nombreProfesor']}} y reservas de esta semana
 @endsection
-<?php if (!isset($horariosProfe['L']['1'])){
+@if (!isset($horariosProfe['L']['1']))
     echo "<h1>No se han encontrado registros para esta tabla</h1><br>";
   }
-  ?>
+@endif
  <!-- <div class="row justify-content-end">
     <a class='col-3 col-sm-2 col-md-2  btn btn-success mb-1 mr-2' href="{{url('aulas/').'/create'}}" role='button'>Añadir</a>
   </div>
