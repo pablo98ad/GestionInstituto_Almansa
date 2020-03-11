@@ -188,16 +188,11 @@ class AulaController extends Controller
             $rutaArchivo=Storage::disk('local')->path($nombre)/*Storage::disk('local')->get($nombre)*/;
             
             Excel::load($rutaArchivo, function($reader) {
-                //$indice=0;
+
                 foreach ($reader->get() as $aula) {
-                    //echo $aula;
+ 
                     if($aula->reservable == "SI")   { $is_reservable=1; }
-                    else                            { $is_reservable=0;}
-                    echo $aula->nombre;
-                    echo $aula->descripcion;
-                    echo $aula->numero;
-                    echo $is_reservable;
-                    //exit;
+                    else                            { $is_reservable=0; }
 
                     $nuevaAula = new Aula();
                     $nuevaAula->id = $aula->id;
@@ -207,24 +202,13 @@ class AulaController extends Controller
                     $nuevaAula->reservable = $is_reservable;
                     
                     $nuevaAula->save();
-
-                    /*Aula::create([
-                        'id'=> $aula->id,
-                        'nombre' => $aula->nombre,
-                        'descripcion' => $aula->descripcion,
-                        'numero' => $aula->numero,
-                        'reservable' => $is_reservable
-                    ]);*/
-                    
-                    //$indice=$indice+1;
-                    //$GLOBALS['indice']++;
                  }
                  
            });
         } catch (\Exception  $e) {
-            return redirect()->action('AulaController@index')->with('error', $rutaArchivo.'Error, no se ha podido guardar el fichero'.$e->getMessage().' me he quedado por la linea '.$indice);
+            return redirect()->action('AulaController@index')->with('error', $rutaArchivo.'Error, no se ha podido guardar el fichero. Mensaje de error: '.$e->getMessage());
         }
-        return redirect()->action('AulaController@index')->with('notice', 'El fichero ' . $nombre . ', importado correctamente. Con '.$GLOBALS['indice'].' importados');
+        return redirect()->action('AulaController@index')->with('notice', 'El fichero ' . $nombre . ', importado correctamente.');
     }
 
     /**
