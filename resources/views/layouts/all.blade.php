@@ -50,7 +50,7 @@
           <a href="{{url('/horarios')}}" aria-expanded="false" class="elementoMenu"><div><i class="fa fa-table fa-lg"></i></div><span> Horarios</span></a>
         </li>
         <li>
-          <a href="{{url('/guardias/')}}" aria-expanded="false" class="elementoMenu"><div><i class="fa fa-address-book-o fa-lg"></i></div><span> Guardias</span></a>
+          <a href="{{url('/guardias')}}" aria-expanded="false" class="elementoMenu"><div><i class="fa fa-address-book-o fa-lg"></i></div><span> Guardias</span></a>
         </li>
         <li>
           <a href="{{url('/reservar')}}"  aria-expanded="false" class="elementoMenu"><div> <i class="fa fa-book fa-lg"></i></div><span> Reservas</span></a>
@@ -101,9 +101,9 @@
               <span></span>
               <span></span>
             </button>
-            <!--<a class="ml-5 mb-2 btn btn-secondary my-auto" href="{{URL::previous()}}">Atras</a>-->
-          </div>
-          
+             </div>
+            <!-- <a class="ml-5 mb-2 btn btn-secondary my-auto" href="{{URL::previous()}}"><i class="fa fa-arrow-left fa-xl" aria-hidden="true"></i></a>-->
+         
           <div>
             <h3 class="p-0 m-0">@yield('tituloCabezera') </h3>
           </div><!-- d-inline-block d-lg-none  -->
@@ -128,7 +128,6 @@
 <!-- JS de bootstrap -->
 <script src="{{asset('js/bootstrap-4.4.1.min.js')}}"></script>
 
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/1.0.1/slideout.min.js" type="text/javascript"></script>-->
   <script type="text/javascript">
     //PARA ERRORES Y CONFIRMACIONES
     window.setTimeout(function() {
@@ -159,13 +158,10 @@
 
       $('#sidebarCollapse').on('click', function() {
         //slideout.toggle();
-
         localStorage.setItem('menu-closed', !$('#sidebarCollapse').hasClass('active')); ////PARA RECORDAR SI EL USUARIO TIENE CERRADO EL MENU
         $('#sidebar').toggleClass('active');
         $('#content').toggleClass('active');
         $('#sidebarCollapse').toggleClass('active');
-
-
       });
       //al deslizar con el menu puesto en el movil, este se oculta
       function initialHash() {
@@ -195,15 +191,12 @@
       document.querySelector('#sidebar, #content').addEventListener('touchmove', handleTouch, false);
       document.querySelector('#sidebar, #content').addEventListener('touchend', handleTouchEnd, false);
 
-
-
-      //SELECION DE MODULO EN EL MENU AUTOMATICO
+      //SELECION DE MODULO Active EN EL MENU AUTOMATICO
       let enlace = window.location.href.split('?')[0];
       enlace=enlace.substring(urlBase.length+1,enlace.length);
       if(enlace.indexOf('/')!=-1){
         enlace=enlace=enlace.substring(0,enlace.indexOf('/'));
       }
-
       $(".elementoMenu").each(function() {
         //console.log(enlace+'   -----   '+$(this).parent().attr('href'));
         let enlaceA=$(this).attr('href');
@@ -214,9 +207,8 @@
           $(this).parent().attr("aria-expanded", "true");
         }
       });
-
     });
-    //try{
+
     //PARA QUE CUANDO ESTE EN UNA PAGINA CON UN FORMULARIO, LE PIDA CONFIRMACION PARA SALIR
     if(document.querySelectorAll(".paginaFormulario").length>0 ){
       window.onbeforeunload = ()=>{return 'Es posible que los cambios no se guarden'};
@@ -226,7 +218,6 @@
     $('form').submit(function() {
       window.onbeforeunload = null;
       });
-
 
     //para que los texarea aumenten de tamaño segun vallamos escribiendo
     var tx = document.getElementsByTagName('textarea');
@@ -246,7 +237,7 @@
     function activarTimeout() {
         return setTimeout(function() {
             window.location.href = '{{url('/')}}' + '/verAnuncios';
-        }, 60000) //3 minutos
+        }, 180000) //3 minutos
     }
     function resetearTimeout() {
         clearTimeout(timeout);

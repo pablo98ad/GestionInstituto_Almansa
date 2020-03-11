@@ -1,8 +1,8 @@
-<?php
-if(!isset($horario['error'])){
 
-    if(sizeof($horario)>0){
-    ?>
+@if(!isset($horario['error']))
+
+    @if(sizeof($horario)>0)
+    
     <table class="greenTable">
       <thead>
         <tr>
@@ -35,12 +35,12 @@ if(!isset($horario['error'])){
       </tr>
     </table>
 
-    <?php
-    }else{
-      echo "<h1 class='text-center w-100 alert-danger'>Esta Aula no se puede reservar</h1>";
-    }
-  }else{
-      echo "<h1 class='text-center w-100 alert-danger' >".$horario['error'] ."</h1>";
-    }
-    ?>
+    
+    @else
+      <h1 class='text-center w-100 alert-danger'>Esta Aula no se puede reservar</h1>
+    @endif
+  @else
+      <h1 class='text-center w-100 alert-danger' >{{$horario['error']}}</h1>
+    @endif
+  
 

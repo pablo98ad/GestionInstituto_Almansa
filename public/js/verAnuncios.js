@@ -5,7 +5,9 @@ document.body.addEventListener("scroll", volverPaginaPrincipal);
 document.body.addEventListener("touchmove", volverPaginaPrincipal);
 
 let actual = 0;
-let anchoHTML = document.documentElement.offsetHeight;
+//let anchoHTML = document.documentElement.offsetHeight;
+let anchoHTML = document.body.scrollHeight-950;
+console.log('Ancho pagina: '+anchoHTML);
 let inter = scrollParaAbajo();
 
 function quitarEventos(e) {
@@ -30,11 +32,12 @@ function volverPaginaPrincipal() {
 function scrollParaAbajo() {
   return setInterval(function() {
     actual += 1;
-    if (actual >= anchoHTML - 700) {
+    if (actual >= anchoHTML/* - 500*/) {
       clearInterval(inter);
       inter = scrollParaArriba();
-      //console.log(actual)
+      
     }
+    console.log('abajo: '+actual)
     window.scrollTo(0, actual);
   }, velocidad);
 }
@@ -42,11 +45,12 @@ function scrollParaAbajo() {
 function scrollParaArriba() {
   return setInterval(function() {
     actual -= 1;
-    if (actual <= 10) {
+    if (actual <= 0/* -500*/) {
       clearInterval(inter);
       inter = scrollParaAbajo();
-      //console.log(actual)
+     
     }
+    console.log('arriba: '+actual)
     window.scrollTo(0, actual);
   }, velocidad);
 }

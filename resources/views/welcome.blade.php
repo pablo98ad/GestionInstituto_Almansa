@@ -91,20 +91,6 @@ Pagina Principal Gestion Escultor
 
 @section('scriptsFooter')
 <script>
-    document.body.addEventListener('mousemove', resetearTimeout);
-    document.body.addEventListener('click', resetearTimeout);
-
-    let timeout = activarTimeout();
-
-    function activarTimeout() {
-        return setTimeout(function() {
-            window.location.href = '{{url('/')}}' + '/verAnuncios';
-        }, 90000) //3 minutos
-    }
-
-    function resetearTimeout() {
-        clearTimeout(timeout);
-        timeout = activarTimeout();
-    }
+ 
 </script>
 @endsection

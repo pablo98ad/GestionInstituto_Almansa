@@ -68,7 +68,7 @@
 
   <script>
     let paginaAnterior = "{{URL::previous()}}";
-    let velocidad = 12; //menos es mas rapido
+    let velocidad = 6; //menos es mas rapido
   </script>
 
   <script src="{{asset('js/verAnuncios.js')}}"></script>

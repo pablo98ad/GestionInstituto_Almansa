@@ -118,7 +118,7 @@ td > a > div{
 <hr>
 
 <div class="row text-center d-flex justify-content-center " id="tabla">
-  <table id="tabla" class="table-responsive table table-hover rounder w-auto">
+  <table id="tabla" class="table-bordered table-striped table-responsive table table-hover rounder w-auto">
     <tr>
       <th>Hora</th>
       <th>Profesor Falta</th>
@@ -188,7 +188,9 @@ td > a > div{
             fetch(url{{$ausYHoras[$hora]['aus'][$index]->id}}) 
               .then(response => {
                 if (!response.ok) {
-                  alert('fallo');
+                  alert('Fallo, recarga la pagina por favor.');
+                  console.log(response.statusText);
+                  console.log(response.errors);
                   throw new Error('Problema con el servidor!!');
                 }
                 return response.json(); //pasamos de json a array de objetos...
