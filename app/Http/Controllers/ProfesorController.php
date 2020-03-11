@@ -189,15 +189,15 @@ class ProfesorController extends Controller{
                 foreach ($reader->get() as $profe) {
                     //echo $profe;
                     Profesor::create([
-                        'id' => $profe->codigo,
-                        'nombre' => $profe->nombre,
-                        'apellidos' =>$profe->apellidos,
-                        'departamento' =>$profe->departamento,
-                        'especialidad' =>$profe->cuerpo.' - '.$profe->especialidad,
-                        'cargo' =>$profe->cargo,
+                        'id' => utf8_encode($profe->codigo),
+                        'nombre' => utf8_encode($profe->nombre),
+                        'apellidos' =>utf8_encode($profe->apellidos),
+                        'departamento' =>utf8_encode($profe->departamento),
+                        'especialidad' =>utf8_encode($profe->cuerpo).' - '.utf8_encode($profe->especialidad),
+                        'cargo' =>utf8_encode($profe->cargo),
                         'observaciones' => '',
-                        'codigo' =>$profe->abreviatura,
-                        'rutaImagen' => 'imagenes/profesores/'.$profe->imagen
+                        'codigo' =>utf8_encode($profe->abreviatura),
+                        'rutaImagen' => 'imagenes/profesores/'.utf8_encode($profe->imagen)
                     ]);
                     //$indice=$indice+1;
                     $GLOBALS['indice']++;
