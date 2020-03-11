@@ -197,12 +197,12 @@ class ProfesorController extends Controller{
                         'cargo' =>$profe->cargo,
                         'observaciones' => '',
                         'codigo' =>$profe->abreviatura,
-                        'rutaImagen' => 'imagenes/profesores/default.png'
+                        'rutaImagen' => 'imagenes/profesores/'.$profe->imagen
                     ]);
                     //$indice=$indice+1;
                     $GLOBALS['indice']++;
                  }
-                 //return $indice;
+                 
            });
 
         } catch (\Exception  $e) {
