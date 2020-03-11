@@ -127,7 +127,7 @@ Horario Instituto
             }*/
             if (elementoSeleccionado == 'profesores' && result.id != 'no') {
               final = `<div class="resulDiv"><div class="imagen"><img class="imagenResul" src="${directorioImagenes}${result.rutaImagen}"/></div><h2 class="nombreResul"> ${result.nombre} ${result.apellidos}</h2><br>
-                                    <h3 class="segundaLineaResul"> ${result.departamento}   (${result.especialidad}) </h3>
+                                    <h3 class="segundaLineaResul"> ${result.departamento} <br>  ${result.especialidad}</h3>
                                     </div>`;
 
             } else if (elementoSeleccionado == 'aulas'  && result.id != 'no') {
@@ -154,7 +154,7 @@ Horario Instituto
             }
             if (elementoSeleccionado == 'profesores' && result.id != 'no') {
               final = `<div class="resulDiv"><div class="imagen"><img class="imagenResul" src="${directorioImagenes}${result.rutaImagen}"/></div><h2 class="nombreResul"> ${result.nombre} ${result.apellidos}</h2><br>
-                                    <h3 class="segundaLineaResul"> ${result.departamento}   (${result.especialidad}) </h3>
+                                    <h3 class="segundaLineaResul"> ${result.departamento} <br> ${result.especialidad}</h3>
                                     </div>`;
 
             } else if (elementoSeleccionado == 'aulas' && result.id != 'no') {

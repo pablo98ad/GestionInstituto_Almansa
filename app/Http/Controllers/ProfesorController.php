@@ -229,6 +229,17 @@ class ProfesorController extends Controller{
             if(!file_exists(Storage::disk('local')->path('/').$profesor->rutaImagen)){
                 $profesor->rutaImagen='default.png';
             }
+            //comprobamos que los campos no tengan mucha longittud y los cortamos si hace fata para que en el select2 no se vean mal
+            if($profesor->departamento!=null && strlen($profesor->departamento)>35){
+                $profesor->departamento=substr( $profesor->departamento,0,30).'...';
+            }
+            if($profesor->nombre!=null && strlen($profesor->nombre)>20){
+                $profesor->nombre=substr( $profesor->nombre,0,20).'...';
+            }
+            //echo  $profesor->departamento.'<br>';
+            if($profesor->nombre!=null && strlen($profesor->especialidad)>30){
+                $profesor->especialidad=substr( $profesor->especialidad,0,30).'...';
+            }
         }
         echo $profesores;
     }
