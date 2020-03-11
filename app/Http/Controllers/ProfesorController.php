@@ -189,15 +189,15 @@ class ProfesorController extends Controller{
                 foreach ($reader->get() as $profe) {
                     //echo $profe;
                     Profesor::create([
-                        'id' => utf8_encode($profe->codigo),
-                        'nombre' => utf8_encode($profe->nombre),
-                        'apellidos' =>utf8_encode($profe->apellidos),
-                        'departamento' =>utf8_encode($profe->departamento),
-                        'especialidad' =>utf8_encode($profe->cuerpo).' - '.utf8_encode($profe->especialidad),
-                        'cargo' =>utf8_encode($profe->cargo),
+                        'id' => $profe->codigo,
+                        'nombre' => $profe->nombre,
+                        'apellidos' =>$profe->apellidos,
+                        'departamento' =>$profe->departamento,
+                        'especialidad' =>$profe->cuerpo.' - '.$profe->especialidad,
+                        'cargo' =>$profe->cargo,
                         'observaciones' => '',
-                        'codigo' =>utf8_encode($profe->abreviatura),
-                        'rutaImagen' => 'imagenes/profesores/'.utf8_encode($profe->imagen)
+                        'codigo' =>$profe->abreviatura,
+                        'rutaImagen' => 'imagenes/profesores/'.$profe->imagen
                     ]);
                     //$indice=$indice+1;
                     $GLOBALS['indice']++;
@@ -206,9 +206,9 @@ class ProfesorController extends Controller{
            });
 
         } catch (\Exception  $e) {
-            return redirect()->action('ProfesorController@index')->with('error', $rutaArchivo.'Error, no se ha podido guardar el fichero'.$e->getMessage().' me he quedado por la linea '.$indice);
+            return redirect()->action('ProfesorController@index')->with('error', $rutaArchivo.'Error, no se ha podido guardar el fichero. Mensaje de Error: '.$e->getMessage());
         }
-        return redirect()->action('ProfesorController@index')->with('notice', 'El fichero ' . $nombre . ', importado correctamente. Con '.$GLOBALS['indice'].' importados' );
+        return redirect()->action('ProfesorController@index')->with('notice', 'El fichero ' . $nombre . ', importado correctamente.');
     }
 
     public function getTodosProfesoresJSON(){

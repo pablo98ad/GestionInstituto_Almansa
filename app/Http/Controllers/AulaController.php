@@ -7,6 +7,7 @@ use App\Aula;
 use Exception;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 class AulaController extends Controller
@@ -184,10 +185,46 @@ class AulaController extends Controller
 
         try { //no se haria asi...
             Storage::disk('local')->put($nombre, File::get($archivo));
+            $rutaArchivo=Storage::disk('local')->path($nombre)/*Storage::disk('local')->get($nombre)*/;
+            
+            Excel::load($rutaArchivo, function($reader) {
+                //$indice=0;
+                foreach ($reader->get() as $aula) {
+                    //echo $aula;
+                    if($aula->reservable == "SI")   { $is_reservable=1; }
+                    else                            { $is_reservable=0;}
+                    echo $aula->nombre;
+                    echo $aula->descripcion;
+                    echo $aula->numero;
+                    echo $is_reservable;
+                    //exit;
+
+                    $nuevaAula = new Aula();
+                    $nuevaAula->id = $aula->id;
+                    $nuevaAula->nombre = $aula->nombre;
+                    $nuevaAula->descripcion = $aula->descripcion;
+                    $nuevaAula->numero = $aula->numero;
+                    $nuevaAula->reservable = $is_reservable;
+                    
+                    $nuevaAula->save();
+
+                    /*Aula::create([
+                        'id'=> $aula->id,
+                        'nombre' => $aula->nombre,
+                        'descripcion' => $aula->descripcion,
+                        'numero' => $aula->numero,
+                        'reservable' => $is_reservable
+                    ]);*/
+                    
+                    //$indice=$indice+1;
+                    //$GLOBALS['indice']++;
+                 }
+                 
+           });
         } catch (\Exception  $e) {
-            return redirect()->action('AulaController@index')->with('error', 'Error, no se ha podido guardar el fichero');
+            return redirect()->action('AulaController@index')->with('error', $rutaArchivo.'Error, no se ha podido guardar el fichero'.$e->getMessage().' me he quedado por la linea '.$indice);
         }
-        return redirect()->action('AulaController@index')->with('notice', 'El fichero ' . $nombre . ', importado correctamente.');
+        return redirect()->action('AulaController@index')->with('notice', 'El fichero ' . $nombre . ', importado correctamente. Con '.$GLOBALS['indice'].' importados');
     }
 
     /**
