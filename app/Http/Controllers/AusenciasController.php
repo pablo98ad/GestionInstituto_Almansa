@@ -8,6 +8,7 @@ use App\Horario;
 use App\Reservas;
 use DateTime;
 use Exception;
+use Illuminate\Support\Facades\Storage;
 use PhpParser\Node\Stmt\Switch_;
 
 class AusenciasController extends Controller
@@ -39,6 +40,12 @@ class AusenciasController extends Controller
             }
         }
         $horarioProfe = Horario::whereIn('id', $idHoras)->with('profesor')->with('aula')->with('grupo')->orderBy('hora')->get();
+        //comprobamos las imagenes 
+        foreach ($horarioProfe as $profesor){
+            if(!file_exists(Storage::disk('local')->path('/').$profesor->profesor->rutaImagen)){
+                $profesor->profesor->rutaImagen='default.png';
+            }
+        }
 
         return view('guardias.listadoHoras', ['horas' => $horarioProfe, 'fecha' => $fecha]);
     }
@@ -85,6 +92,13 @@ class AusenciasController extends Controller
                 ->where('dia', $this->deFechaADiaSemana($ausencia->fecha))
                 ->with('aula')->with('profesor')->with('grupo')->with('materia')->first();
             //echo $this->deFechaADiaSemana($ausencia->fecha).'---'.$ausencia->fecha.'<br>';
+        }
+        
+        //comprobamos las imagenes de los profesores
+        foreach ($horariosDeLasAusencias as $profesor){
+            if(!file_exists(Storage::disk('local')->path('/').$profesor->profesor->rutaImagen)){
+                $profesor->profesor->rutaImagen='default.png';
+            }
         }
         $ausenciasYHorariosEnHoras = $this->ponerHorariosYAusenciasEnHoras($ausenciasSinAsignar, $horariosDeLasAusencias);
         //  echo $ausenciasSinAsignar .'<br><br><br>';

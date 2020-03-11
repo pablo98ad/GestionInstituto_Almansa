@@ -12,8 +12,7 @@ use Illuminate\Support\Facades\File;
 use Intervention\Image\ImageManagerStatic as Image;
 use Maatwebsite\Excel\Facades\Excel;
 use Exception;
-
-
+use Illuminate\Support\Facades\DB;
 
 class ProfesorController extends Controller{
 
@@ -29,10 +28,15 @@ class ProfesorController extends Controller{
             $profesores = Profesor::where('nombre', 'LIKE', '%' . $req->busqueda . '%')->orWhere('apellidos', 'LIKE', '%' . $req->busqueda . '%')->paginate(12);
             $profesores->appends($req->only('busqueda'));
         }
+        //para cada profesor, comprobamos si existe su imagen
+        foreach ($profesores as $profesor){
+            if(!file_exists(Storage::disk('local')->path('/').$profesor->rutaImagen)){
+                $profesor->rutaImagen='default.png';
+            }
+        }
 
         return view('profesores.index', ['profesores' => $profesores]);
     }
-
 
     
     public function create(){
@@ -41,7 +45,6 @@ class ProfesorController extends Controller{
     }
 
 
-    
     public function store(Request $request){
         // echo "estoy aqui";
         //guardar los datos que se envian en la base de datos 
@@ -78,16 +81,20 @@ class ProfesorController extends Controller{
     }
 
 
-    
-
  
     public function show($id){
         try {
             //Aqui tengo que mostrar el registro seleccionado 
             $profesor = Profesor::find($id);
+            
             if (!isset($profesor->nombre)) { //si no lo ha encontrado
                 throw new Exception();
             }
+            //comprobamos que existe la imagen, si no, ponemos la de por defecto
+            if(!file_exists(Storage::disk('local')->path('/').$profesor->rutaImagen)){
+                $profesor->rutaImagen='default.png';
+            }
+
             $gruposQueDaClase=Horario::select('grupo_id')->where('profesor_id',$id)->distinct()->get();
             $materiasQueImparte=Horario::select('materia_id')->where('profesor_id',$id)->distinct()->get();
             //$profesor->nombre=ucfirst($profesor->nombre); //Para que salga la primera letra del nombre siempre en mayusculas
@@ -98,13 +105,16 @@ class ProfesorController extends Controller{
     }
 
 
-
     public function edit($id){
         try {
             //recupera el id ylo manda a la vista
             $profesor = Profesor::find($id);
             if (!isset($profesor->nombre)) { //si no lo ha encontrado
                 throw new Exception();
+            }
+            //comprobamos que existe la imagen, si no, ponemos la de por defecto
+            if(!file_exists(Storage::disk('local')->path('/').$profesor->rutaImagen)){
+                $profesor->rutaImagen='default.png';
             }
             return view('profesores.update', ['profesor' => $profesor]);
         } catch (\Exception  $e) {
@@ -178,13 +188,13 @@ class ProfesorController extends Controller{
     {
         //guardar los datos que se envian en la base de datos 
         $archivo = $request->file('ficheroProfesores');
-        $nombre = 'ArchivoIMPProfesores'.$archivo->getClientOriginalName();
+        //$nombre = 'ArchivoIMPProfesores'.$archivo->getClientOriginalName();
         global $indice;
         try { //no se haria asi...
-            Storage::disk('local')->put($nombre, File::get($archivo));
-            $rutaArchivo=Storage::disk('local')->path($nombre)/*Storage::disk('local')->get($nombre)*/;
+           // Storage::disk('local')->put($nombre, File::get($archivo));
+           // $rutaArchivo=Storage::disk('local')->path($nombre)/*Storage::disk('local')->get($nombre)*/;
             $indice=0;
-            Excel::load($rutaArchivo, function($reader) {
+            Excel::load(/*$rutaArchivo*/$archivo, function($reader) {
                 
                 foreach ($reader->get() as $profe) {
                     //echo $profe;
@@ -206,15 +216,23 @@ class ProfesorController extends Controller{
            });
 
         } catch (\Exception  $e) {
-            return redirect()->action('ProfesorController@index')->with('error', $rutaArchivo.'Error, no se ha podido guardar el fichero'.$e->getMessage().' me he quedado por la linea '.$indice);
+            return redirect()->action('ProfesorController@index')->with('error', /*$rutaArchivo.*/'Error, no se ha podido guardar el fichero'.$e->getMessage().' me he quedado por la linea '.$indice);
         }
-        return redirect()->action('ProfesorController@index')->with('notice', 'El fichero ' . $nombre . ', importado correctamente. Con '.$GLOBALS['indice'].' importados' );
+        return redirect()->action('ProfesorController@index')->with('notice', 'El fichero ' /*. $nombre */. ', importado correctamente. Con '.$GLOBALS['indice'].' importados' );
     }
 
+
     public function getTodosProfesoresJSON(){
-        $profesor = Profesor::all();
-        echo $profesor;
+        $profesores = Profesor::all();
+        //para cada profesor, comprobamos si existe su imagen
+        foreach ($profesores as $profesor){
+            if(!file_exists(Storage::disk('local')->path('/').$profesor->rutaImagen)){
+                $profesor->rutaImagen='default.png';
+            }
+        }
+        echo $profesores;
     }
+
 
     public function getProfesoresAusencias($fecha){
         //obtenemos los profesores que tengan alguna hora lectiva en la fecha especificada
@@ -230,6 +248,12 @@ class ProfesorController extends Controller{
             $idsProfes[]=$profe->profesor_id;
         }
         $profesores = Profesor::whereIn('id', $idsProfes)->get();
+        //para cada profesor, comprobamos si existe su imagen
+        foreach ($profesores as $profesor){
+            if(!file_exists(Storage::disk('local')->path('/').$profesor->rutaImagen)){
+                $profesor->rutaImagen='default.png';
+            }
+        }
         echo $profesores;
     }
 
@@ -257,8 +281,22 @@ class ProfesorController extends Controller{
         }
         //una vez los tenemos, los devolvemos en json para el select2 
         $profesores = Profesor::whereIn('id', $idsProfes)->get();
+        //para cada profesor, comprobamos si existe su imagen
+        foreach ($profesores as $profesor){
+            if(!file_exists(Storage::disk('local')->path('/').$profesor->rutaImagen)){
+                $profesor->rutaImagen='default.png';
+            }
+        }
         echo $profesores;
     }
+
+    public function eliminarTabla(){
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        Profesor::truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        return redirect()->action('ProfesorController@index')->with('notice', 'La tabla Profesores ha sido vaciada.' );
+    }
+
 
     //function que nos dice si un id de un profesor esta en un array de objetos ausencias donde este ese id de profesor
     //en un campo profesor_id o profesor_sustituye_id

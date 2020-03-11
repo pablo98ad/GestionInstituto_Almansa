@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use App\Materia;
 use App\Horario;
 use Exception;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use Maatwebsite\Excel\Facades\Excel;
 
 class MateriaController extends Controller
 {
@@ -24,7 +26,7 @@ class MateriaController extends Controller
         if ($req->busqueda == "") {
             $materias = Materia::paginate(12);
         } else {
-            $materias = Materia::where('nombre', 'LIKE', '%' . $req->busqueda . '%')->paginate(12);
+            $materias = Materia::where('nombre', 'LIKE', '%' . $req->busqueda . '%')->orWhere('departamento', 'LIKE', '%' . $req->busqueda . '%')->paginate(12);
             $materias->appends($req->only('busqueda'));
         }
 
@@ -147,14 +149,39 @@ class MateriaController extends Controller
     {
         //guardar los datos que se envian en la base de datos 
         $archivo = $request->file('ficheroMaterias');
-        $nombre = 'ArchivoIMPMaterias'.$archivo->getClientOriginalName();
-
+        //$nombre = 'ArchivoIMPProfesores'.$archivo->getClientOriginalName();
+        global $indice;
         try { //no se haria asi...
-            Storage::disk('local')->put($nombre, File::get($archivo));
+           // Storage::disk('local')->put($nombre, File::get($archivo));
+           // $rutaArchivo=Storage::disk('local')->path($nombre)/*Storage::disk('local')->get($nombre)*/;
+            $indice=0;
+            Excel::load(/*$rutaArchivo*/$archivo, function($reader) {
+                
+                foreach ($reader->get() as $materia) {
+                    //echo $materia;
+                    Materia::create([
+                        'id' => $materia->id,
+                        'nombre' => $materia->nombre,
+                        'observaciones' =>$materia->observaciones,
+                        'departamento' =>$materia->departamento
+                    ]);
+                    //$indice=$indice+1;
+                    $GLOBALS['indice']++;
+                 }
+                 
+           });
+
         } catch (\Exception  $e) {
-            return redirect()->action('MateriaController@index')->with('error', 'Error, no se ha podido guardar el fichero');
+            return redirect()->action('MateriaController@index')->with('error', /*$rutaArchivo.*/'Error, no se ha podido guardar el fichero'.$e->getMessage().' me he quedado por la linea '.$indice);
         }
-        return redirect()->action('MateriaController@index')->with('notice', 'El fichero ' . $nombre . ', importado correctamente.');
+        return redirect()->action('MateriaController@index')->with('notice', 'El fichero ' /*. $nombre */. ', importado correctamente. Con '.$GLOBALS['indice'].' importados' );
+    }
+
+    public function eliminarTabla(){
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        Materia::truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        return redirect()->action('MateriaController@index')->with('notice', 'La tabla Materia ha sido vaciada.' );
     }
 
 }

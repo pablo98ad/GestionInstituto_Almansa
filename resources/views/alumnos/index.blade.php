@@ -71,9 +71,9 @@ Listado de alumnos
         <h3 style="height: 70px;"  class=" overflow-auto">{{$alumno->nombre }} {{$alumno->apellidos}}</h3>
         
         <!--card-img-top  w-25-->
-        <img draggable="false" class="border rounded d-inline mb-1" width="70px" height="70px" src="{{url('/').'/storage/'.$alumno->rutaImagen}}" alt="">
-        <div class="table-responsive">
-          <table class="table">
+        <img draggable="false" class="border rounded d-inline mb-1" width="75px" height="75px" src="{{url('/').'/storage/'.$alumno->rutaImagen}}" alt="">
+        <div style="height: 110px;" class="table-responsive  overflow-auto">
+          <table class="table mb-0 pb-0">
             <thead>
               <tr>
                 <!--<th scope="col">ID</th>-->
@@ -84,7 +84,7 @@ Listado de alumnos
             </thead>
             <tbody>
               <tr>
-                <!--<td>{{$alumno->id}}</td>-->
+                <!--<td>{{--$alumno->id--}}</td>-->
                 <td>{{$alumno->grupo->nombre}}</td>
                 <td>{{floor((time() - strtotime($alumno->fechaNacimiento)) / 31556926)}}</td>
                 <td>{{$alumno->Telefono1}}</td>
@@ -94,7 +94,7 @@ Listado de alumnos
         </div>
         <!--<h5 class="card-title ">Observaciones</h5>
         <div style="height: 80px;" class="border overflow-auto">
-          <p class="card-text">{{$alumno->observaciones}}</p>
+          <p class="card-text">{{--$alumno->observaciones--}}</p>
         </div><br>-->
 
         <a title="Horario" class='btn btn-warning' href='{{url('/horario/grupo/').'/'.$alumno->Grupo_id}}' role='button'><i class="fa fa-table fa-lg" aria-hidden="true"></i></a>

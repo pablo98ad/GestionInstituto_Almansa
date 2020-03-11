@@ -29,6 +29,12 @@ class AlumnoController extends Controller
             $alumnos = Alumno::where('nombre', 'LIKE', '%' . $req->busqueda . '%')->orWhere('apellidos', 'LIKE', '%' . $req->busqueda . '%')->paginate(12);
             $alumnos->appends($req->only('busqueda'));
         }
+         //para cada alumno, comprobamos si existe su imagen
+         foreach ($alumnos as $alumno){
+            if(!file_exists(Storage::disk('local')->path('/').$alumno->rutaImagen)){
+                $alumno->rutaImagen='default.png';
+            }
+        }
 
         return view('alumnos.index', ['alumnos' => $alumnos]);
     }
@@ -96,6 +102,10 @@ class AlumnoController extends Controller
             if (!isset($alumno->nombre)) { //si no lo ha encontrado
                 throw new Exception();
             }
+            //comprobamos que existe la imagen, si no, ponemos la de por defecto
+            if(!file_exists(Storage::disk('local')->path('/').$alumno->rutaImagen)){
+                $alumno->rutaImagen='default.png';
+            }
             //compañeros de grupo, wherenotin para que no se coja a si mismo
             $companeros=Alumno::where('Grupo_id',$alumno->Grupo_id)->whereNotIn('id',[$id])->distinct()->get();
             //profesores que le dan clase
@@ -121,6 +131,10 @@ class AlumnoController extends Controller
             $alumno = Alumno::find($id);
             if (!isset($alumno->nombre)) { //si no lo ha encontrado
                 throw new Exception();
+            }
+            //comprobamos que existe la imagen, si no, ponemos la de por defecto
+            if(!file_exists(Storage::disk('local')->path('/').$alumno->rutaImagen)){
+                $alumno->rutaImagen='default.png';
             }
             return view('alumnos.update', ['alumno' => $alumno]);
         } catch (Exception  $e) {
@@ -227,7 +241,13 @@ class AlumnoController extends Controller
     public function getTodosAlumnosJSON()
     {
         $alumnos = Alumno::with('grupo')->get();//asi podemos devolver todas sus relacciones!
-        return new JsonResponse( $alumnos);
+        //para cada alumno, comprobamos si existe su imagen
+        foreach ($alumnos as $alumno){
+            if(!file_exists(Storage::disk('local')->path('/').$alumno->rutaImagen)){
+                $alumno->rutaImagen='default.png';
+            }
+        }
+        return $alumnos;
     }
 
     

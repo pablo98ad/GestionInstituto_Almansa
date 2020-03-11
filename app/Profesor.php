@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Profesor extends Model
 {
@@ -20,4 +21,11 @@ class Profesor extends Model
     public function ausencias(){
         return $this->hasMany('App\Ausencias','profesor_id');
     }
+
+   /* public function boot()
+    {
+        if(!file_exists(Storage::disk('local')->path('/').$this->rutaImagen)){
+            $this->rutaImagen='default.png';
+        }
+    }*/
 }

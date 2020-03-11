@@ -35,6 +35,11 @@ Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');
 
+//eliminacion de todas las tablas de cada modulo
+Route::delete('/profesores', 'ProfesorController@eliminarTabla')->name('eliminarTablaProfesores');
+Route::delete('/materia', 'MateriaController@eliminarTabla')->name('eliminarTablaMateria');
+
+
 //Rutas archivos de importaciones
 Route::post('/profesores/importar', 'ProfesorController@importar')->name('profesorImportar');
 Route::post('/alumno/importar', 'AlumnoController@importar')->name('alumnoImportar');
