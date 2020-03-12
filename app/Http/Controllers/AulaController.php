@@ -191,9 +191,11 @@ class AulaController extends Controller
 
                 foreach ($reader->get() as $aula) {
  
-                    if($aula->reservable == "SI")   { $is_reservable=1; }
-                    else                            { $is_reservable=0; }
-
+                    if($aula->reservable == "SI"){ 
+                        $is_reservable=1; 
+                    }else{ 
+                        $is_reservable=0; 
+                    }
                     $nuevaAula = new Aula();
                     $nuevaAula->id = $aula->id;
                     $nuevaAula->nombre = $aula->nombre;
@@ -203,7 +205,6 @@ class AulaController extends Controller
                     
                     $nuevaAula->save();
                  }
-                 
            });
         } catch (\Exception  $e) {
             return redirect()->action('AulaController@index')->with('error', $rutaArchivo.'Error, no se ha podido guardar el fichero. Mensaje de error: '.$e->getMessage());
@@ -212,11 +213,21 @@ class AulaController extends Controller
     }
 
     /**
-     * Controlador del api, devuelve todos los alumnos en formato json
+     * Controlador del api, devuelve todas las aulas en formato json se utiliza en modulo horarios
      */
     public function getTodasAulasJSON()
     {
         $aulas = Aula::all();
+        //comprobamos que el numero del aula no sea null y que el numero tenga siempre longitud 3
+        foreach($aulas as $aula){
+            if($aula->numero==null){
+                $aula->numero='XXX';
+            }else if(strlen((string)$aula->numero)==1){
+                $aula->numero=(string)'00'.$aula->numero;
+            }else if(strlen((string)$aula->numero)==2){
+                 $aula->numero=(string)'0'.$aula->numero;
+            }
+        }
         echo $aulas;
     }
 }

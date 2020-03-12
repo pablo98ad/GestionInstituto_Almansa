@@ -13,6 +13,7 @@ use Intervention\Image\ImageManagerStatic as Image;
 use Maatwebsite\Excel\Facades\Excel;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use App\Helper;
 
 class ProfesorController extends Controller{
 
@@ -221,26 +222,13 @@ class ProfesorController extends Controller{
         return redirect()->action('ProfesorController@index')->with('notice', 'El fichero ' /*. $nombre */. ', importado correctamente. Con '.$GLOBALS['indice'].' importados' );
     }
 
-
+    //para el select2 del modulo horarios
     public function getTodosProfesoresJSON(){
         $profesores = Profesor::all();
-        //para cada profesor, comprobamos si existe su imagen
-        foreach ($profesores as $profesor){
-            if(!file_exists(Storage::disk('local')->path('/').$profesor->rutaImagen)){
-                $profesor->rutaImagen='default.png';
-            }
-            //comprobamos que los campos no tengan mucha longittud y los cortamos si hace fata para que en el select2 no se vean mal
-            if($profesor->departamento!=null && strlen($profesor->departamento)>35){
-                $profesor->departamento=substr( $profesor->departamento,0,30).'...';
-            }
-            if($profesor->nombre!=null && strlen($profesor->nombre)>20){
-                $profesor->nombre=substr( $profesor->nombre,0,20).'...';
-            }
-            //echo  $profesor->departamento.'<br>';
-            if($profesor->nombre!=null && strlen($profesor->especialidad)>30){
-                $profesor->especialidad=substr( $profesor->especialidad,0,30).'...';
-            }
-        }
+
+        //comprobamos que este la imagen y que la longitud de los campos no sea mucha para el select2
+        $profesores= Helper::comprobarImagenYLongCamposProfes($profesores);
+
         echo $profesores;
     }
 
@@ -259,12 +247,10 @@ class ProfesorController extends Controller{
             $idsProfes[]=$profe->profesor_id;
         }
         $profesores = Profesor::whereIn('id', $idsProfes)->get();
-        //para cada profesor, comprobamos si existe su imagen
-        foreach ($profesores as $profesor){
-            if(!file_exists(Storage::disk('local')->path('/').$profesor->rutaImagen)){
-                $profesor->rutaImagen='default.png';
-            }
-        }
+
+        //comprobamos que este la imagen y que la longitud de los campos no sea mucha para el select2
+        $profesores= Helper::comprobarImagenYLongCamposProfes($profesores);
+
         echo $profesores;
     }
 
@@ -277,7 +263,7 @@ class ProfesorController extends Controller{
         
         //seleccionamos los profesores que tengan la hora libre, ese dia, esa hora y con esa materia
         $profes=Horario::select('profesor_id')->where('materia_id',$materiaID)->where('hora',$hora)
-        ->where('dia',$this->deFechaADiaSemana($fecha))->get();
+        ->where('dia',Helper::deFechaADiaSemana($fecha))->get();
 
         //seleccionamos tambien los profesores que ya esten asignados a una ausencia ese dia, a esa hora
         $profesAsignados=Ausencias::where('hora',$hora)->where('fecha',$fecha)->get();
@@ -292,12 +278,10 @@ class ProfesorController extends Controller{
         }
         //una vez los tenemos, los devolvemos en json para el select2 
         $profesores = Profesor::whereIn('id', $idsProfes)->get();
-        //para cada profesor, comprobamos si existe su imagen
-        foreach ($profesores as $profesor){
-            if(!file_exists(Storage::disk('local')->path('/').$profesor->rutaImagen)){
-                $profesor->rutaImagen='default.png';
-            }
-        }
+
+        //comprobamos que este la imagen y que la longitud de los campos no sea mucha para el select2
+        $profesores= Helper::comprobarImagenYLongCamposProfes($profesores);
+
         echo $profesores;
     }
 
@@ -322,29 +306,4 @@ class ProfesorController extends Controller{
         return $esta;
     }
 
-
-    //function que desde una fecha dada, devuelve el dia de la semana en formato una letra.
-    private function deFechaADiaSemana($fecha){
-        $numeroDiaSemana = date("w", strtotime($fecha));
-        $letraDiaSemana = '';
-
-        switch ($numeroDiaSemana) {
-            case 1:
-                $letraDiaSemana = 'L';
-                break;
-            case 2:
-                $letraDiaSemana = 'M';
-                break;
-            case 3:
-                $letraDiaSemana = 'X';
-                break;
-            case 4:
-                $letraDiaSemana = 'J';
-                break;
-            case 5:
-                $letraDiaSemana = 'V';
-                break;
-        }
-        return $letraDiaSemana;
-    }
 }

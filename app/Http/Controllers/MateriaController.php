@@ -15,14 +15,12 @@ class MateriaController extends Controller
 {
 
 
-    public function __construct()
-    {
+    public function __construct(){
         $this->middleware('auth')->except('index','show');
     }
 
 
-    public function index(Request $req)
-    {
+    public function index(Request $req){
         if ($req->busqueda == "") {
             $materias = Materia::paginate(12);
         } else {
@@ -36,19 +34,12 @@ class MateriaController extends Controller
 
 
 
-    public function create()
-    {
+    public function create(){
         return view('materias.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
+  
+    public function store(Request $request){
         $materia = new Materia();
         $materia->nombre = $request->input('nombre');
         $materia->departamento = $request->input('departamento');
@@ -61,14 +52,8 @@ class MateriaController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
+   
+    public function show($id){
         try {
             $materia = Materia::find($id);
             if (!isset($materia->nombre)) { //si no lo ha encontrado
@@ -82,14 +67,9 @@ class MateriaController extends Controller
         }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
+    
+    
+    public function edit($id){
         try {
             $materia = Materia::find($id);
             if (!isset($materia->nombre)) { //si no lo ha encontrado
@@ -102,15 +82,8 @@ class MateriaController extends Controller
     }
 
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
+
+    public function update(Request $request, $id){
         try {
             $materia = Materia::find($id);
             if (!isset($materia->nombre)) { //si no lo ha encontrado
@@ -126,21 +99,16 @@ class MateriaController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
+    
+
+    public function destroy($id){
         $materia = Materia::find($id);
         try {
             $materia->delete();
             return redirect()->action('MateriaController@index')->with('notice', 'La materia ' . $materia->nombre . ' eliminada correctamente.');
        
         }catch(\Exception  $e){
-            return redirect()->action('MateriaController@index')->with('error', 'Error: ' . $e->getMessage() . ' - La Materia ' . $materia->nombre . ', no se ha podido eliminar');
+            return redirect()->action('MateriaController@index')->with('error', 'Error: ' . $e->getMessage() . ' - La Materia con id' . $id . ', no se ha podido eliminar');
   
         }
     }

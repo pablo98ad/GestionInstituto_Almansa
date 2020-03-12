@@ -10,6 +10,7 @@ use DateTime;
 use Exception;
 use Illuminate\Support\Facades\Storage;
 use PhpParser\Node\Stmt\Switch_;
+use App\Helper;
 
 class AusenciasController extends Controller
 {
@@ -84,20 +85,49 @@ class AusenciasController extends Controller
 
         $ausenciasSinAsignar = Ausencias::where('fecha', '=', $fecha)/*->whereNull('profesor_sustituye_id')*/
             ->with('profesor')->with('profesor_sustituye')->get();
+        //comprobamos las imagenes de los profesores y la longitud de sus campos del campo profesor sustituye, el campo profesor lo haremos mas abajo
+        foreach ($ausenciasSinAsignar as $profe){
+            if(isset($profe->profesor_sustituye)){
+                if(!file_exists(Storage::disk('local')->path('/').$profe->profesor_sustituye->rutaImagen)){
+                    $profe->profesor_sustituye->rutaImagen='default.png';
+                }
+                //comprobamos que los campos no tengan mucha longittud y los cortamos si hace fata para que en el select2 no se vean mal
+                if($profe->profesor_sustituye->departamento!=null && strlen($profe->profesor_sustituye->departamento)>35){
+                    $profe->profesor_sustituye->departamento=substr( $profe->profesor_sustituye->departamento,0,30).'...';
+                }
+                if(/*$profe->profesor_sustituye->nombre!=null && */strlen($profe->profesor_sustituye->nombre)>20){
+                    $profe->profesor_sustituye->nombre=substr( $profe->profesor_sustituye->nombre,0,20).'...';
+                }
+                if($profe->profesor_sustituye->especialidad!=null && strlen($profe->profesor_sustituye->especialidad)>30){
+                    $profe->profesor_sustituye->especialidad=substr( $profe->profesor_sustituye->especialidad,0,30).'...';
+                }
+            }
+        }
+
 
         $horariosDeLasAusencias = [];
         foreach ($ausenciasSinAsignar as $ausencia) {
             //recuperamos la hora que se va a ausentar cada profesor
             $horariosDeLasAusencias[] = Horario::where('profesor_id', $ausencia->profesor_id)->where('hora', $ausencia->hora)
-                ->where('dia', $this->deFechaADiaSemana($ausencia->fecha))
+                ->where('dia', Helper::deFechaADiaSemana($ausencia->fecha))
                 ->with('aula')->with('profesor')->with('grupo')->with('materia')->first();
-            //echo $this->deFechaADiaSemana($ausencia->fecha).'---'.$ausencia->fecha.'<br>';
         }
         
-        //comprobamos las imagenes de los profesores
-        foreach ($horariosDeLasAusencias as $profesor){
-            if(!file_exists(Storage::disk('local')->path('/').$profesor->profesor->rutaImagen)){
-                $profesor->profesor->rutaImagen='default.png';
+        //comprobamos las imagenes de los profesores y la longitud de sus campos
+        foreach ($horariosDeLasAusencias as $profe){
+
+            if(!file_exists(Storage::disk('local')->path('/').$profe->profesor->rutaImagen)){
+                $profe->profesor->rutaImagen='default.png';
+            }
+            //comprobamos que los campos no tengan mucha longittud y los cortamos si hace fata para que en el select2 no se vean mal
+            if($profe->profesor->departamento!=null && strlen($profe->profesor->departamento)>35){
+                $profe->profesor->departamento=substr( $profe->profesor->departamento,0,30).'...';
+            }
+            if(/*$profe->profesor->nombre!=null &*/ strlen($profe->profesor->nombre)>20){
+                $profe->profesor->nombre=substr( $profe->profesor->nombre,0,20).'...';
+            }
+            if($profe->profesor->especialidad!=null && strlen($profe->profesor->especialidad)>30){
+                $profe->profesor->especialidad=substr( $profe->profesor->especialidad,0,30).'...';
             }
         }
         $ausenciasYHorariosEnHoras = $this->ponerHorariosYAusenciasEnHoras($ausenciasSinAsignar, $horariosDeLasAusencias);
@@ -176,7 +206,6 @@ class AusenciasController extends Controller
     }
 
 
-
     private function estaEsaHoraAusente($hora, $ausenciasDia)
     {
         $estaEsaHoraAusente = false;
@@ -188,29 +217,4 @@ class AusenciasController extends Controller
         return $estaEsaHoraAusente;
     }
 
-    private function deFechaADiaSemana($fecha)
-    {
-        $numeroDiaSemana = date("w", strtotime($fecha));
-        $letraDiaSemana = '';
-
-        switch ($numeroDiaSemana) {
-            case 1:
-                $letraDiaSemana = 'L';
-                break;
-            case 2:
-                $letraDiaSemana = 'M';
-                break;
-            case 3:
-                $letraDiaSemana = 'X';
-                break;
-            case 4:
-                $letraDiaSemana = 'J';
-                break;
-            case 5:
-                $letraDiaSemana = 'V';
-                break;
-        }
-
-        return $letraDiaSemana;
-    }
 }

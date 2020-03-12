@@ -50,7 +50,7 @@ td > a > div{
             return `<div class="resulDiv">
                       <div class="imagen"><img class="imagenResul" src="${directorioImagenes}${result.rutaImagen}"/></div>
                       <h2 class="nombreResul"> ${result.nombre} ${result.apellidos}</h2><br>
-                      <h3 class="segundaLineaResul"> ${result.departamento}   (${result.especialidad}) </h3>
+                      <h3 class="segundaLineaResul"> ${result.departamento} <br> ${result.especialidad}</h3>
                     </div>`;
           }
         },
@@ -62,7 +62,7 @@ td > a > div{
             var final = `<div class="resulDiv">
                           <div class="imagen"><img class="imagenResul" src="${directorioImagenes}${result.rutaImagen}"/></div>
                           <h2 class="nombreResul"> ${result.nombre} ${result.apellidos}</h2><br>
-                          <h3 class="segundaLineaResul"> ${result.departamento}   (${result.especialidad}) </h3>
+                          <h3 class="segundaLineaResul"> ${result.departamento}  <br> ${result.especialidad} </h3>
                         </div>`;
           }
           return final;
@@ -141,12 +141,12 @@ td > a > div{
 
     <tr>
       <th scope="row">{{$hora}}</th>
-      <td> 
+      <td style="width:300px;"> 
       <a  href="{{url('/profesores').'/'.$ausYHoras[$hora]['hor'][$index]->profesor->id}}">
         <div class="resulDiv m-0 p-0 border rounded">
           <div class="imagen"><img class="imagenResul" src="{{url('/').'/storage/'.$ausYHoras[$hora]['hor'][$index]->profesor->rutaImagen}}" /></div>
           <h2 class="nombreResul"> {{$ausYHoras[$hora]['hor'][$index]->profesor->nombre}} {{$ausYHoras[$hora]['hor'][$index]->profesor->apellidos}}</h2><br>
-          <h3 class="segundaLineaResul">{{$ausYHoras[$hora]['hor'][$index]->profesor->departamento}} ({{$ausYHoras[$hora]['hor'][$index]->profesor->especialidad}}) </h3>
+          <h3 class="segundaLineaResul">{{$ausYHoras[$hora]['hor'][$index]->profesor->departamento}}<br>{{$ausYHoras[$hora]['hor'][$index]->profesor->especialidad}} </h3>
         </div>
       </a>
       </td>
@@ -164,7 +164,7 @@ td > a > div{
             <div class="resulDiv m-0 p-0 border rounded">
               <div class="imagen"><img class="imagenResul" src="{{url('/').'/storage/'.$profeSusti->rutaImagen}}" /></div>
               <h2 class="nombreResul"> {{$profeSusti->nombre}} {{$profeSusti->apellidos}}</h2><br>
-              <h3 class="segundaLineaResul">{{$profeSusti->departamento}} ({{$profeSusti->especialidad}}) </h3>
+              <h3 class="segundaLineaResul">{{$profeSusti->departamento}}<br>{{$profeSusti->especialidad}} </h3>
             </div>
       </td>
       <td>
@@ -172,12 +172,12 @@ td > a > div{
       </td>
 
         @else
-        <td>
+        <td style="width:320px;">
           <form id="{{$ausYHoras[$hora]['aus'][$index]->id}}" method="POST" action="{{url('/guardias/listado')}}">
             {{ csrf_field()}}
             {{ method_field('POST') }}
           <input type="hidden" name="idAusencia" value="{{$ausYHoras[$hora]['aus'][$index]->id}}">
-          <select class="" style="width: 250px" id="profeSus{{$ausYHoras[$hora]['aus'][$index]->id}}" name="profesorSustituye">
+          <select class="" style="width: 320px" id="profeSus{{$ausYHoras[$hora]['aus'][$index]->id}}" name="profesorSustituye">
             <option value="no" selected></option>
           </select><br>
          

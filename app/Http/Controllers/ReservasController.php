@@ -135,7 +135,6 @@ class ReservasController extends Controller
             if($tablaHorariosAulaLibre[$letraDia][$hora]=='libre'){
                 $sePuedeReservar=true; 
             }
-
         }
         return $sePuedeReservar;
     }
@@ -203,7 +202,6 @@ class ReservasController extends Controller
        $aulasConHorasLibres= Aula::whereIn('id', $aulasDisponiblesNum)->get();
 
        echo $aulasConHorasLibres;
-
     }
 
 
@@ -229,8 +227,6 @@ class ReservasController extends Controller
         if ($this->hayReservasDisponibles($tablaHorariosAulaLibre)) { //si hay algun hueco libre para la proxima semana  
             $sePuedeReservar = true;
         }
-
-
         return $sePuedeReservar;
     }
 

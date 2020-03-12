@@ -194,9 +194,11 @@ Reservar Aula Manualmente
         //para cuando se seleccione uno, que se muestra en el select cerrado
         templateSelection: function(result) {
           if (result.id != 'no') {
-            return `<div class="resulDiv"><div class="imagen"><img class="imagenResul" src="${directorioImagenes}${result.rutaImagen}"/></div><h2 class="nombreResul"> ${result.nombre} ${result.apellidos}</h2><br>
-                                    <h3 class="segundaLineaResul"> ${result.departamento}   (${result.especialidad}) </h3>
-                                    </div>`;
+            return `<div class="resulDiv">
+                      <div class="imagen"><img class="imagenResul" src="${directorioImagenes}${result.rutaImagen}"/></div>
+                      <h2 class="nombreResul"> ${result.nombre} ${result.apellidos}</h2><br>
+                      <h3 class="segundaLineaResul"> ${result.departamento}<br>${result.especialidad}</h3>
+                    </div>`;
           }
         },
         //Para que decidamos como se ve en el menu desplegable
@@ -204,9 +206,11 @@ Reservar Aula Manualmente
           if (result.id == 'no' || typeof result.id == 'undefined') { //para que no haga nada cuando es el 1º resultado
             return '';
           } else {
-            var final = `<div class="resulDiv"><div class="imagen"><img class="imagenResul" src="${directorioImagenes}${result.rutaImagen}"/></div><h2 class="nombreResul"> ${result.nombre} ${result.apellidos}</h2><br>
-                                    <h3 class="segundaLineaResul"> ${result.departamento}   (${result.especialidad}) </h3>
-                                    </div>`
+            var final =`<div class="resulDiv">
+                          <div class="imagen"><img class="imagenResul" src="${directorioImagenes}${result.rutaImagen}"/></div>
+                          <h2 class="nombreResul"> ${result.nombre} ${result.apellidos}</h2><br>
+                          <h3 class="segundaLineaResul"> ${result.departamento}<br>${result.especialidad}</h3>
+                        </div>`;
           }
           return final;
         },

@@ -99,11 +99,11 @@ Listado de profesores
         <!--card-img-top w-25 -->
         <img class=" border rounded d-inline mb-1" width="75px" height="75px" src="{{url('/').'/storage/'.$profesor->rutaImagen}}" alt="">
         <div style="height: 115px; overflow-y: auto;" class="table-responsive  ">
-          <table class="table mb-0 pb-0 ">
+          <table class="table mb-0 pb-0">
             <thead>
               <tr>
-                <th class="m-0 px-0" scope="col">Departamento</th>
-                <th class="m-0 px-0" scope="col">Especialidad</th>
+                <th class="w-50 m-0 px-0" scope="col">Departamento</th>
+                <th class="w-50 m-0 px-0" scope="col">Especialidad</th>
               </tr>
             </thead>
             <tbody>
