@@ -21,14 +21,17 @@ class MateriaController extends Controller
 
 
     public function index(Request $req){
-        if ($req->busqueda == "") {
-            $materias = Materia::paginate(12);
+        $busqueda=$req->busqueda;
+
+        if ($busqueda == "") {
+            $materias = Materia::orderBy('nombre','ASC')->paginate(12);
         } else {
-            $materias = Materia::where('nombre', 'LIKE', '%' . $req->busqueda . '%')->orWhere('departamento', 'LIKE', '%' . $req->busqueda . '%')->paginate(12);
+            $materias = Materia::where('nombre', 'LIKE', '%' . $busqueda . '%')->orWhere('departamento', 'LIKE', '%' . $busqueda . '%')
+            ->orderBy('nombre','ASC')->paginate(12);
             $materias->appends($req->only('busqueda'));
         }
 
-        return view('materias.index', ['materias' => $materias]);
+        return view('materias.index', ['materias' => $materias, 'busqueda' => $busqueda]);
     }
 
 

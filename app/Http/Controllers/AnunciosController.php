@@ -20,26 +20,26 @@ class AnunciosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $req)
-    {
+    public function index(Request $req){
+        $busqueda=$req->busqueda;
+
         if (Auth::check()) {
-            if ($req->busqueda == "") {
+            if ($busqueda == "") {
                 $anuncios = Anuncios::orderBy("activo", 'desc')->orderBy("fin", 'asc')->paginate(6); //ordenados por activos primero y a puntos de acabar primero
             } else {
-                $anuncios = Anuncios::where('nombre', 'LIKE', '%' . $req->busqueda . '%')->orderBy("activo", 'desc')->orderBy("fin", 'asc')->paginate(6);
-                $anuncios->appends($req->only('busqueda'));
+                $anuncios = Anuncios::where('nombre', 'LIKE', '%' . $busqueda . '%')->orderBy("activo", 'desc')->orderBy("fin", 'asc')->paginate(6);
+               // $anuncios->appends($req->only('busqueda'));
             }
         } else {//los no logueados no ven los anuncios desactivados
-            if ($req->busqueda == "") {
+            if ($busqueda == "") {
                 $anuncios = Anuncios::where('activo',true)->orderBy("fin", 'asc')->paginate(6); //ordenados por activos primero y a puntos de acabar primero
             } else {
-                $anuncios = Anuncios::where('nombre', 'LIKE', '%' . $req->busqueda . '%')->where('activo',true)->orderBy("fin", 'asc')->paginate(6);
-                $anuncios->appends($req->only('busqueda'));
+                $anuncios = Anuncios::where('nombre', 'LIKE', '%' . $busqueda . '%')->where('activo',true)->orderBy("fin", 'asc')->paginate(6);
+                //$anuncios->appends($req->only('busqueda'));
             }
         }
 
-
-        return view('anuncios.index', ['anuncios' => $anuncios]);
+        return view('anuncios.index', ['anuncios' => $anuncios, 'busqueda' => $busqueda]);
     }
 
     /**

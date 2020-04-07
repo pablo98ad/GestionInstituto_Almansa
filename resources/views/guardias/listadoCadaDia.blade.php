@@ -159,9 +159,9 @@ td > a > div{
         @endphp
 
         @if($ausYHoras[$hora]['aus'][$index]->profesor_sustituye_id!=null)
-        <td>
+        <td style="width:300px;">
         <a href="{{url('/profesores').'/'.$profeSusti->id}}">
-            <div class="resulDiv m-0 p-0 border rounded">
+            <div  class="resulDiv m-0 p-0 border rounded">
               <div class="imagen"><img class="imagenResul" src="{{url('/').'/storage/'.$profeSusti->rutaImagen}}" /></div>
               <h2 class="nombreResul"> {{$profeSusti->nombre}} {{$profeSusti->apellidos}}</h2><br>
               <h3 class="segundaLineaResul">{{$profeSusti->departamento}}<br>{{$profeSusti->especialidad}} </h3>

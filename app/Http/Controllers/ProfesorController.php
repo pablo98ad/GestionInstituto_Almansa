@@ -23,10 +23,12 @@ class ProfesorController extends Controller{
 
     
     public function index(Request $req){
-        if ($req->busqueda == "") {
-            $profesores = Profesor::paginate(12);
+        $busqueda=$req->busqueda;
+        if ($busqueda == "") {
+            $profesores = Profesor::orderBy('nombre','ASC')->paginate(12);
         } else {
-            $profesores = Profesor::where('nombre', 'LIKE', '%' . $req->busqueda . '%')->orWhere('apellidos', 'LIKE', '%' . $req->busqueda . '%')->paginate(12);
+            $profesores = Profesor::where('nombre', 'LIKE', '%' . $busqueda . '%')->orWhere('apellidos', 'LIKE', '%' . $busqueda . '%')
+            ->orderBy('nombre','ASC')->paginate(12);
             $profesores->appends($req->only('busqueda'));
         }
         //para cada profesor, comprobamos si existe su imagen
@@ -36,7 +38,7 @@ class ProfesorController extends Controller{
             }
         }
 
-        return view('profesores.index', ['profesores' => $profesores]);
+        return view('profesores.index', ['profesores' => $profesores,'busqueda'=>$busqueda]);
     }
 
     

@@ -18,7 +18,7 @@ Listado de grupos
   <div class="row justify-content-between">
     <form class="form-inline my-2 my-lg-0" action="{{url('/grupo')}}" role="search" method="get">
       <!--csrf_field()-->
-      <input class="form-control mr-sm-1" type="text" name="busqueda" placeholder="Buscar" aria-label="Search">
+      <input class="form-control mr-sm-1" type="text" name="busqueda" value="{{$busqueda}}" placeholder="Buscar" aria-label="Search">
       <button title="Buscar" class="btn btn-success my-2 my-sm-0" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
     </form>
 
@@ -68,15 +68,15 @@ Listado de grupos
     <div class="card col-md-3 col-sm-6 col-12 mt-1 ">
       <div class="card-body  ">
         <h2 class="card-title">{{$grupo->nombre}}</h2>
-        <h4 class="card-subtitle mb-2 text-muted">{{$grupo->curso}}</h4>
+        <h5 class="card-subtitle mb-2 text-muted">{{$grupo->curso}}</h5>
 
         <!--<h5 class="card-title  ">Tutor</h5>
 
-          <p class="card-text">{{$grupo->nombreTutor}}</p>
+          <p class="card-text">{{--$grupo->nombreTutor--}}</p>
 
         <h5 class="card-title mt-3 ">Descripcion</h5>
         <div style="height: 55px;" class="border overflow-auto">
-          <p class="card-text">{{$grupo->descripcion}}</p>
+          <p class="card-text">{{--$grupo->descripcion--}}</p>
         </div><br>-->
         <a class='btn btn-warning' title="Horario" href='{{url('/horario/grupo/').'/'.$grupo->id}}' role='button'><i class="fa fa-table fa-lg" aria-hidden="true"></i></a>
         <a class='btn btn-success' title="Ver" href='grupo/{{$grupo->id}}' role='button'><i class="fa fa-eye fa-lg" aria-hidden="true"></i></a>
@@ -116,6 +116,9 @@ Listado de grupos
       </div>
     </div>
     @endforeach
+    @if(sizeOf($grupos)==0)
+    <h3 class='text-center w-100 mt-4'>No hay resultados</h3>
+    @endif
   </div>
   <br><br>
   <div class="row text-center d-flex justify-content-center">

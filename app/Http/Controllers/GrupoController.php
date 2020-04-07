@@ -9,23 +9,25 @@ use App\Alumno;
 use Exception;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use Maatwebsite\Excel\Facades\Excel;
 
 class GrupoController extends Controller
 {   
-    public function __construct()
-    {
+    public function __construct(){
         $this->middleware('auth')->except('index','show','getTodosGruposJSON');
     }
    
-    public function index(Request $req)
-    {
-        if ($req->busqueda == "") {
-            $grupos = Grupo::paginate(12);
+    public function index(Request $req){
+        $busqueda=$req->busqueda;
+        
+        if ($busqueda == "") {
+            $grupos = Grupo::orderBy('nombre','ASC')->paginate(12);
         } else {
-            $grupos = Grupo::where('nombre', 'LIKE', '%' . $req->busqueda . '%')->orWhere('curso', 'LIKE', '%' . $req->busqueda . '%')->paginate(12);
-            $grupos->appends($req->only('busqueda'));
+            $grupos = Grupo::where('nombre', 'LIKE', '%' . $busqueda . '%')->orWhere('curso', 'LIKE', '%' . $busqueda . '%')
+            ->orderBy('nombre','ASC')->paginate(12);
+            //$grupos->appends($req->only('busqueda'));
         }
-        return view('grupos.index', ['grupos' => $grupos]);
+        return view('grupos.index', ['grupos' => $grupos, 'busqueda' => $busqueda]);
     }
 
     
@@ -120,14 +122,30 @@ class GrupoController extends Controller
     {
         //guardar los datos que se envian en la base de datos 
         $archivo = $request->file('ficheroGrupos');
-        $nombre = 'ArchivoIMPGrupos'.$archivo->getClientOriginalName();
-
-        try { //no se haria asi...
+        $nombre = 'ArchivoIMPGrupos' . $archivo->getClientOriginalName();
+        global $indice;
+        try {
             Storage::disk('local')->put($nombre, File::get($archivo));
+            $rutaArchivo=Storage::disk('local')->path($nombre)/*Storage::disk('local')->get($nombre)*/;
+            
+            Excel::load($rutaArchivo, function($reader) {
+                $indice=0;
+                foreach ($reader->get() as $grupo) {
+ 
+                    $newGrupo = new Grupo();
+                    $newGrupo->nombre = $grupo->nombre;
+                    $newGrupo->curso = $grupo->curso;
+                    $newGrupo->descripcion = $grupo->descripcion;
+                    $newGrupo->nombreTutor = $grupo->nombretutor;
+                    
+                    $newGrupo->save();
+                    $GLOBALS['indice']++;
+                 }
+           });
         } catch (\Exception  $e) {
-            return redirect()->action('GrupoController@index')->with('error', 'Error, no se ha podido guardar el fichero');
+            return redirect()->action('GrupoController@index')->with('error', $rutaArchivo.'Error, no se ha podido guardar el fichero. Mensaje de error: '.$e->getMessage().' me he quedado por la linea '.$indice);
         }
-        return redirect()->action('GrupoController@index')->with('notice', 'El fichero ' . $nombre . ', importado correctamente.');
+        return redirect()->action('GrupoController@index')->with('notice', 'El fichero ' . $nombre . ', importado correctamente.  Con '.$GLOBALS['indice'].' importados');
     }
 
     /**

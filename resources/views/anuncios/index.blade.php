@@ -25,7 +25,7 @@ Listado de Anuncios
   <div class="row justify-content-between">
   <form class="form-inline my-2 my-lg-0" action="{{url('/anuncios')}}" role="search" method="get">
     <!--csrf_field()-->
-      <input class="form-control mr-sm-1" type="text" name="busqueda" placeholder="Buscar" aria-label="Search">
+      <input class="form-control mr-sm-1" type="text" name="busqueda" value="{{$busqueda}}" placeholder="Buscar" aria-label="Search">
       <button title="Buscar" class="btn btn-success my-2 my-sm-0" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
     </form>
   <a class="btn btn-dark" href="{{url('verAnuncios')}}" role='button'><i class="fa fa-magic fa-lg" aria-hidden="true"></i></a>
@@ -34,7 +34,7 @@ Listado de Anuncios
     @endif
   </div>
   <div class="row pt-2 justify-content-center">
-    <?php foreach ($anuncios as $anuncio) { ?>
+    @foreach ($anuncios as $anuncio)
 
       <div class="card col-md-11 col-sm-6 col-11 mt-1 mb-5">
         <div class="card-body  ">
@@ -155,7 +155,10 @@ Listado de Anuncios
         </div>
       </div>
 
-    <?php } ?>
+    @endforeach
+    @if(sizeOf($anuncios)==0)
+    <h3 class='text-center w-100 mt-4'>No hay resultados</h3>
+    @endif
   </div>
   <br><br>
   <div class="row text-center d-flex justify-content-center">

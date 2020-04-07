@@ -23,16 +23,17 @@ class AulaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $req)
-    {
+    public function index(Request $req){
+        $busqueda=$req->busqueda;
 
-        if ($req->busqueda == "") {
-            $aulas = Aula::paginate(12);
+        if ($busqueda == "") {
+            $aulas = Aula::orderBy('nombre','ASC')->paginate(12);
         } else {
-            $aulas = Aula::where('nombre', 'LIKE', '%' . $req->busqueda . '%')->orWhere('numero', 'LIKE', '%' . $req->busqueda . '%')->paginate(12);
-            $aulas->appends($req->only('busqueda'));
+            $aulas = Aula::where('nombre', 'LIKE', '%' . $busqueda . '%')->orWhere('numero', 'LIKE', '%' . $busqueda . '%')
+            ->orderBy('nombre','ASC')->paginate(12);
+            //$aulas->appends($req->only('busqueda'));
         }
-        return view('aulas.index', ['aulas' => $aulas]);
+        return view('aulas.index', ['aulas' => $aulas, 'busqueda' => $busqueda]);
     }
 
     /**
@@ -182,11 +183,11 @@ class AulaController extends Controller
         //guardar los datos que se envian en la base de datos 
         $archivo = $request->file('ficheroAulas');
         $nombre = 'ArchivoIMPAulas' . $archivo->getClientOriginalName();
-
+        global $indice;
         try { //no se haria asi...
             Storage::disk('local')->put($nombre, File::get($archivo));
             $rutaArchivo=Storage::disk('local')->path($nombre)/*Storage::disk('local')->get($nombre)*/;
-            
+            $indice=0;
             Excel::load($rutaArchivo, function($reader) {
 
                 foreach ($reader->get() as $aula) {
@@ -204,12 +205,13 @@ class AulaController extends Controller
                     $nuevaAula->reservable = $is_reservable;
                     
                     $nuevaAula->save();
+                    $GLOBALS['indice']++;
                  }
            });
         } catch (\Exception  $e) {
-            return redirect()->action('AulaController@index')->with('error', $rutaArchivo.'Error, no se ha podido guardar el fichero. Mensaje de error: '.$e->getMessage());
+            return redirect()->action('AulaController@index')->with('error', $rutaArchivo.'Error, no se ha podido guardar el fichero. Mensaje de error: '.$e->getMessage().' me he quedado por la linea '.$indice);
         }
-        return redirect()->action('AulaController@index')->with('notice', 'El fichero ' . $nombre . ', importado correctamente.');
+        return redirect()->action('AulaController@index')->with('notice', 'El fichero ' . $nombre . ', importado correctamente.  Con '.$GLOBALS['indice'].' importados');
     }
 
     /**

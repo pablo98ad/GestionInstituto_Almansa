@@ -15,8 +15,18 @@
   <link rel="stylesheet" href="{{asset('css/bootstrap-4.4.1.min.css')}}">
   <!--Font-awesome-->
   <link rel="stylesheet" href="{{asset('css/font-awesome-4.7.0/css/font-awesome.min.css')}}">
+   <!-- 
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/virtual-keyboard/1.30.1/css/keyboard.min.css">-->
   <!-- JQuery  3.4.1 -->
   <script src="{{asset('js/jquery-3.4.1.min.js')}}"></script>
+  <!--
+<script src="https://cdnjs.cloudflare.com/ajax/libs/virtual-keyboard/1.30.1/js/jquery.keyboard.extension-all.min.js"></script>
+  <script>
+ 
+  $(function() {
+    $('input[type="text"]').keyboard({ layout: 'qwerty' });
+  });
+  </script>-->
 
   @yield('scriptsHead')
 </head>
@@ -246,7 +256,7 @@
 
 
 
-
+    
     //}catch(e){}
 
     /*$(document).ready(function() {

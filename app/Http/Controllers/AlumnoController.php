@@ -15,18 +15,19 @@ class AlumnoController extends Controller
 {
 
 
-    public function __construct()
-    {
+    public function __construct(){
         $this->middleware('auth')->except('index','show', 'getTodosAlumnosJSON');
     }
 
 
-    public function index(Request $req)
-    {
-        if ($req->busqueda == "") {
-            $alumnos = Alumno::paginate(12);
+    public function index(Request $req){
+        $busqueda=$req->busqueda;
+
+        if ($busqueda == "") {
+            $alumnos = Alumno::orderBy('nombre','ASC')->paginate(12);
         } else {
-            $alumnos = Alumno::where('nombre', 'LIKE', '%' . $req->busqueda . '%')->orWhere('apellidos', 'LIKE', '%' . $req->busqueda . '%')->paginate(12);
+            $alumnos = Alumno::where('nombre', 'LIKE', '%' . $busqueda . '%')->orWhere('apellidos', 'LIKE', '%' . $busqueda . '%')
+            ->orderBy('nombre','ASC')->paginate(12);
             $alumnos->appends($req->only('busqueda'));
         }
          //para cada alumno, comprobamos si existe su imagen
@@ -36,7 +37,7 @@ class AlumnoController extends Controller
             }
         }
 
-        return view('alumnos.index', ['alumnos' => $alumnos]);
+        return view('alumnos.index', ['alumnos' => $alumnos, 'busqueda' => $busqueda]);
     }
 
     /**
