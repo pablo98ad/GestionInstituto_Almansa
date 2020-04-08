@@ -21,7 +21,7 @@ Listado de alumnos
     </form>
 
     @if (Auth::check())
-    <!--<a class='col-3 col-sm-2 col-md-2  btn btn-info mb-1 mr-2' href="{{url('alumno/').'/create'}}" role='button'><i class="fa fa-plus" aria-hidden="true"></i></a>-->
+    <!--<a class='col-3 col-sm-2 col-md-2  btn btn-info mb-1 mr-2' href="{{--url('alumno/').'/create'--}}" role='button'><i class="fa fa-plus" aria-hidden="true"></i></a>-->
     <div class="btn-group col-3 col-sm-2 col-md-2">
       <div class="btn-group dropleft" role="group">
         <button title="Añadir por fichero" type="button" class="btn btn-dark dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -138,7 +138,7 @@ Listado de alumnos
 
     @endforeach
     @if(sizeOf($alumnos)==0)
-    <h3 class='text-center w-100 mt-4'>No hay resultados</h3>
+      <h3 class='text-center w-100 mt-4'>No hay resultados</h3>
     @endif
 
   </div><br><br>

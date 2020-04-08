@@ -1,61 +1,30 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
-
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
-
 ## Visualizacion de la pantalla principal 
 <p align="center"><img src="https://i.gyazo.com/91d9852882d86bf825e164b0ee67b35f.png"></p>
 
-## About Laravel
+## Sobre Gestion Escultor
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
+GestionEscultor es una aplicacion web pensada para gestionar un Instituto en esta aplicacion podremos:
+- Ver los horarios de cada alumno, grupo, aula o profesor.
+- Reservar horas de un aula que este vacia y se pueda reservar asignando el profesor y la fecha y hora.
+- Ver las reservas realizadas en el horario del profesor y aula que reservan.
+- Introducir la falta de un profesor (Dia y fecha) y el profesor que lo va a sustituir
+- Ver todas las ausencias de cada dia
+- Ver, editar, modificar, eliminar, añadir (CRUD) de Alumnos, Aulas, Profesores, Materias, Grupos.
+- Poder importar Alumnos, Aulas, Profesores, Materias, Grupos con un fichero .csv cada uno.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Idea Principal
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications.
+Esta aplicacion web funcionaria en la sala de profesores del centro, donde todos los profesores tienen acceso a ella. 
+A los 3 minutos de inactividad aparece un panel de anuncios, donde un usuario registrado puede ponerlos en la seccion de modulos para que se visualicen en la pantalla inactiva
 
-## Learning Laravel
+## ¿Como lo hago funcionar?
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of any modern web application framework, making it a breeze to get started learning the framework.
+Desarrollado en entorno apache, ejecutar en la carpeta dentro de apache (htdocs)
+    git clone https://github.com/pablo98ad/GestionInstituto_Almansa
+    cd GestionInstituto_Almansa
+    composer install
+    php artisan key:generate
+Configurar base de datos en el archivo .env
+    php artisan migrate
+    php artisan db:seed
 
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 1100 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for helping fund on-going Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell):
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Pulse Storm](http://www.pulsestorm.net/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
