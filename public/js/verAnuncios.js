@@ -9,6 +9,7 @@ let actual = 0;
 let anchoHTML = document.body.scrollHeight-950;
 console.log('Ancho pagina: '+anchoHTML);
 let inter = scrollParaAbajo();
+let timeout;
 
 function quitarEventos(e) {
   if (e.keyCode == 13) {
@@ -17,6 +18,7 @@ function quitarEventos(e) {
     document.body.removeEventListener("scroll", volverPaginaPrincipal);
     document.body.removeEventListener("touchmove", volverPaginaPrincipal);
     clearInterval(inter);
+    anunciosParados();
   } else {
     volverPaginaPrincipal();
   }
@@ -48,9 +50,26 @@ function scrollParaArriba() {
     if (actual <= 0/* -500*/) {
       clearInterval(inter);
       inter = scrollParaAbajo();
-     
     }
     console.log('arriba: '+actual)
     window.scrollTo(0, actual);
   }, velocidad);
+}
+
+  //Para cuando estas tiempo inactivo, y con los anuncios parados se valla a la pagina anterior
+function anunciosParados(){
+  document.body.addEventListener('mousemove', resetearTimeout);
+  document.body.addEventListener('click', resetearTimeout);
+  timeout = activarTimeout();
+ 
+}
+
+function activarTimeout() {
+  return setTimeout(function() {
+      window.location.href = paginaAnterior;
+  }, 180000) //3 minutos
+}
+function resetearTimeout() {
+  clearTimeout(timeout);
+  timeout = activarTimeout();
 }

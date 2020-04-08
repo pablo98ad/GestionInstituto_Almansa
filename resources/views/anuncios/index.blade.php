@@ -89,10 +89,7 @@ Listado de Anuncios
                     "VIE",
                     "SAB"
                   ],
-                  "monthNames": [
-                    "Enero",
-                    "Febrero",
-                    "Marzo",
+                  "monthNames": [ "Enero", "Febrero", "Marzo",
                     "Abril",
                     "Mayo",
                     "Junio",
