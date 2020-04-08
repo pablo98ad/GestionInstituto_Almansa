@@ -19,12 +19,13 @@ A los 3 minutos de inactividad aparece un panel de anuncios, donde un usuario re
 
 ## ¿Como lo hago funcionar?
 
-Desarrollado en entorno apache, ejecutar en la carpeta dentro de apache (htdocs)
-    git clone https://github.com/pablo98ad/GestionInstituto_Almansa
-    cd GestionInstituto_Almansa
-    composer install
-    php artisan key:generate
-Configurar base de datos en el archivo .env
-    php artisan migrate
-    php artisan db:seed
+1. `$ git clone https://github.com/pablo98ad/GestionInstituto_Almansa `
+2. `$ cd GestionInstituto_Almansa`
+3. `$ composer install`
+4. `$ php artisan key:generate`
+5. Configurar base de datos en el archivo .env
+6. `$ php artisan migrate`
+7. `$ php artisan db:seed`
+8. `$php artisan serve`
+9. Abrir  `$ https://localhost:8000 ` con el navegador.
 
