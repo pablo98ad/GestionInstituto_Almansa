@@ -53,9 +53,9 @@ Iniciar Sesión
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Entrar</button>
-                <a class="btn btn-link" href=""><!--route('password.request')-->
+                <!--a class="btn btn-link" href=""--><!--route('password.request')--><!--
                     ¿Olvidaste la contraseña?
-                </a>
+                </a-->
             </form>
 
 

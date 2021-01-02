@@ -27,6 +27,8 @@ class DatabaseSeeder extends Seeder
             HorarioTableSeeder::class,
             
             AusenciasTableSeeder::class,
+
+            UsersTableSeeder::class
             
             
             

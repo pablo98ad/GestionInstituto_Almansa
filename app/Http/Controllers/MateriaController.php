@@ -118,15 +118,15 @@ class MateriaController extends Controller
 
     public function importar(Request $request) //metodo del controlador que recibe un archivo xml para importar las materias de la aplicacion
     {
-        //guardar los datos que se envian en la base de datos 
+        //guardar los datos que se envian en la base de datos//
         $archivo = $request->file('ficheroMaterias');
-        //$nombre = 'ArchivoIMPProfesores'.$archivo->getClientOriginalName();
+        $nombre = 'ArchivoIMPMaterias'.$archivo->getClientOriginalName();
         global $indice;
         try { //no se haria asi...
-           // Storage::disk('local')->put($nombre, File::get($archivo));
-           // $rutaArchivo=Storage::disk('local')->path($nombre)/*Storage::disk('local')->get($nombre)*/;
+            Storage::disk('local')->put($nombre, File::get($archivo));
+            $rutaArchivo=Storage::disk('local')->path($nombre)/*Storage::disk('local')->get($nombre)*/;
             $indice=0;
-            Excel::load(/*$rutaArchivo*/$archivo, function($reader) {
+            Excel::load($rutaArchivo/*$archivo*/, function($reader) {
                 
                 foreach ($reader->get() as $materia) {
                     //echo $materia;
