@@ -38,6 +38,9 @@ Auth::routes();
 //eliminacion de todas las tablas de cada modulo
 Route::delete('/profesores', 'ProfesorController@eliminarTabla')->name('eliminarTablaProfesores');
 Route::delete('/materia', 'MateriaController@eliminarTabla')->name('eliminarTablaMateria');
+Route::delete('/alumnos', 'AlumnoController@eliminarTabla')->name('eliminarTablaAlumnos');
+Route::delete('/grupos', 'GrupoController@eliminarTabla')->name('eliminarTablaGrupos');
+Route::delete('/aulas', 'AulaController@eliminarTabla')->name('eliminarTablaAulas');
 
 
 //Rutas archivos de importaciones

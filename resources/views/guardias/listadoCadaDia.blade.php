@@ -104,7 +104,7 @@ td > a > div{
   @endsection
   <div class="row justify-content-between">
     <a title="Dar de Alta una guardia" class='col-4 col-sm-2 col-md-2  h-50 w-25  btn btn-success mb-1 mr-2' href="{{url('/').'/guardias/realizar'}}" role='button'><i class=" pt-1 fa fa-plus fa-2x" aria-hidden="true"></i></a>
-    <a title="Imprimir guardias de hoy" class='col-4 col-sm-2 col-md-2  h-50 w-25  btn btn-info mb-1 mr-2' href="{{url('/').'/guardias/imprimirHoy'}}" role='button'><i class=" pt-1 fa fa-print fa-2x" aria-hidden="true"></i></a>
+    <!--a title="Imprimir guardias de hoy" class='col-4 col-sm-2 col-md-2  h-50 w-25  btn btn-info mb-1 mr-2' href="{{url('/').'/guardias/imprimirHoy'}}" role='button'><i class=" pt-1 fa fa-print fa-2x" aria-hidden="true"></i></a-->
   </div>
   <div class="row d-flex justify-content-center">
     <div class="col-12 col-md-4">

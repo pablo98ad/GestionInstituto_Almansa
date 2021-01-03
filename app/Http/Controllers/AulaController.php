@@ -8,6 +8,8 @@ use Exception;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\DB;
+
 
 
 class AulaController extends Controller
@@ -231,5 +233,12 @@ class AulaController extends Controller
             }
         }
         echo $aulas;
+    }
+
+    public function eliminarTabla(){
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        Aula::truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        return redirect()->action('AulaController@index')->with('notice', 'La tabla Aulas ha sido vaciada.' );
     }
 }

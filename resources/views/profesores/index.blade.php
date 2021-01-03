@@ -28,7 +28,7 @@ Listado de profesores
           <span class="sr-only">Importar</span>
         </button>
         <div class="dropdown-menu text-center">
-          <!-- MODAL PARA LA IMPORTACION  DE PROFESORES POR FICHERO -->
+          <!-- MODAL PARA LA IMPORTACION  DE PROFESORES POR FICHERoO -->
           <button type="button" class="btn text-white bg-dark dropdown-item" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-file-code-o fa-lg"></i></button>
           <button type="button" class="mt-2 btn text-white bg-danger dropdown-item" data-toggle="modal" data-target="#exampleModal2"><i class="fa fa-exclamation-triangle"></i> <i class="fa fa-trash fa-lg"></i> <i class="fa fa-list  fa-1x"></i></button>
         

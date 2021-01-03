@@ -4,12 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Alumno;
+use App\Grupo;
 use App\Horario;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\ImageManagerStatic as Image;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\DB;
+
 
 class AlumnoController extends Controller
 {
@@ -215,7 +219,6 @@ class AlumnoController extends Controller
                 unlink(Storage::disk('local')->path('/') . $imagenAntigua);
             }
         } catch (Exception $e) {
-
             return redirect()->action('AlumnoController@index')->with('error', 'Error: ' . $e->getMessage());
         }
         return redirect()->action('AlumnoController@index')->with('notice', 'El Alumno' . $alumno->nombre . ' eliminado correctamente.');
@@ -226,14 +229,53 @@ class AlumnoController extends Controller
         //guardar los datos que se envian en la base de datos 
         $archivo = $request->file('ficheroAlumnos');
         $nombre = 'ArchivoIMPAlumnos'.$archivo->getClientOriginalName();
+        global $indice;
 
-        try { //no se haria asi...
+        try { //TO DO
             Storage::disk('local')->put($nombre, File::get($archivo));
+            $rutaArchivo=Storage::disk('local')->path($nombre)/*Storage::disk('local')->get($nombre)*/;//
+            $indice=0;
+
+            Excel::load(/*$rutaArchivo*/$archivo, function($reader) {
+                
+                foreach ($reader->get() as $alum) {
+                    //\Log::debug('alumn ' . $alum);
+                    //\Log::debug('grupo alumn ' . $alum->grupo);
+                    $grupo = Grupo::where('nombre', $alum->grupo)->first();
+                    //\Log::debug('grupo'.$grupo->id);
+                    Alumno::create([
+                        'id' => $alum->codigo,
+                        'nombre' => $alum->nombre,
+                        'apellidos' =>$alum->apellidos,
+                        'fechaNacimiento' =>$alum->fechanacimiento,
+                        'nombrePadre' =>$alum->nombrepadre,
+                        'nombreMadre' =>$alum->nombremadre,
+                        'Telefono1' =>$alum->telefono1,
+                        'Telefono2' =>$alum->telefono2,
+                        'Grupo_id' => $grupo->id,
+                        'rutaImagen' => 'imagenes/alumnos/'.$alum->imagen,
+                        'observaciones' => ''
+                    ]);
+                    $GLOBALS['indice']++;
+                 }
+                 
+           });
         } catch (\Exception  $e) {
-            return redirect()->action('AlumnoController@index')->with('error', 'Error, no se ha podido guardar el fichero');
+            //\Log::debug($e);
+            return redirect()->action('AlumnoController@index')->with('error', /*$rutaArchivo.*/'Error, no se ha podido guardar el fichero '.$e->getMessage().' me he quedado por la linea '.$indice);
         }
-        return redirect()->action('AlumnoController@index')->with('notice', 'El fichero ' . $nombre . ', importado correctamente.');
+        return redirect()->action('AlumnoController@index')->with('notice', 'El fichero ' /*. $nombre */. ', importado correctamente. Con '.$GLOBALS['indice'].' importados' );
+    
     }
+
+
+    public function eliminarTabla(){
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        Alumno::truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        return redirect()->action('AlumnoController@index')->with('notice', 'La tabla Alumnos ha sido vaciada.' );
+    }
+
 
 
     /**

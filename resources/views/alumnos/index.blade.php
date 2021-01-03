@@ -30,6 +30,8 @@ Listado de alumnos
         <div class="dropdown-menu text-center">
           <!-- MODAL PARA LA IMPORTACION  DE ALUMNOS POR FICHERO -->
           <button type="button" class="btn text-white bg-dark dropdown-item" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-file-code-o fa-lg" aria-hidden="true"></i></button>
+          <button type="button" class="mt-2 btn text-white bg-danger dropdown-item" data-toggle="modal" data-target="#exampleModal2"><i class="fa fa-exclamation-triangle"></i> <i class="fa fa-trash fa-lg"></i> <i class="fa fa-list  fa-1x"></i></button>
+        
         </div>
       </div>
       <a title="Añadir manualmente" role="button" class="btn btn-info" href="{{url('alumno/').'/create'}}" role='button'><i class="fa fa-plus" aria-hidden="true"></i></a>
@@ -55,6 +57,30 @@ Listado de alumnos
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
             <button form="myform" type="submit" class="btn btn-primary">Subir Fichero</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal borrar toda la tabla -->
+    <div class="modal fade " id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog " role="document">
+        <div class="modal-content ">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">AVISO</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <h5 class="modal-title" id="exampleModalLabel">¿Esta seguro que quiere eliminar todos los alumnos?</h5>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            <form class="d-inline" method="POST" action="{{url('alumnos')}}">
+              {{ csrf_field() }}
+              {{ method_field('DELETE') }}
+              <input type="submit" name="eliminar" class="btn btn-danger" value="Borrar">
+            </form>
           </div>
         </div>
       </div>

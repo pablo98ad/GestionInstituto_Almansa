@@ -195,7 +195,7 @@ class ProfesorController extends Controller{
         global $indice;
         try { //no se haria asi...
            // Storage::disk('local')->put($nombre, File::get($archivo));
-           // $rutaArchivo=Storage::disk('local')->path($nombre)/*Storage::disk('local')->get($nombre)*/;
+           // $rutaArchivo=Storage::disk('local')->path($nombre)/*Storage::disk('local')->get($nombre)*/;//
             $indice=0;
             Excel::load(/*$rutaArchivo*/$archivo, function($reader) {
                 

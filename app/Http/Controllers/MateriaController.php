@@ -127,8 +127,8 @@ class MateriaController extends Controller
             $rutaArchivo=Storage::disk('local')->path($nombre)/*Storage::disk('local')->get($nombre)*/;
             $indice=0;
             Excel::load($rutaArchivo/*$archivo*/, function($reader) {
-                
                 foreach ($reader->get() as $materia) {
+                    \Log::debug('materia ' . $materia);
                     //echo $materia;
                     Materia::create([
                         'id' => $materia->id,

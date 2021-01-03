@@ -10,6 +10,7 @@ use Exception;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\DB;
 
 class GrupoController extends Controller
 {   
@@ -155,5 +156,12 @@ class GrupoController extends Controller
     {
         $grupos = Grupo::all();
         echo $grupos;
+    }
+
+    public function eliminarTabla(){
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        Grupo::truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        return redirect()->action('GrupoController@index')->with('notice', 'La tabla Grupos ha sido vaciada.' );
     }
 }
