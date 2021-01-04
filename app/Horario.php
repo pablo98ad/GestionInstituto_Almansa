@@ -7,6 +7,8 @@ class Horario extends Model
 {
     //
     protected $table = 'horario';
+    // para poder importar por fichero
+    protected $fillable = ['profesor_id', 'aula_id','grupo_id','materia_id', 'observaciones', 'esProfesor', 'dia', 'hora'];
 
     public function profesor(){
         return $this->belongsTo('App\Profesor','profesor_id');//muchos - uno | 1 parametro el modelo, 2º parametro la clave

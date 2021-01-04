@@ -10,6 +10,10 @@ use App\Aula;
 use App\Grupo;
 use App\Reservas;
 use Exception;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class HorarioController extends Controller
 {
@@ -276,6 +280,57 @@ class HorarioController extends Controller
             $aux.= "SIN CLASE";
         }
         return $aux;
+    }
+
+
+
+
+
+
+    public function importar(Request $request) //metodo del controlador que recibe un archivo xml para importar el horario de la aplicacion
+    {
+        //guardar los datos que se envian en la base de datos 
+        $archivo = $request->file('ficheroHorario');
+        $nombre = 'ArchivoIMPHorario'.$archivo->getClientOriginalName();
+        global $indice;
+        try {
+            Storage::disk('local')->put($nombre, File::get($archivo));
+            $rutaArchivo=Storage::disk('local')->path($nombre)/*Storage::disk('local')->get($nombre)*/;//
+            $indice=0;
+            Excel::load(/*$rutaArchivo*/$archivo, function($reader) {
+                
+                foreach ($reader->get() as $horario) {
+                    //echo $profe;
+                    $grupo = Grupo::where('nombre', $horario->nombregrupo)->first();
+                    $aula = Aula::where('nombre', $horario->nombreaula)->first();
+                    Horario::create([
+                        'profesor_id' => $horario->profesor_id,
+                        'grupo_id' => $grupo->id,
+                        'aula_id' => $aula->id,
+                        'materia_id' => $horario->materia_id,
+                        'dia' => $horario->dia,
+                        'hora' => $horario->hora,
+                        'observaciones' => '',
+                        'esProfesor' => true
+                    ]);
+                    //$indice=$indice+1;
+                    $GLOBALS['indice']++;
+                 }
+                 
+           });
+
+        } catch (\Exception  $e) {
+            return redirect()->action('HorarioController@index')->with('error', /*$rutaArchivo.*/'Error, no se ha podido guardar el fichero'.$e->getMessage().' me he quedado por la linea '.$indice);
+        }
+        return redirect()->action('HorarioController@index')->with('notice', 'El fichero ' /*. $nombre */. ', importado correctamente. Con '.$GLOBALS['indice'].' importados' );
+    }
+
+
+    public function eliminarTabla(){
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        Horario::truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        return redirect()->action('HorarioController@index')->with('notice', 'La tabla Horarios ha sido vaciada.' );
     }
 
 

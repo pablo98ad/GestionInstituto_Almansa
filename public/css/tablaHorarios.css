@@ -9,6 +9,9 @@ table.greenTable {
     border: 2px solid #040C03;
     padding: 3px 2px;
   }
+  table.greenTable td {
+    max-width: 50px;
+  }
 
  
 

@@ -41,7 +41,7 @@ Route::delete('/materia', 'MateriaController@eliminarTabla')->name('eliminarTabl
 Route::delete('/alumnos', 'AlumnoController@eliminarTabla')->name('eliminarTablaAlumnos');
 Route::delete('/grupos', 'GrupoController@eliminarTabla')->name('eliminarTablaGrupos');
 Route::delete('/aulas', 'AulaController@eliminarTabla')->name('eliminarTablaAulas');
-
+Route::delete('/horarios', 'HorarioController@eliminarTabla')->name('eliminarTablaHorarios');
 
 //Rutas archivos de importaciones
 Route::post('/profesores/importar', 'ProfesorController@importar')->name('profesorImportar');
@@ -49,6 +49,7 @@ Route::post('/alumno/importar', 'AlumnoController@importar')->name('alumnoImport
 Route::post('/grupo/importar', 'GrupoController@importar')->name('grupoImportar');
 Route::post('/aulas/importar', 'AulaController@importar')->name('aulaImportar');
 Route::post('/materia/importar', 'MateriaController@importar')->name('materiaImportar');
+Route::post('/horario/importar', 'HorarioController@importar')->name('horarioImportar');
 
 //horarios!!
 Route::get('/horario/profesor/{id}','HorarioController@horarioProfesor')->name('verHorarioProfesor');

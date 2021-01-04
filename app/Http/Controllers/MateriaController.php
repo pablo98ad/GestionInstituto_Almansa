@@ -128,7 +128,7 @@ class MateriaController extends Controller
             $indice=0;
             Excel::load($rutaArchivo/*$archivo*/, function($reader) {
                 foreach ($reader->get() as $materia) {
-                    \Log::debug('materia ' . $materia);
+                    //\Log::debug('materia ' . $materia);
                     //echo $materia;
                     Materia::create([
                         'id' => $materia->id,
