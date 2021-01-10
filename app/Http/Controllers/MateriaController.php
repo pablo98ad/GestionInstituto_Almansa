@@ -143,7 +143,7 @@ class MateriaController extends Controller
            });
 
         } catch (\Exception  $e) {
-            return redirect()->action('MateriaController@index')->with('error', /*$rutaArchivo.*/'Error, no se ha podido guardar el fichero'.$e->getMessage().' me he quedado por la linea '.$indice);
+            return redirect()->action('MateriaController@index')->with('error', /*$rutaArchivo.*/'Error, no se ha podido importar el fichero. ERROR: '.$e->getMessage().' me he quedado por la linea '.$indice);
         }
         return redirect()->action('MateriaController@index')->with('notice', 'El fichero ' /*. $nombre */. ', importado correctamente. Con '.$GLOBALS['indice'].' importados' );
     }

@@ -65,7 +65,7 @@ Horario profesor: {{$horariosProfe['nombreProfesor']}} y reservas de esta semana
       <tr>
       <td>6</td><td>{!!$horariosProfe['L']['6']!!}</td><td>{!!$horariosProfe['M']['6']!!}</td><td>{!!$horariosProfe['X']['6']!!}</td><td>{!!$horariosProfe['J']['6']!!}</td><td>{!!$horariosProfe['V']['6']!!}</td></tr>
       <tr>
-      <td>7</td><td>{!!$horariosProfe['L']['1']!!}</td><td>{!!$horariosProfe['M']['7']!!}</td><td>{!!$horariosProfe['X']['7']!!}</td><td>{!!$horariosProfe['J']['7']!!}</td><td>{!!$horariosProfe['V']['7']!!}</td></tr>
+      <td>7</td><td>{!!$horariosProfe['L']['7']!!}</td><td>{!!$horariosProfe['M']['7']!!}</td><td>{!!$horariosProfe['X']['7']!!}</td><td>{!!$horariosProfe['J']['7']!!}</td><td>{!!$horariosProfe['V']['7']!!}</td></tr>
       </tbody>
       </tr>
     </table>

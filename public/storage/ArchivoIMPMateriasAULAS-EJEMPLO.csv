@@ -11,7 +11,7 @@ Orientación;Orientación;;NO
 008-2ºA;008-2ºA;008;NO
 003-1ºB;003-1ºB;003;NO
 005-1ºC;005-1ºC;005;NO
-105-Desdoble;105-Desdoble;105;SI
+105-Desdoble;105-Desdoble;105;NO
 209-1ºFP Básica;209-1ºFP Básica;209;NO
 101-LENGUA Y L.;101-LENGUA Y L.;101;NO
 108-Matemáticas;108-Matemáticas;108;NO
@@ -40,10 +40,10 @@ Biblioteca;Biblioteca;;NO
 204-Plástica;204-Plástica;204;NO
 110-1DAW;110-1DAW;110;NO
 112-2DAW;112-2DAW;112;NO
-109-Althia;109-Althia;109;SI
-106-Althia-EOI;106-Althia-EOI;106;SI
+109-Althia;109-Althia;109;NO
+106-Althia-EOI;106-Althia-EOI;106;NO
 202-Música;202-Música;202;NO
-MULTIUSOS;MULTIUSOS;MUL;SI
+MULTIUSOS;MULTIUSOS;;NO
 114-LFQuímica;114-LFQuímica;114;NO
 113-LBiología;113-LBiología;113;NO
 Gimnasio;Gimnasio;;NO

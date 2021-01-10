@@ -30,7 +30,7 @@
       <tr>
       <td>6</td><td>{!!$horario['L']['6']!!}</td><td>{!!$horario['M']['6']!!}</td><td>{!!$horario['X']['6']!!}</td><td>{!!$horario['J']['6']!!}</td><td>{!!$horario['V']['6']!!}</td></tr>
       <tr>
-      <td>7</td><td>{!!$horario['L']['1']!!}</td><td>{!!$horario['M']['7']!!}</td><td>{!!$horario['X']['7']!!}</td><td>{!!$horario['J']['7']!!}</td><td>{!!$horario['V']['7']!!}</td></tr>
+      <td>7</td><td>{!!$horario['L']['7']!!}</td><td>{!!$horario['M']['7']!!}</td><td>{!!$horario['X']['7']!!}</td><td>{!!$horario['J']['7']!!}</td><td>{!!$horario['V']['7']!!}</td></tr>
       </tbody>
       </tr>
     </table>

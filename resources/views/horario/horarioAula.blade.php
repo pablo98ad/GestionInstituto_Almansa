@@ -59,7 +59,7 @@ Horario del Aula: {{$horariosAula['nombreAula']}} y reservas de <b>esta semana</
       <tr>
       <td>6</td><td>{!!$horariosAula['L']['6']!!}</td><td>{!!$horariosAula['M']['6']!!}</td><td>{!!$horariosAula['X']['6']!!}</td><td>{!!$horariosAula['J']['6']!!}</td><td>{!!$horariosAula['V']['6']!!}</td></tr>
       <tr>
-      <td>7</td><td>{!!$horariosAula['L']['1']!!}</td><td>{!!$horariosAula['M']['7']!!}</td><td>{!!$horariosAula['X']['7']!!}</td><td>{!!$horariosAula['J']['7']!!}</td><td>{!!$horariosAula['V']['7']!!}</td></tr>
+      <td>7</td><td>{!!$horariosAula['L']['7']!!}</td><td>{!!$horariosAula['M']['7']!!}</td><td>{!!$horariosAula['X']['7']!!}</td><td>{!!$horariosAula['J']['7']!!}</td><td>{!!$horariosAula['V']['7']!!}</td></tr>
       </tbody>
       </tr>
     </table>

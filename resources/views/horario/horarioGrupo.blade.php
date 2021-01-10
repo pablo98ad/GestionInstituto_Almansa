@@ -59,7 +59,7 @@ Horario del grupo: {{$horariosGrupo['nombreGrupo']}}</b>
       <tr>
       <td>6</td><td>{!!$horariosGrupo['L']['6']!!}</td><td>{!!$horariosGrupo['M']['6']!!}</td><td>{!!$horariosGrupo['X']['6']!!}</td><td>{!!$horariosGrupo['J']['6']!!}</td><td>{!!$horariosGrupo['V']['6']!!}</td></tr>
       <tr>
-      <td>7</td><td>{!!$horariosGrupo['L']['1']!!}</td><td>{!!$horariosGrupo['M']['7']!!}</td><td>{!!$horariosGrupo['X']['7']!!}</td><td>{!!$horariosGrupo['J']['7']!!}</td><td>{!!$horariosGrupo['V']['7']!!}</td></tr>
+      <td>7</td><td>{!!$horariosGrupo['L']['7']!!}</td><td>{!!$horariosGrupo['M']['7']!!}</td><td>{!!$horariosGrupo['X']['7']!!}</td><td>{!!$horariosGrupo['J']['7']!!}</td><td>{!!$horariosGrupo['V']['7']!!}</td></tr>
       </tbody>
       </tr>
     </table>

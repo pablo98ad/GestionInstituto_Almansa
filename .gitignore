@@ -1,6 +1,9 @@
 /node_modules
 /public/hot
-/public/storage
+/public/storage/imagenes/alumnos/*
+/public/storage/imagenes/profesores/*
+!/public/storage/imagenes/profesores/default.png
+!/public/storage/imagenes/alumnos/default.png
 /storage/*.key
 /vendor
 /.idea
