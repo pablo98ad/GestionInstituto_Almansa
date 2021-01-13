@@ -171,7 +171,7 @@ class AnunciosController extends Controller
         date_default_timezone_set('CET'); //para que estamos en la hora de madrid
         $hoy =  (new DateTime())->format('Y-m-d H:i:s');
         //echo $hoy;
-        $anunciosATiempo = DB::table('Anuncios')->where('fin', '>=', $hoy)->where('activo', '=', '1')->orderBy('fin')->get();
+        $anunciosATiempo = DB::table('anuncios')->where('fin', '>=', $hoy)->where('activo', '=', '1')->orderBy('fin')->get();
         //echo $anunciosATiempo;
         return view('anuncios.verAnuncios', ['anuncios' => $anunciosATiempo]);
     }
