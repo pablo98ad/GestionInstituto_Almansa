@@ -21,7 +21,6 @@ GestionEscultor es una aplicacion web pensada para gestionar un Instituto en est
 - Ver, editar, modificar, eliminar, añadir (CRUD) de Alumnos, Aulas, Profesores, Materias, Grupos.
 - Poder importar Alumnos, Aulas, Profesores, Materias, Grupos con un fichero .csv cada uno.
 - Instertar Anuncios, poder activarlos o desactivarlos, darle un rango de fecha que queramos que se vea en la pantalla inactiva
-- Versión en desarrollo realizado mas o menos el 80%
 
 ## ¿Como lo hago funcionar?
 
@@ -29,9 +28,10 @@ GestionEscultor es una aplicacion web pensada para gestionar un Instituto en est
 2. `$ cd GestionInstituto_Almansa`
 3. `$ composer install`
 4. `$ php artisan key:generate`
-5. Configurar base de datos en el archivo .env
-6. `$ php artisan migrate`
-7. `$ php artisan db:seed`
-8. `$ php artisan serve`
-9. Abrir  `https://localhost:8000` con el navegador.
+5. Copiar env.example a .env
+6. Configurar base de datos en el archivo .env
+7. `$ php artisan migrate`
+8. `$ php artisan db:seed`
+9. `$ php artisan serve`
+10. Abrir  `https://localhost:8000` con el navegador.
 

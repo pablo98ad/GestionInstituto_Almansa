@@ -54,6 +54,7 @@
       </div>
     </div><br><br><br>
     @endforeach
+    <br><br><br><br><br><br><br><br><br><br><br><br>
 
     @else
     <h1>No hay anuncios disponibles para ver</h1><br>
