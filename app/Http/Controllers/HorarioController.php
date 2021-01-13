@@ -37,7 +37,7 @@ class HorarioController extends Controller
             $tablaHorario['nombreProfesor']= $tablaHorario->nombre;
             return view('horario.horarioProfesor', ['horariosProfe' => $tablaHorario]);
         }
-         \Log::debug('horario profe', $tablaHorario);
+        //\Log::debug('horario profe', $tablaHorario);
 
         return view('horario.horarioProfesor', ['horariosProfe' => $tablaHorario]);
     }
