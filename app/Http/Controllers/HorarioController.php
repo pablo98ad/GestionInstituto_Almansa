@@ -178,7 +178,7 @@ class HorarioController extends Controller
             
         }else if($por=='alumnos'){
             $alum=Alumno::find($quien);
-            $horariosGrupo = Horario::where('aula_id', $alum->grupo->id)->get();
+            $horariosGrupo = Horario::where('grupo_id', $alum->grupo->id)->get();
             if(sizeof($horariosGrupo)>0){
                 $tablaHorario= $this->generarHorarioGrupo($horariosGrupo);
             }else{

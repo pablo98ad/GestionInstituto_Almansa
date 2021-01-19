@@ -272,7 +272,7 @@ Horario Instituto
       let por = elementoSeleccionado;
       let quien = document.getElementById('campos').value;
       let url = directorioBase + '/horario/tabla/' + por + '/' + quien;
-      //alert(url);
+      console.log('url buscar', url);
       $("#tabla").load(url);
 
     } else {
